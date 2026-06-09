@@ -7,6 +7,8 @@ import employeeManagementIcon from "../../assets/images/employee_management.png"
 import "./Sidebar.css";
 import { MenuItem, SubMenuItem } from "../../types/sidebar-types";
 import { menuItems } from "../../constants/constants";
+import { useAuthStore } from "../../store/auth-store";
+import Image from "../../components/common/image";
 
 
 
@@ -20,6 +22,7 @@ interface SidebarProps {
 const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
   const navigate = useNavigate();
    const location = useLocation();
+   const {profile} = useAuthStore();
 
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
     
@@ -42,7 +45,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
       <div className="logo-area">
         <div className="logo">
           <NavLink to="/">
-            <img src={logo} alt="Logo" />
+            <Image src={profile?.company?.companyLogo || logo} alt="Logo" />
           </NavLink>
         </div>
       </div>

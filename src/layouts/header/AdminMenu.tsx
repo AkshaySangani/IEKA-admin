@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import UserAvatar from "../../assets/images/sunny.jpg";
+import UserAvatar from "../../assets/images/User-Image.jpg";
 import "./AdminMenu.css";
 import { NavLink } from "react-router-dom";
 import Modal from "../../components/common/modal/Modal";
 import { removeLocalStorageData } from "../../utils/helper";
 import { storageKeys } from "../../constants/constants";
 import { useAuthStore } from "../../store/auth-store";
+import Image from "../../components/common/image";
 
 const AdminMenu = () => {
   const {clearAuth, profile} = useAuthStore();
@@ -53,7 +54,7 @@ const AdminMenu = () => {
             id="userAvatar"
             onClick={handleMenuOenClose}
           >
-            <img src={UserAvatar} alt="User" />
+            <Image src={profile?.profileImage} alt="User" fallbackSrc={UserAvatar}/>
             <div className="userareadetails">
               <span className="username">{profile?.firstName}{" "}{profile?.lastName}</span>
               <span className="userposition">Admin</span>

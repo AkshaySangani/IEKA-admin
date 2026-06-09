@@ -137,14 +137,14 @@ const ChangePassword: React.FC = () => {
           </div>
 
           {/* Forgot Password */}
-          <div className="grid grid-cols-[1fr] mb-5">
+          {/* <div className="grid grid-cols-[1fr] mb-5">
             <button
               type="button"
               className="w-fit text-[16px] text-blue-600 hover:underline"
             >
               Forgot password?
             </button>
-          </div>
+          </div> */}
 
           {/* New Password */}
           <div className="grid grid-cols-[1fr] items-center gap-5">

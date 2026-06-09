@@ -1,9 +1,10 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Image from "../image";
 
 interface ImageUploadProps {
   label: string;
   required?: boolean;
-  value?: string;
+  value?: string | File | null;
   onChange?: (file: File | null) => void;
   error?: string;
 }
@@ -11,7 +12,7 @@ interface ImageUploadProps {
 const ImageUpload = ({
   label,
   required,
-  value,
+  value = "",
   onChange,
   error,
 }: ImageUploadProps) => {
@@ -20,10 +21,50 @@ const ImageUpload = ({
   const [preview, setPreview] = useState<string>("");
   const [fileName, setFileName] = useState<string>("No file chosen");
 
+  const [imageError, setError] = useState("");
+
+  useEffect(() => {
+  if (!value) {
+    setPreview("");
+    setFileName("No file chosen");
+    return;
+  }
+
+  if (typeof value === "string") {
+    setPreview(value);
+    setFileName(value.split("/").pop() || "Image");
+  } else if (value instanceof File) {
+    setPreview(URL.createObjectURL(value));
+    setFileName(value.name);
+  }
+}, [value]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (!file) return;
+
+    setError("");
+
+    const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+    const maxSize = 1 * 1024 * 1024; // 50 MB
+
+    // File Type Validation
+    if (!allowedTypes.includes(file.type)) {
+      setError("Only JPG, JPEG and PNG files are allowed.");
+
+      e.target.value = "";
+      return;
+    }
+
+    // File Size Validation
+    if (file.size > maxSize) {
+      setError("File size must be less than 50 MB.");
+
+      e.target.value = "";
+      return;
+    }
 
     setFileName(file.name);
     setPreview(URL.createObjectURL(file));
@@ -47,45 +88,43 @@ const ImageUpload = ({
       <label className="block text-sm font-medium mb-2">
         {label}
 
-        {required && <span className="text-red-500 ml-1">*</span>}
+        {required && <span className="text-error ml-1">*</span>}
       </label>
 
       <div className="flex flex-col gap-3">
-        {!preview && <div className="flex items-start gap-10 border border-gray-300 p-2">
-          {/* File Input */}
-          <div className="flex-1 ">
-            <div className="flex ">
-              <label
-                htmlFor="logo-upload"
-                className="bg-gray-500 text-white px-2 flex items-center cursor-pointer whitespace-nowrap"
-              >
-                Choose File
-              </label>
+        {!preview && (
+          <div className="flex items-start gap-10 border border-gray-300 p-2">
+            {/* File Input */}
+            <div className="flex-1 ">
+              <div className="flex ">
+                <label
+                  htmlFor="logo-upload"
+                  className="bg-gray-500 text-white px-2 flex items-center cursor-pointer whitespace-nowrap"
+                >
+                  Choose File
+                </label>
 
-              <input
-                ref={fileInputRef}
-                id="logo-upload"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
-              />
+                <input
+                  ref={fileInputRef}
+                  id="logo-upload"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
 
-              <div className="flex items-center px-3 overflow-hidden text-ellipsis whitespace-nowrap">
-                {fileName}
+                <div className="flex items-center px-3 overflow-hidden text-ellipsis whitespace-nowrap">
+                  {fileName}
+                </div>
               </div>
             </div>
           </div>
-        </div>}
+        )}
 
         {/* Preview */}
         {preview && (
           <div className="relative w-[100px] h-[100px]">
-            <img
-              src={preview}
-              alt="Preview"
-              className="w-[100px] h-[100px] border border-gray-300 object-cover"
-            />
+            <Image src={preview} alt="preview" className="w-[100px] h-[100px] border border-gray-300 object-contain"/>
 
             <button
               type="button"
@@ -98,7 +137,7 @@ const ImageUpload = ({
         )}
       </div>
 
-      {error && <div className="text-error">{error}</div>}
+      {(error || imageError) && <p className="text-error text-xs mt-1">{error}</p>}
     </div>
   );
 };

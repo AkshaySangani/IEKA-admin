@@ -40,7 +40,7 @@ const AppLayout: React.FC = () => {
           <Header setIsOpen={setIsOpen} isOpen={isOpen} />
 
           <main
-            className={`main-content overflow-hidden flex flex-col flex-1 ${isOpen ? "sidebar-open" : "sidebar-closed"}`}
+            className={`main-content overflow-hidden relative flex flex-col flex-1 ${isOpen ? "sidebar-open" : "sidebar-closed"}`}
             id="mainContent"
           >
             <Outlet />

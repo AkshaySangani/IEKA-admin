@@ -1,5 +1,4 @@
 import { apiRequest } from "../../services/request";
-import { ApiResponse } from "../../types/api.types";
 import {
   ForgotPasswordPayload,
   LoginPayload,
@@ -11,8 +10,6 @@ export const loginApi = (payload: LoginPayload) =>
   apiRequest.post("/auth/login", payload, {
     showSuccessToast: true,
   });
-
-export const getProfile = () => apiRequest.get<ApiResponse>("/profile");
 
 export const forgotPasswordApi = (payload: ForgotPasswordPayload) =>
   apiRequest.post("/auth/forgot-password", payload, {

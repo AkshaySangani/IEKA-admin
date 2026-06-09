@@ -38,3 +38,13 @@ export const menuItems: MenuItem[] = [
     ],
   },
 ];
+
+export const statusMessage: {[key: string]: string} = {
+  ACTIVE: "Active",
+  INACTIVE: "Inactive"
+}
+
+export const statusColor: {[key: string]: string} = {
+  ACTIVE: "text-success",
+  INACTIVE: "text-pending"
+}

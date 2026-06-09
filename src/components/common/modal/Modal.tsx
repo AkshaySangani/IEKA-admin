@@ -10,6 +10,7 @@ interface ModalProps {
   width?: string;
   confirmButtonName?: string;
   handleOnConfirm: (value?: any) => void;
+  loading?: boolean;
 }
 
 const Modal = ({
@@ -19,7 +20,8 @@ const Modal = ({
   onClose,
   width = "max-w-4xl",
   confirmButtonName = "Ok",
-  handleOnConfirm = () => {}
+  handleOnConfirm = () => {},
+  loading = false
 }: ModalProps) => {
 
   return (
@@ -49,7 +51,7 @@ const Modal = ({
           {/* Footer */}
 
           <div className="bg-[#f7f7f7] border-t border-gray-300 px-6 py-4 flex justify-center gap-3">
-            <Button name={confirmButtonName} size="sm" onClick={handleOnConfirm} />
+            <Button loading={loading} disabled={loading} name={confirmButtonName} size="sm" onClick={handleOnConfirm} />
             <Button
               name="Close"
               size="sm"

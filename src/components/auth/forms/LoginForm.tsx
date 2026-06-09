@@ -131,7 +131,7 @@ const LoginForm = ({}: Props) => {
         <AppStoreButtons />
       </form>
 
-      <div className="login-links">
+      {/* <div className="login-links">
         <Link
           to="/forgot-password"
           className="forgotpass"
@@ -139,7 +139,7 @@ const LoginForm = ({}: Props) => {
         >
           Forgot password?
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

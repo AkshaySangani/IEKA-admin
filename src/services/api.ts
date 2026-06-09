@@ -3,8 +3,9 @@ import { config } from "../utils/config";
 import { storageKeys } from "../constants/constants";
 import { getLocalStorageData, removeLocalStorageData } from "../utils/helper";
 // import { clearToken } from './tokenService';
+const apiPrefix: string = "/api/admin";
 const api = axios.create({
-  baseURL: config.BACKEND_API_URL,
+  baseURL: `${config.BACKEND_API_URL}${apiPrefix}`,
   timeout: 60000,
 });
 
