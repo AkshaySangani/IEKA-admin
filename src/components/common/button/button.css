@@ -1,0 +1,165 @@
+@import "../../../styles/variables.css";
+
+/* =========================
+   Base Button
+========================= */
+.form_btn {
+  padding: 12px 20px;
+  border: none;
+  font-size: var(--font-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Segoe UI", sans-serif;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  color: var(--white);
+  background-size: 200% auto;
+}
+
+.form_btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.form_btn:hover::after {
+  left: 100%;
+}
+
+.form_btn:hover {
+  background-position: right center;
+  text-decoration: none;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.form_btn:active {
+  transform: translateY(0);
+}
+
+/* =========================
+   Primary
+========================= */
+.form_btn.primary {
+  background: linear-gradient(
+    135deg,
+    #385c99 0%,
+    #5b84c4 50%,
+    #385c99 100%
+  );
+}
+
+.form_btn.primary:hover {
+  box-shadow: 0 4px 18px rgba(56, 92, 153, 0.4);
+}
+
+/* =========================
+   Secondary
+========================= */
+.form_btn.secondary {
+  background: linear-gradient(
+    135deg,
+    #6c757d 0%,
+    #8a939b 50%,
+    #6c757d 100%
+  );
+}
+
+.form_btn.secondary:hover {
+  box-shadow: 0 4px 18px rgba(108, 117, 125, 0.4);
+}
+
+/* =========================
+   Success
+========================= */
+.form_btn.success {
+  background: linear-gradient(
+    135deg,
+    #198754 0%,
+    #2ba17f 50%,
+    #198754 100%
+  );
+}
+
+.form_btn.success:hover {
+  box-shadow: 0 4px 18px rgba(43, 161, 127, 0.4);
+}
+
+/* =========================
+   Danger
+========================= */
+.form_btn.danger {
+  background: linear-gradient(
+    135deg,
+    #dc3545 0%,
+    #e15f5f 50%,
+    #dc3545 100%
+  );
+}
+
+.form_btn.danger:hover {
+  box-shadow: 0 4px 18px rgba(225, 95, 95, 0.4);
+}
+
+/* =========================
+   Warning
+========================= */
+.form_btn.warning {
+  background: linear-gradient(
+    135deg,
+    #d97706 0%,
+    #eb8f0c 50%,
+    #d97706 100%
+  );
+}
+
+.form_btn.warning:hover {
+  box-shadow: 0 4px 18px rgba(235, 143, 12, 0.4);
+}
+
+/* =========================
+   Sizes
+========================= */
+
+.form_btn.sm {
+  padding: 5px 15px;
+  font-size: var(--font-sm);
+  min-height: 34px;
+  width: auto;
+}
+
+.form_btn.md {
+  padding: 12px 20px;
+  font-size: 14px;
+  min-height: 42px;
+}
+
+.form_btn.lg {
+  padding: 14px 24px;
+  font-size: 16px;
+  min-height: 50px;
+}
+
+.form_btn.auto {
+  width: auto;
+}
+
+.form_btn.full {
+  width: 100%;
+}

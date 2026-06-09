@@ -1,0 +1,73 @@
+@import "../../../styles/variables.css";
+
+.form_group {
+  margin-bottom: 20px;
+}
+
+.form_group .field_set {
+  position: relative;
+}
+
+.form_group .field_set .fieldicon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.form_group .field_set:focus-within .fieldicon {
+  color: #437cd3;
+}
+
+.form_group label {
+  display: block;
+  font-size: var(--font-sm);
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.form_group .labelname {
+  font-size: var(--font-sm);
+  line-height: 16px;
+  font-weight: 500;
+  color: #4c4c4c;
+}
+
+.input_field {
+  padding: 5px 15px;
+  border: 1px solid #d1d1d1;
+  font-size: var(--font-sm);
+  line-height: 25px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-weight: 500;
+  color: #383838;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 0;
+  outline: none;
+}
+
+.input_field:focus {
+  border: 1px solid #437cd3;
+}
+
+.input_field::placeholder {
+  transition: all 0.2s ease;
+  font-weight: 400;
+  font-size: var(--font-sm);
+}
+
+.input_field:focus::placeholder {
+  padding-left: 10px;
+}
+
+.error_message {
+  margin-top: 5px;
+  font-size: var(--font-xs);
+  color: #ff4d4f;
+}

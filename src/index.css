@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Styles */
+
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.content-area {
+    padding: 15px 15px;
+    /* background-color: #eef3f9; */
+    overflow-y: auto;
+    /* flex: 1; */
+}
+
+.content-card {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 1px 3px -5px, rgba(0, 0, 0, 0.3) 0px 7px 15px -8px;
+  background-color: #fff;
+}

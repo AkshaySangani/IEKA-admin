@@ -1,0 +1,52 @@
+/* Full screen backdrop */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding-top: 40px;
+
+  z-index: 9999;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+/* Backdrop visible */
+.modal-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modal */
+.modal-container {
+  width: 100%;
+  max-width: 800px;
+
+  background: #fff;
+  border: 1px solid #8f8f8f;
+
+  transform: translateY(-40px);
+  opacity: 0;
+
+  margin-left: 5px;
+  margin-right: 5px;
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+/* Modal visible */
+.modal-container.open {
+  transform: translateY(0);
+  opacity: 1;
+}

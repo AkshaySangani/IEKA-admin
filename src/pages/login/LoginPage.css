@@ -1,0 +1,351 @@
+@import "../../styles/variables.css";
+
+.login-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================================
+           LEFT PANEL
+        ============================================ */
+.login-left {
+  background-image: url(../../assets/images/leftbarbg.jpg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  width: 65%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+  padding: 0 25px;
+}
+
+/* Dark overlay */
+.login-left::before {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.73);
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+/* Banner content */
+.login-left .bannercontent {
+  position: relative;
+  z-index: 3;
+  text-align: left;
+  width: 100%;
+  max-width: 800px;
+  padding-left: 20px;
+}
+
+/* Animated left border line */
+.login-left .bannercontent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 0%;
+  background: linear-gradient(180deg, transparent, #5396ff, transparent);
+  border-radius: var(--radius-sm);
+  animation: drawLine 1.2s ease forwards;
+}
+
+.login-left .bannercontent .titleupper {
+  display: inline-block;
+  border-bottom: 1px solid #437cd3;
+  font-size: var(--font-lg);
+  line-height: 34px;
+  padding-bottom: 3px;
+  animation: slideInLeft 0.7s ease forwards;
+  opacity: 0;
+}
+
+.login-left .welcometitle {
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.6s ease 0.3s forwards;
+  opacity: 0;
+}
+
+.login-left .welcometitle .titleword {
+  font-size: 60px;
+  font-weight: 700;
+}
+
+.login-left .typing-wrapper {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+}
+
+.login-left .typing-text {
+  color: #5396ff;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 70px;
+  display: inline-block;
+}
+
+.login-left .cursor {
+  color: #5396ff;
+  font-size: 60px;
+  font-weight: 300;
+  animation: blink 0.7s infinite;
+  display: inline-block;
+  width: 3px;
+  margin-left: 2px;
+}
+
+.login-left .bannercontent .desc {
+  font-size: var(--font-md);
+  color: #fff;
+  line-height: 22px;
+  margin-top: 14px;
+  max-width: 520px;
+  text-align: left;
+  animation: fadeInUp 0.6s ease 0.6s forwards;
+  opacity: 0;
+}
+
+/* ============================================
+           RIGHT PANEL
+        ============================================ */
+.login-right {
+  background-color: #fff;
+  flex: 1;
+  padding: 0 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.login-right .logo {
+  text-align: center;
+  width: 120px;
+  margin: 0 auto;
+}
+.login-right .logo img {
+  width: 100%;
+}
+
+/* ============================================
+           FORM VIEWS
+        ============================================ */
+.form-content-container {
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-content-container.active {
+  display: flex;
+  animation: fadeInUp 0.35s ease forwards;
+}
+
+.login-right h2 {
+  font-size: var(--font-lg);
+  line-height: 30px;
+  margin-bottom: 10px;
+  color: #333;
+  text-align: center;
+}
+
+.login-right p.subtitle {
+  font-size: var(--font-sm);
+  color: var(--gray-text);
+  margin-bottom: 20px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+  margin-top: 0;
+}
+/* ============================================
+           LINKS
+        ============================================ */
+.login-links {
+  text-align: center;
+  margin-top: 20px;
+  font-size: var(--font-sm);
+}
+
+.login-links .forgotpass {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.login-links .forgotpass:hover {
+  color: #437cd3;
+}
+
+.login-links .backtologin {
+  color: #333;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.login-links .backtologin:hover {
+  color: #437cd3;
+  gap: 9px;
+}
+
+/* ============================================
+           LEGAL LINKS
+        ============================================ */
+.other-links {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.legal-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.legal-links a {
+  font-size: var(--font-xs);
+  color: var(--gray-text);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+  color: #437cd3;
+}
+
+/* ============================================
+           ANIMATIONS
+        ============================================ */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawLine {
+  from {
+    height: 0%;
+    top: 50%;
+  }
+  to {
+    height: 100%;
+    top: 0%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ============================================
+           RESPONSIVE
+        ============================================ */
+@media only screen and (max-width: 1440px) {
+  .login-left .welcometitle .titleword {
+    font-size: 50px;
+  }
+  .login-left .typing-text {
+    font-size: 50px;
+  }
+  .login-left .cursor {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-right {
+    width: 100%;
+    padding: 40px 24px;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  .login-left .welcometitle .titleword {
+    font-size: 40px;
+  }
+  .login-left .typing-text {
+    font-size: 40px;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .login-container {
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+  }
+  .login-left {
+    width: 100%;
+    padding: 60px 25px;
+  }
+  .login-right {
+    padding: 60px 25px;
+    max-width: 500px;
+    margin: 15px auto;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .login-left .typing-wrapper {
+    min-height: auto;
+  }
+  .login-right .logo {
+    width: 90px;
+  }
+  .login-left .cursor {
+    font-size: 25px;
+  }
+
+  .login-left .welcometitle .titleword {
+    font-size: 35px;
+    line-height: 40px;
+  }
+  .login-left .typing-text {
+    font-size: 24px;
+    line-height: 30px;
+  }
+}
+
