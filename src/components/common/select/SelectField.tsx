@@ -36,9 +36,9 @@ const SelectField = ({
 }: SelectFieldProps) => {
 
   return (
-    <div className="form-group w-full" id={`field-${name}`}>
+    <div className="" id={`field-${name}`}>
       {label && (
-        <div className="label font-medium">
+        <div className="text-sm text-inputLabel font-medium mb-2">
           {label} {required && <span className="text-error">*</span>}
         </div>
       )}

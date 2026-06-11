@@ -1,4 +1,4 @@
-import { IOption } from "../types/common-types";
+import { IOption, ObjectType } from "../types/common-types";
 import { MenuItem } from "../types/sidebar-types";
 
 export const storageKeys = {
@@ -52,22 +52,60 @@ export const statusColor: {[key: string]: string} = {
   DELETED: "text-danger"
 }
 
-export const companyModules: {[key: string]: string} = {
+export const companyModules: ObjectType = {
   employee: "EMPLOYEE",
   production: "PRODUCTION"
 }
 
+export const gender: ObjectType = {
+  male: "Male",
+  female: "Female",
+  other: "Other"
+}
+
+export const bankAccount: ObjectType = {
+  SAVING: "Saving",
+  CURRENT: "Current"
+}
+
+export const bankAccountEnum: ObjectType = {
+  SAVING: "SAVING",
+  CURRENT: "CURRENT"
+}
+
 export const genderOptions: IOption[] = [
   {
-    label: "Male",
+    label: gender.male,
     value: "male",
   },
   {
-    label: "Female",
+    label: gender.female,
     value: "female",
   },
   {
-    label: "Other",
+    label: gender.other,
     value: "other",
   },
+];
+
+export const accountOptions: IOption[] = [
+  {
+    label: bankAccount.SAVING,
+    value: bankAccountEnum.SAVING,
+  },
+  {
+    label: bankAccount.CURRENT,
+    value: bankAccountEnum.CURRENT,
+  }
+];
+
+export const accountStatusOptions: IOption[] = [
+  {
+    label: statusMessage.ACTIVE,
+    value: "ACTIVE",
+  },
+  {
+    label: statusMessage.INACTIVE,
+    value: "INACTIVE",
+  }
 ];

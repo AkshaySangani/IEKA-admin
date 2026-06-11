@@ -12,16 +12,16 @@ interface PersonDetailsCardProps {
   onChange: (name: keyof AddCompanyFormData, value: any) => void;
 }
 
-
-
 const PersonDetailsCard: React.FC<PersonDetailsCardProps> = ({
   value,
   errors,
   onChange,
 }) => {
   const getOptionLabel: any = (gender: string) => {
-    return genderOptions.find(ele => ele?.value === gender)?.label??value?.gender;
-  }
+    return (
+      genderOptions.find((ele) => ele?.value === gender)?.label ?? value?.gender
+    );
+  };
   return (
     <div className="content-card p-5">
       {/* Header */}
@@ -114,6 +114,7 @@ const PersonDetailsCard: React.FC<PersonDetailsCardProps> = ({
             <TextField
               name={"phone"}
               placeholder="Enter Phone No."
+              type="number"
               value={value.phone}
               error={errors.phone}
               onChange={(e) => onChange("phone", e.target.value)}
@@ -131,7 +132,16 @@ const PersonDetailsCard: React.FC<PersonDetailsCardProps> = ({
             <SelectField
               name="gender"
               options={genderOptions}
-              value={value.gender ? [{value: value.gender, label: getOptionLabel(value.gender)}]:""}
+              value={
+                value.gender
+                  ? [
+                      {
+                        value: value.gender,
+                        label: getOptionLabel(value.gender),
+                      },
+                    ]
+                  : ""
+              }
               placeholder="Select Gender"
               error={errors.gender}
               onChange={(option) => onChange("gender", option?.value)}
@@ -150,7 +160,7 @@ const PersonDetailsCard: React.FC<PersonDetailsCardProps> = ({
               name={"address"}
               rows={4}
               value={value.address}
-              onChange={(e:any) => onChange("address", e.target.value)}
+              onChange={(e: any) => onChange("address", e.target.value)}
               error={errors.address}
               placeholder="Enter address"
             />

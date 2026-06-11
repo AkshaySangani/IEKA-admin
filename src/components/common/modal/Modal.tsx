@@ -19,7 +19,7 @@ const Modal = ({
   children,
   onClose,
   width = "max-w-4xl",
-  confirmButtonName = "Ok",
+  confirmButtonName = "Save",
   handleOnConfirm = () => {},
   loading = false
 }: ModalProps) => {

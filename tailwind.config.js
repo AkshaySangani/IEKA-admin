@@ -29,9 +29,13 @@ module.exports = {
         /* Forms */
         inputBorder: "#e0e0e0",
         inputFocus: "#4E72F8",
+        inputLabel: "#4c4c4c",
         placeholder: "#aaaaaa",
         link: "#4E72F8",
         error: "#ff4d4f",
+
+        /* Table */
+        tableHeader: "#eeeeee",
 
         /* Status */
         info: "#767676",

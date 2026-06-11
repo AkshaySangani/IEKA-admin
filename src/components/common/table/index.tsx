@@ -17,12 +17,12 @@ export function CustomTable<T>({ columns, data }: CustomTableProps<T>) {
     <div className="w-full overflow-x-auto rounded-md border border-gray-200 bg-white shadow-sm">
       <table className="w-full border-collapse text-left text-sm">
         {/* Table Header */}
-        <thead className="bg-[#f1f5f9] text-gray-700 font-semibold border-b border-gray-200">
+        <thead className="bg-tableHeader text-gray-700 font-semibold border-b border-gray-200">
           <tr>
             {columns.map((col, index) => (
               <th 
                 key={index} 
-                className={`py-3.5 px-4 font-medium text-gray-800 ${col.className || ''}`}
+                className={`py-2 px-4 font-medium text-gray-800 ${col.className || ''}`}
               >
                 {col.header}
               </th>
@@ -47,7 +47,7 @@ export function CustomTable<T>({ columns, data }: CustomTableProps<T>) {
                 {columns.map((col, colIndex) => (
                   <td 
                     key={colIndex} 
-                    className={`py-1 px-4 text-gray-600 align-middle ${col.className || ''}`}
+                    className={`py-3.5 px-4 text-gray-600 align-middle ${col.className || ''}`}
                   >
                     {col.render(row, rowIndex)}
                   </td>

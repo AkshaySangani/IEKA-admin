@@ -1,6 +1,10 @@
+import TopBar from "../../common/topbar/TopBar";
+
 const AllPayments = () => {
   return (
-    <div>All Payments</div>
+    <div>
+      <TopBar title="All Payments"/>
+    </div>
   );
 };
 

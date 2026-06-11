@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ImageUpload from "../../common/image-upload";
 import TextField from "../../common/text-field/TextField";
 import { AddCompanyFormData } from ".";
 import TextAreaField from "../../common/text-area/TextAreaField";
 import SelectField from "../../common/select/SelectField";
+import { getBankAccounts } from "../../../apis/all-masters/accounts";
+import { bankAccount, bankAccountEnum } from "../../../constants/constants";
+import { IBankAccount } from "../all-masters/accounts";
+import { IOption } from "../../../types/common-types";
 
 export interface PersonDetailsForm {
   profileImage: File | string | null;
@@ -26,7 +30,22 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
   errors,
   onChange,
 }) => {
-  const [bankAccounts, setBankAccounts] = useState([])
+  const [bankAccounts, setBankAccounts] = useState<IOption[]>([]);
+
+  useEffect(() => {
+      getBankAccountList()
+    },[])
+  
+    // get all bank accounts
+    const getBankAccountList = async () => {
+      const response = await getBankAccounts(bankAccountEnum.ACTIVE);
+      if(response.success){
+        const options = response?.data?.map((ele: IBankAccount) => ({value: ele?._id, label: `${bankAccount[ele.accountType]} | ${ele.accountNo}`}))
+        setBankAccounts(options);
+      } else {
+        setBankAccounts([]);
+      }
+    }
   return (
     <div className="content-card p-5">
       {/* Header */}
@@ -102,6 +121,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
             <TextField
               name={"companyPhone"}
               placeholder="Enter Company Phone No."
+              type="number"
               value={value.companyPhone}
               error={errors.companyPhone}
               onChange={(e) => onChange("companyPhone", e.target.value)}
@@ -154,7 +174,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
             <SelectField
               name="assignedBankAccount"
               options={bankAccounts}
-              value={[{value: value.assignedBankAccount, label: value.assignedBankAccount}]}
+              value={bankAccounts.find((ele: IOption) => ele.value === value.assignedBankAccount) || ""}
               placeholder="Select Account"
               error={errors.assignedBankAccount}
               onChange={(option) => onChange("assignedBankAccount", option?.value)}
