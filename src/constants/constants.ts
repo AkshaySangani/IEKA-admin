@@ -1,3 +1,4 @@
+import { IOption } from "../types/common-types";
 import { MenuItem } from "../types/sidebar-types";
 
 export const storageKeys = {
@@ -41,10 +42,32 @@ export const menuItems: MenuItem[] = [
 
 export const statusMessage: {[key: string]: string} = {
   ACTIVE: "Active",
-  INACTIVE: "Inactive"
+  INACTIVE: "Inactive",
+  DELETED: "Deleted"
 }
 
 export const statusColor: {[key: string]: string} = {
   ACTIVE: "text-success",
-  INACTIVE: "text-pending"
+  INACTIVE: "text-pending",
+  DELETED: "text-danger"
 }
+
+export const companyModules: {[key: string]: string} = {
+  employee: "EMPLOYEE",
+  production: "PRODUCTION"
+}
+
+export const genderOptions: IOption[] = [
+  {
+    label: "Male",
+    value: "male",
+  },
+  {
+    label: "Female",
+    value: "female",
+  },
+  {
+    label: "Other",
+    value: "other",
+  },
+];

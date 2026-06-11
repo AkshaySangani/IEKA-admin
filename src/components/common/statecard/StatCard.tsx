@@ -20,7 +20,7 @@ const StatCard: React.FC<StatCardProps> = ({
 }) => {
   return (
     <div
-      className={`stat-card ${active ? "active" : ""}`}
+      className={`stat-card content-card ${active ? "active" : ""}`}
       style={active ? { backgroundColor: activeColor } : {}}
 
       onClick={onClick}

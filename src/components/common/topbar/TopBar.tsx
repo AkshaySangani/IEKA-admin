@@ -10,11 +10,11 @@ interface TopBarProps {
   handleDownloadPdfClick?: () => void;
   handleCloseClick?: () => void;
   isSearch?: boolean;
-  isExecl?: boolean;
+  isExcel?: boolean;
   isPdf?: boolean;
 }
 
-const TopBar = ({ title = "", actionButtons = <></>,isSearch = false,isExecl = false, isPdf = false, handleSearchClick = () => {}, handleDownloadExcelClick = () => {}, handleDownloadPdfClick = () => {}, handleCloseClick = () => {}}: TopBarProps) => {
+const TopBar = ({ title = "", actionButtons = <></>,isSearch = false,isExcel = false, isPdf = false, handleSearchClick = () => {}, handleDownloadExcelClick = () => {}, handleDownloadPdfClick = () => {}, handleCloseClick = () => {}}: TopBarProps) => {
   return (
     <div className="topbar">
       <div className="topbarinner">
@@ -31,7 +31,7 @@ const TopBar = ({ title = "", actionButtons = <></>,isSearch = false,isExecl = f
               >
                 <i className="fa-solid fa-magnifying-glass"></i>
               </div>}
-              {isExecl && <div
+              {isExcel && <div
                 className="exelicon"
                 onClick={handleDownloadExcelClick}
               >

@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../../styles/variables.css";
 
 import StatCard from "../../common/statecard/StatCard";
+import { getCompaniesCount } from "../../../apis/company/company.api";
 
 interface CardItem {
   id: string;
@@ -10,6 +11,13 @@ interface CardItem {
   activeColor?: string;
   icon: React.ReactNode;
 }
+
+export interface CompanyStats {
+  total: number;
+  active: number;
+  inactive: number;
+  deleted: number;
+}
 interface FilterCardsProps {
     activeCard: string;
   setActiveCard: (id: string) => void;
@@ -17,36 +25,71 @@ interface FilterCardsProps {
 
 const FilterCards = ({ setActiveCard, activeCard }: FilterCardsProps) => {
 
-  const cards: CardItem[] = [
+  const [cards,setCards] = useState<CardItem[]>([
     {
-      id: "total",
+      id: "",
       title: "Total",
-      count: 6,
+      count: 0,
       activeColor: "var(--status-info)",
       icon: <i className="fa-solid fa-align-justify"></i>,
     },
     {
-      id: "active",
+      id: "ACTIVE",
       title: "Active",
-      count: 4,
+      count: 0,
       activeColor: "var(--status-active)",
       icon: <i className="fa-solid fa-user-check"></i>,
     },
     {
-      id: "inactive",
+      id: "INACTIVE",
       title: "Inactive",
-      count: 1,
+      count: 0,
       activeColor: "var(--status-inactive)",
       icon: <i className="fa-solid fa-user-xmark"></i>,
     },
     {
-      id: "deleted",
+      id: "DELETED",
       title: "Deleted",
-      count: 1,
+      count: 0,
       activeColor: "var(--status-deleted)",
       icon: <i className="fa-solid fa-trash-can"></i>,
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    getCompanyCounts();
+  },[]);
+  
+  const getCompanyCounts = async () => {
+    const response = await getCompaniesCount();
+    if(response?.success){
+      updateCards(response?.data);
+    }
+  }
+
+  // update cards
+  const updateCards = (stats: CompanyStats) => {
+  setCards((prev) =>
+    prev.map((card) => {
+      switch (card.id) {
+        case "":
+          return { ...card, count: stats.total };
+
+        case "ACTIVE":
+          return { ...card, count: stats.active };
+
+        case "INACTIVE":
+          return { ...card, count: stats.inactive };
+
+        case "DELETED":
+          return { ...card, count: stats.deleted };
+
+        default:
+          return card;
+      }
+    })
+  );
+};
 
   const handleCardClick = (
     card: CardItem

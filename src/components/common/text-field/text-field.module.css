@@ -1,8 +1,6 @@
 @import "../../../styles/variables.css";
 
-.form_group {
-  margin-bottom: 20px;
-}
+
 
 .form_group .field_set {
   position: relative;

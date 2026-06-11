@@ -18,6 +18,7 @@ interface SelectFieldProps {
   error?: string;
   isDisabled?: boolean;
   isMulti?: boolean;
+  required?: boolean;
   onChange: (value: any) => void;
 }
 
@@ -30,14 +31,15 @@ const SelectField = ({
   error,
   isDisabled,
   isMulti,
+  required,
   onChange,
 }: SelectFieldProps) => {
 
   return (
-    <div className="form-group w-full">
+    <div className="form-group w-full" id={`field-${name}`}>
       {label && (
         <div className="label font-medium">
-          {label}
+          {label} {required && <span className="text-error">*</span>}
         </div>
       )}
 
@@ -46,7 +48,6 @@ const SelectField = ({
         options={options}
         value={value}
         placeholder={placeholder}
-        name={name}
         isSearchable
         isClearable
         isDisabled={isDisabled}
@@ -61,7 +62,7 @@ const SelectField = ({
       />
 
       {error && (
-        <div className="error-text">
+        <div className="text-error text-xs">
           {error}
         </div>
       )}

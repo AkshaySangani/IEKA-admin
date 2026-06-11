@@ -3,7 +3,7 @@ import "./button.css";
 
 interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  name: string;
+  name?: string;
   loading?: boolean;
   variant?:
     | "primary"
@@ -31,7 +31,7 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       disabled={disabled || loading}
-      className={`form_btn ${variant} ${size} ${fullWidth ? "full" : "auto"}`}
+      className={`form_btn ${variant} ${className} ${size} ${fullWidth ? "full" : "auto"}`}
       {...props}
     >
       {/* Shine Effect */}
@@ -43,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({
         <i className="fa-solid fa-spinner animate-spin mr-2"></i>
       )}
 
-      {leftIcon && <span className="mr-2">{leftIcon}</span>}
+      {leftIcon && <span className={name ? "mr-2":""}>{leftIcon}</span>}
       {name}
     </button>
   );

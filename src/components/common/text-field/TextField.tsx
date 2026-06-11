@@ -6,6 +6,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   icon?: any;
   required?: boolean;
+  ref?: any;
 }
 
 const TextField: React.FC<InputProps> = ({

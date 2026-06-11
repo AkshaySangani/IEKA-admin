@@ -36,7 +36,6 @@ const logoutUser = async () => {
 api.interceptors.request.use(
   async (config) => {
     const token = getLocalStorageData(storageKeys.authStorage)?.state?.token;
-    console.log("auth-token", token)
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;

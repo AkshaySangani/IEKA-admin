@@ -13,6 +13,7 @@ import GeneratedInvoicePage from "./pages/generated-invoice";
 import AccountsPage from "./pages/accounts";
 import MyProfilePage from "./pages/my-profile";
 import ChangePasswordPage from "./pages/change-password";
+import AddCompanyPage from "./pages/all-companies/add-company";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
           </ProtectedRoute>
         }>
           <Route index element={<AllCompanies />} />
+          <Route path="add-company" element={<AddCompanyPage/>} />
           <Route path="all-payments" element={<AllPaymentsPage />} />
           <Route path="generated-invoice" element={<GeneratedInvoicePage />} />
           <Route path="accounts" element={<AccountsPage />} />
