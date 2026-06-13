@@ -2,33 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar/SideBar";
 import Header from "./header/Header";
-import "./AppLayout.css";
+import useWidthHeight from "../hooks/useWidthHeight";
 
 const AppLayout: React.FC = () => {
   const [active, setActive] = useState<string>("Dashboard");
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 991) {
-        setIsOpen(false);
-      } else {
-        setIsOpen(true);
-      }
-    };
-
-    handleResize(); // Initial check
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  const {isMobile} = useWidthHeight();
 
   return (
     <>
-      <div className="flex flex-col h-screen overflow-hidden bg-gray-100">
+      <div className="flex flex-col h-screen overflow-hidden">
         <Sidebar
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -40,20 +24,28 @@ const AppLayout: React.FC = () => {
           <Header setIsOpen={setIsOpen} isOpen={isOpen} />
 
           <main
-            className={`main-content overflow-hidden relative flex flex-col flex-1 ${isOpen ? "sidebar-open" : "sidebar-closed"}`}
+            className={`main-content overflow-hidden relative flex flex-col flex-1 ${isOpen ? "sidebar-open" : "ml-0"}`}
             id="mainContent"
           >
             <Outlet />
           </main>
         </>
       </div>
-      {window.innerWidth <= 991 && (
-        <div
-          className={`backdrop ${isOpen ? "visible" : ""}`}
-          id="sidebarBackdrop"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
+
+      <div
+        onClick={() => setIsOpen(false)}
+        className={`
+          fixed inset-0 z-[9999]
+          bg-black/50
+          transition-all duration-300 ease-in-out
+          lg:hidden
+          ${
+            isMobile && isOpen
+              ? "visible opacity-100"
+              : "invisible opacity-0 pointer-events-none"
+          }
+        `}
+      />
     </>
   );
 };

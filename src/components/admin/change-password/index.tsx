@@ -111,7 +111,7 @@ const ChangePassword: React.FC = () => {
     <>
       <TopBar title="Change Password" />
       {updated ? <SuccessPassword setUpdated={setUpdated}/> : <div className="max-w-md p-8">
-        <form method="POST" onSubmit={handleSubmit}>
+        <form method="POST" className="flex flex-col gap-5" onSubmit={handleSubmit}>
           {/* Current Password */}
           <div className="grid grid-cols-[1fr] items-center gap-5">
             <TextField

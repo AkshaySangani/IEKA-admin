@@ -107,7 +107,7 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
     },
   ];
   return (
-    <div className="content-card p-5">
+    <div className="content-card border p-5">
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-gray-400 pb-4 mb-8">
         <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">
@@ -128,9 +128,9 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
 
           <div className="max-w-[80%]">
             <CustomTable columns={columns} data={tableData} />
-            {(errors.modules || errors.employeePrice) && (
+            {(errors.employeePrice) && (
               <span className="mt-1 text-xs text-error">
-                {errors.modules || errors.employeePrice}
+                {errors.employeePrice}
               </span>
             )}
           </div>

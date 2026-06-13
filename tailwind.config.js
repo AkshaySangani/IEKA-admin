@@ -27,15 +27,26 @@ module.exports = {
         border: "#e9ecef",
 
         /* Forms */
-        inputBorder: "#e0e0e0",
+        inputBorder: "#aaa",
         inputFocus: "#4E72F8",
         inputLabel: "#4c4c4c",
         placeholder: "#aaaaaa",
         link: "#4E72F8",
         error: "#ff4d4f",
 
+        /* Button */
+        "btn-primary": "#4483df",
+        "btn-primary-hover": "#336bbe",
+        "btn-secondary": "#454e62",
+        "btn-secondary-hover": "#3b4458",
+        "btn-danger": "#ffe8e8",
+        "btn-danger-hover": "#f5d0d0", 
+
         /* Table */
         tableHeader: "#eeeeee",
+
+        /* Card */
+        cardBg: "#ececec",
 
         /* Status */
         info: "#767676",

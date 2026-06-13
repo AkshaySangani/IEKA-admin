@@ -99,8 +99,6 @@ const AddCompany = () => {
 
     const phoneRegex = regex.phone;
 
-    const gstRegex = regex.gstRegex;
-
     
     if (!formData.companyLogo) {
       newErrors.companyLogo = "Company logo is required";
@@ -120,12 +118,6 @@ const AddCompany = () => {
       newErrors.companyPhone = "Company phone is required";
     } else if (!phoneRegex.test(formData.companyPhone)) {
       newErrors.companyPhone = "Invalid company phone";
-    }
-
-    if (!formData.gstin.trim()) {
-      newErrors.gstin = "GST IN number is required";
-    } else if (formData.gstin && !gstRegex.test(formData.gstin)) {
-      newErrors.gstin = "Invalid GST Number";
     }
 
     if (!formData.companyAddress.trim()) {
@@ -166,10 +158,6 @@ const AddCompany = () => {
 
     if (!formData.address) {
       newErrors.address = "Address is required";
-    }
-
-    if (formData.modules?.length === 0) {
-      newErrors.modules = "Module is required";
     }
 
     if (!formData.employeePrice.trim()) {
@@ -267,7 +255,7 @@ const AddCompany = () => {
               // className="bg-dangerLight"
               onClick={handleNavigate}
               variant="danger"
-              leftIcon={<i className="fa-solid fa-xmark fa-xl"></i>}
+              leftIcon={<i className="fa-solid fa-xmark fa-xl text-danger"></i>}
             />
           </div>
         }
@@ -296,8 +284,8 @@ const AddCompany = () => {
             onChange={handleChange}
           />
           <div className="flex justify-end gap-2">
-            <Button type="submit" name="Save" />
-            <Button name="Cancel" variant="danger" />
+            <Button type="submit" name="Save" size="sm" />
+            <Button name="Cancel" onClick={handleNavigate} variant="secondary" size="sm" />
           </div>
         </form>
       </div>

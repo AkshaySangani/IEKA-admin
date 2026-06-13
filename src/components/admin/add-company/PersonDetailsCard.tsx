@@ -23,7 +23,7 @@ const PersonDetailsCard: React.FC<PersonDetailsCardProps> = ({
     );
   };
   return (
-    <div className="content-card p-5">
+    <div className="content-card border p-5">
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-gray-400 pb-4 mb-8">
         <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">

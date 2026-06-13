@@ -14,15 +14,15 @@ interface CustomTableProps<T> {
 
 export function CustomTable<T>({ columns, data }: CustomTableProps<T>) {
   return (
-    <div className="w-full overflow-x-auto rounded-md border border-gray-200 bg-white shadow-sm">
+    <div className="w-full overflow-x-auto bg-white">
       <table className="w-full border-collapse text-left text-sm">
         {/* Table Header */}
-        <thead className="bg-tableHeader text-gray-700 font-semibold border-b border-gray-200">
+        <thead className="bg-tableHeader text-gray-700 font-semibold border-b border-gray-300">
           <tr>
             {columns.map((col, index) => (
               <th 
                 key={index} 
-                className={`py-2 px-4 font-medium text-gray-800 ${col.className || ''}`}
+                className={`py-2 px-4 text-[15px] font-medium text-gray-800 ${col.className || ''}`}
               >
                 {col.header}
               </th>
@@ -31,7 +31,7 @@ export function CustomTable<T>({ columns, data }: CustomTableProps<T>) {
         </thead>
 
         {/* Table Body */}
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 border-b border-gray-300">
           {data.length === 0 ? (
             <tr>
               <td colSpan={columns.length} className="text-center py-8 text-gray-500">

@@ -125,7 +125,7 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
 
   return (
     <>
-      <div className="companyDetailsCard secondcard content-card">
+      <div className="companyDetailsCard secondcard content-card border">
         <div className="employebody">
           <div className="employeedetail_parts">
             <div className="titlelabel">

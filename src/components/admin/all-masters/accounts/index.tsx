@@ -175,7 +175,7 @@ const Accounts = () => {
             name="accountType"
             label="Account Type"
             required
-            placeholder="Enter account type"
+            placeholder="Select account type"
             value={
               accountOptions.find(
                 (item) => item.value === formData.accountType,

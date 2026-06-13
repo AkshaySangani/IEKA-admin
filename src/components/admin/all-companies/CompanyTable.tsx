@@ -55,12 +55,12 @@ export default function CompanyList({activeCard}: ICompanyListProps) {
   const columns: ColumnDef<ICompany>[] = [
     {
       header: 'Sr. No.',
-      className: 'w-[80px] text-center text-gray-500',
+      className: 'w-[5%] text-center text-gray-500',
       render: (_, index) => index + 1
     },
     {
       header: 'Company Name',
-      className: 'w-[35%]',
+      className: 'w-[45%]',
       render: (row) => (
         <CompanyInfo companyInfo={row}/>
       )
@@ -74,27 +74,27 @@ export default function CompanyList({activeCard}: ICompanyListProps) {
     },
     {
       header: 'User Info',
-      className: 'w-[25%]',
+      className: 'w-[20%]',
       render: (row) => (
         <div className="flex items-center gap-1.5 text-center text-xs font-medium">
           {/* Total */}
-          <div className="bg-gray-50 border border-gray-100 rounded px-2.5 py-1 min-w-[50px]">
-            <div className="text-sm text-info font-normal">Total</div>
+          <div className="bg-[#f5f5f5] px-2.5 py-1 w-[calc((100%-40px)/4)]">
+            <div className="text-xs text-info font-normal">Total</div>
             <div className="text-info text-sm font-semibold">{getTotal(row.employeeStats)}</div>
           </div>
           {/* Active */}
-          <div className="bg-green-50/50 border border-green-100 rounded px-2.5 py-1 min-w-[50px]">
-            <div className="text-sm text-success font-normal">Active</div>
+          <div className="bg-green-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
+            <div className="text-xs text-success font-normal">Active</div>
             <div className="text-success text-sm font-semibold">{row.employeeStats.active}</div>
           </div>
           {/* Inactive */}
-          <div className="bg-orange-50/50 border border-orange-100 rounded px-2.5 py-1 min-w-[50px]">
-            <div className="text-sm text-inactive font-normal">Inactive</div>
+          <div className="bg-orange-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
+            <div className="text-xs text-orange-500 font-normal">Inactive</div>
             <div className="text-orange-500 text-sm font-semibold">{row.employeeStats.inactive}</div>
           </div>
           {/* Deleted */}
-          <div className="bg-red-50/50 border border-red-100 rounded px-2.5 py-1 min-w-[50px]">
-            <div className="text-sm text-red-400 font-normal">Deleted</div>
+          <div className="bg-red-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
+            <div className="text-xs text-red-400 font-normal">Deleted</div>
             <div className="text-red-500 text-sm font-semibold">{row.employeeStats.deleted}</div>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function CompanyList({activeCard}: ICompanyListProps) {
     },
     {
       header: 'Status',
-      className: 'w-[12%]',
+      className: 'w-[10%]',
       render: (row) => {
         return (
           <div className="flex items-center gap-1.5">

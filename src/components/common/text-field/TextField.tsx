@@ -1,40 +1,75 @@
 import React from "react";
-import styles from "./text-field.module.css";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: string;
-  icon?: any;
+  icon?: React.ReactNode;
   required?: boolean;
-  ref?: any;
 }
 
 const TextField: React.FC<InputProps> = ({
   label,
   error,
-  icon = <></>,
-  className,
+  icon,
+  className = "",
   required,
   ...props
 }) => {
   return (
-    <div className={styles.form_group}>
+    <div>
       {label && (
-        <label className={styles.labelname}>
+        <label className="mb-2 block text-sm font-medium leading-4 text-inputLabel">
           {label} {required && <span className="text-error">*</span>}
         </label>
       )}
 
-      <div className={styles.field_set}>
+      <div className="group relative">
         <input
           {...props}
-          className={styles.input_field}
+          className={`
+            w-full
+            border border-inputBorder
+            bg-white
+            px-[15px]
+            py-[5px]
+            text-sm
+            font-medium
+            leading-[25px]
+            text-[#383838]
+            outline-none
+            placeholder:transition-all
+            placeholder:duration-400
+            placeholder:ease-in-out
+            focus:border-inputFocus
+            placeholder:text-sm
+            placeholder:font-normal
+            focus:placeholder:pl-[10px]
+            ${icon ? "pr-10" : ""}
+            ${className}
+          `}
         />
 
-        <span className={styles.fieldicon}>{icon}</span>
+        {icon && (
+          <span
+            className="
+              absolute right-[10px] top-1/2
+              -translate-y-1/2
+              cursor-pointer
+              text-[18px]
+              text-[#666]
+              transition-colors
+              duration-200
+              group-focus-within:text-inputFocus
+            "
+          >
+            {icon}
+          </span>
+        )}
       </div>
 
-      {error && <p className={styles.error_message}>{error}</p>}
+      {error && (
+        <p className="mt-[5px] text-[var(--font-xs)] text-[#ff4d4f]">{error}</p>
+      )}
     </div>
   );
 };

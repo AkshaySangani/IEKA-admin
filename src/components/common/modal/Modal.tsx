@@ -1,5 +1,4 @@
 import React from "react";
-import "./Modal.css";
 import Button from "../button/Button";
 
 interface ModalProps {
@@ -21,12 +20,36 @@ const Modal = ({
   width = "max-w-4xl",
   confirmButtonName = "Save",
   handleOnConfirm = () => {},
-  loading = false
+  loading = false,
 }: ModalProps) => {
-
   return (
-    <div className={`modal-overlay ${isOpen ? "show" : ""}`} onClick={onClose}>
-      <div className={`modal-container w-full ${width} ${isOpen ? "open" : ""}`}>
+    <div
+      onClick={onClose}
+      className={`
+        fixed inset-0 z-[9999]
+        flex justify-center items-start
+        pt-10 pb-10
+        overflow-y-auto
+        bg-black/45
+        transition-all duration-300 ease-in-out
+        ${isOpen ? "opacity-100 visible" : "opacity-0 invisible"}
+      `}
+    >
+      <div
+        className={`
+          w-full
+          mx-[5px]
+          bg-white
+          border border-[#8f8f8f]
+          transition-all duration-300 ease-in-out
+          ${width}
+          ${
+            isOpen
+              ? "translate-y-0 opacity-100"
+              : "-translate-y-10 opacity-0"
+          }
+        `}
+      >
         {/* Modal */}
         <div
           className={`w-full ${width} bg-white shadow-xl`}
@@ -36,22 +59,31 @@ const Modal = ({
           <div className="bg-[#212837] px-4 py-3 flex items-center justify-between">
             <h5 className="text-white text-base font-semibold">{title}</h5>
 
-            <button
+            <Button
               type="button"
+              size="sm"
               onClick={onClose}
-              className="bg-[#454e62] hover:bg-[#3b4458] text-white w-[30px] h-[24px] flex items-center justify-center"
+              variant="secondary"
+              leftIcon={<i className="fa-solid fa-xmark text-white"></i>}
             >
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+              
+            </Button>
           </div>
 
           {/* Body */}
-          <div className="bg-[#f7f7f7] p-3 sm:p-6">{children}</div>
+          <div className="p-3 sm:p-6">{children}</div>
 
           {/* Footer */}
+          <div className="border-t border-gray-300 px-6 py-4 flex justify-center gap-3">
+            <Button
+              loading={loading}
+              variant="primary"
+              disabled={loading}
+              name={confirmButtonName}
+              size="sm"
+              onClick={handleOnConfirm}
+            />
 
-          <div className="bg-[#f7f7f7] border-t border-gray-300 px-6 py-4 flex justify-center gap-3">
-            <Button loading={loading} disabled={loading} name={confirmButtonName} size="sm" onClick={handleOnConfirm} />
             <Button
               name="Close"
               size="sm"

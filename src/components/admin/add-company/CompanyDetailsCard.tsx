@@ -47,7 +47,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
       }
     }
   return (
-    <div className="content-card p-5">
+    <div className="content-card border p-5">
       {/* Header */}
       <div className="flex items-center gap-3 border-b border-gray-400 pb-2 mb-4">
         <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">
@@ -59,7 +59,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </h3>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         {/* Profile Image */}
         <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
           <label className="font-medium text-[15px]">
@@ -150,7 +150,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         {/* GST IN No. */}
         <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
           <label className="font-medium text-[15px]">
-            GST IN No. <span className="text-error">*</span>
+            GST IN No.
           </label>
 
           <div className="max-w-[250px]">

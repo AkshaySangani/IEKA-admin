@@ -4,13 +4,11 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/ieka_logo.jpg";
 import employeeManagementIcon from "../../assets/images/employee_management.png";
 
-import "./Sidebar.css";
 import { MenuItem, SubMenuItem } from "../../types/sidebar-types";
 import { menuItems } from "../../constants/constants";
 import { useAuthStore } from "../../store/auth-store";
 import Image from "../../components/common/image";
-
-
+import useWidthHeight from "../../hooks/useWidthHeight";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -21,12 +19,11 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
   const navigate = useNavigate();
-   const location = useLocation();
-   const {profile} = useAuthStore();
+  const { isMobile } = useWidthHeight();
+  const location = useLocation();
+  const { profile } = useAuthStore();
 
-  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({
-    
-  });
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
   const toggleMenu = (menuLabel: string) => {
     setOpenMenus((prev) => ({
@@ -38,95 +35,240 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
   const handleMenuItemClick = (menuItem: MenuItem | SubMenuItem) => {
     setActive(menuItem.label);
     navigate(menuItem.path!);
+
+    if (isMobile) {
+      setIsOpen(false);
+    }
   };
 
   return (
-    <div className={`sidebar ${!isOpen ? "collapsed" : ""}`} id="sidebar">
-      <div className="logo-area">
-        <div className="logo">
-          <NavLink to="/">
-            <Image src={profile?.company?.companyLogo || logo} alt="Logo" />
-          </NavLink>
-        </div>
+    <aside
+      id="sidebar"
+      className={`
+        fixed top-0 left-0
+        z-[10000]
+        h-full
+        w-[250px]
+        overflow-hidden
+        bg-sidebarBg
+        text-sidebarText
+        transition-transform duration-200 ease-in-out
+        ${isOpen ? "translate-x-0" : "-translate-x-full"}
+      `}
+    >
+      {/* Logo */}
+      <div
+        className="
+          flex
+          min-h-[59px]
+          max-h-[59px]
+          w-full
+          items-center
+          justify-center
+          border-r
+          border-[#ccc]
+          bg-white
+          px-2
+          py-[1px]
+        "
+      >
+        <NavLink to="/">
+          <Image
+            src={profile?.company?.companyLogo || logo}
+            alt="Logo"
+            className="w-[90px] transition-all duration-300"
+          />
+        </NavLink>
       </div>
 
-      <div className="menu-scroll-container">
-        <ul className="sidebar-menu">
-          <li className="menu-title menu-section-title">
+      {/* Menu Scroll Area */}
+      <div
+        className="
+          menu-scroll-container
+          h-[calc(100%_-_60px)]
+          overflow-y-auto
+          pb-5
+          bg-sidebarBg
+        "
+      >
+        <ul className="list-none p-0">
+          {/* Module Header */}
+          <li
+            className="
+              border-b border-[#334056]
+              px-[10px]
+              py-[15px]
+              text-sm
+              font-semibold
+              uppercase
+              text-sidebarText
+            "
+          >
             <div
-              className="moduletoggle"
+              className="
+                flex
+                flex-col
+                items-center
+                no-underline
+              "
               data-bs-toggle="modal"
               data-bs-target="#all_modules"
             >
               <img
                 src={employeeManagementIcon}
-                className="menutitleimage employee_manage"
+                className="employee_manage"
                 width="35"
                 alt="Employee Management"
               />
-              <span className="modulename">Company Management</span>
+
+              <span
+                className="
+                  mt-[6px]
+                  text-[13px]
+                  font-semibold
+                  leading-[22px]
+                  text-white
+                "
+              >
+                Company Management
+              </span>
             </div>
           </li>
 
           {menuItems.map((menu) =>
             menu.submenu ? (
-              <li
-                key={menu.label}
-                className={`menu-item dropdown ${
-                  openMenus[menu.label] ? "open" : ""
-                }`}
-              >
+              <li key={menu.label}>
                 <div
                   onClick={(e) => {
                     e.preventDefault();
                     toggleMenu(menu.label);
                   }}
+                  className={`
+                    flex
+                    cursor-pointer
+                    items-center
+                    px-3
+                    py-[18px]
+                    text-sm
+                    text-sidebarText
+                    transition-all
+                    duration-200
+                    hover:text-white
+                     ${openMenus[menu.label] ? "text-white" : ""}
+                  `}
                 >
-                  <i className={menu.icon}></i>
+                  <i
+                    className={`${menu.icon} mr-[10px] w-5 text-center text-md`}
+                  />
 
                   <span>{menu.label}</span>
 
                   <i
-                    className={`fas fa-angle-right dropdown-icon ${
-                      openMenus[menu.label] ? "rotate" : ""
-                    }`}
-                  ></i>
+                    className={`
+                      fas fa-angle-right
+                      ml-auto
+                      transition-transform
+                      duration-300
+                      ${openMenus[menu.label] ? "rotate-90" : ""}
+                    `}
+                  />
                 </div>
 
-                {openMenus[menu.label] && (
-                  <ul className="submenu">
-                    {menu.submenu.map((subMenu) => (
+                <ul
+                  className={`
+                    overflow-hidden
+                    bg-[#1a202a]
+                    transition-all
+                    duration-300
+                    ${
+                      openMenus[menu.label]
+                        ? "max-h-[1000px] py-[10px]"
+                        : "max-h-0"
+                    }
+                  `}
+                >
+                  {menu.submenu.map((subMenu) => {
+                    const isActive = location.pathname === subMenu.path;
+
+                    return (
                       <li
                         key={subMenu.path}
-                        className={`menu-item ${
-                          location.pathname === subMenu.path ? "active" : ""
-                        }`}
+                        className={`
+                          ml-5
+                          ${
+                            isActive
+                              ? `
+                                border-l-[3px]
+                                border-l-primary
+                                bg-[linear-gradient(267deg,#3b6cbb,#2e466e)]
+                                text-white
+                              `
+                              : ""
+                          }
+                        `}
                       >
                         <div
                           onClick={(e) => {
                             e.preventDefault();
                             handleMenuItemClick(subMenu);
                           }}
+                          className="
+                            relative
+                            cursor-pointer
+                            px-5
+                            py-[15px]
+                            text-sm
+                            transition-all
+                            duration-200
+                            hover:text-white
+                          "
                         >
                           {subMenu.label}
                         </div>
                       </li>
-                    ))}
-                  </ul>
-                )}
+                    );
+                  })}
+                </ul>
               </li>
             ) : (
               <li
                 key={menu.path}
-                className={`menu-item ${location.pathname === menu.path ? "active" : ""}`}
+                className={`
+                  ${
+                    location.pathname === menu.path
+                      ? `
+                        border-l-[3px]
+                        border-l-[var(--primary-color)]
+                        bg-[linear-gradient(267deg,#457cd5,#2e466e)]
+                        text-white
+                        shadow-[rgb(25_25_32_/_34%)_1px_4px_11px_3px,rgba(0,0,0,0.3)_0px_2px_11px_-8px]
+                      `
+                      : ""
+                  }
+                `}
               >
                 <div
                   onClick={() => {
                     setOpenMenus({});
                     handleMenuItemClick(menu);
                   }}
+                  className={`
+                    flex
+                    cursor-pointer
+                    items-center
+                    px-3
+                    py-[18px]
+                    text-sm
+                    text-sidebarText
+                    transition-all
+                    duration-200
+                    hover:text-white
+                    ${location.pathname === menu.path ? "text-white" : ""}
+                  `}
                 >
-                  <i className={menu.icon}></i>
+                  <i
+                    className={`${menu.icon} mr-[10px] w-5 text-center text-[var(--font-md)]`}
+                  />
 
                   <span>{menu.label}</span>
                 </div>
@@ -135,7 +277,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
           )}
         </ul>
       </div>
-    </div>
+    </aside>
   );
 };
 

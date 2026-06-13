@@ -126,7 +126,7 @@ const LoginForm = ({}: Props) => {
             </span>
           }
         />
-        <Button fullWidth name="Login" loading={loading} type="submit"/>
+        <Button fullWidth variant="primaryGradient" name="Login" loading={loading} type="submit"/>
 
         <AppStoreButtons />
       </form>

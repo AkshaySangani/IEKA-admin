@@ -143,7 +143,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
 
   return (
     <>
-      <div className="companyDetailsCard content-card grid-cols-1">
+      <div className="companyDetailsCard content-card border grid-cols-1">
         <div className="companyHeader">
           <div className="employee_pic">
             <Image src={companyDetails?.companyLogo} alt="CompanyLogo" />

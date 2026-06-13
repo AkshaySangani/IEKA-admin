@@ -49,13 +49,20 @@ const TextAreaField: React.FC<TextAreaProps> = ({
         className={`
           w-full
           border
+          border-[#aaa]
           px-3
           py-2
           outline-none
           resize-none
           transition-all
           duration-200
-          focus:border-inputFocus
+          placeholder:transition-all
+            placeholder:duration-400
+            placeholder:ease-in-out
+            focus:border-inputFocus
+            placeholder:text-sm
+            placeholder:font-normal
+            focus:placeholder:pl-[10px]
           text-sm
         `}
       />
