@@ -15,6 +15,35 @@ const TextField: React.FC<InputProps> = ({
   required,
   ...props
 }) => {
+  const handleWheel = (e: React.WheelEvent<HTMLInputElement>) => {
+    if (props.type === "number") {
+      e.currentTarget.blur(); // Prevent value change on scroll
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (props.type === "number") {
+      let value = e.target.value;
+
+      // Remove leading zeros (except decimals like 0.5)
+      if (/^0\d+/.test(value)) {
+        value = value.replace(/^0+/, "");
+      }
+
+      if (props.name?.toLowerCase().includes("phone")) {
+        // Allow only digits
+        value = value.replace(/\D/g, "");
+
+        // Limit to 10 digits
+        value = value.slice(0, 10);
+      }
+
+      e.target.value = value;
+    }
+
+    props.onChange?.(e);
+  };
+
   return (
     <div>
       {label && (
@@ -26,6 +55,9 @@ const TextField: React.FC<InputProps> = ({
       <div className="group relative">
         <input
           {...props}
+          onChange={handleChange}
+          onWheel={handleWheel}
+          autoComplete={"off"}
           className={`
             w-full
             border border-inputBorder
@@ -34,7 +66,7 @@ const TextField: React.FC<InputProps> = ({
             py-[5px]
             text-sm
             font-medium
-            leading-[25px]
+            ${props.type === "date" ? "leading-[25px]" : "leading-[27px]"}
             text-[#383838]
             outline-none
             placeholder:transition-all
@@ -44,6 +76,11 @@ const TextField: React.FC<InputProps> = ({
             placeholder:text-sm
             placeholder:font-normal
             focus:placeholder:pl-[10px]
+            disabled:bg-disabledBg
+            disabled:text-disabledText
+            disabled:placeholder:text-disabledText
+            disabled:cursor-not-allowed
+            ${error ? "border-error" : ""}
             ${icon ? "pr-10" : ""}
             ${className}
           `}
@@ -67,9 +104,7 @@ const TextField: React.FC<InputProps> = ({
         )}
       </div>
 
-      {error && (
-        <p className="mt-[5px] text-[var(--font-xs)] text-[#ff4d4f]">{error}</p>
-      )}
+      {error && <p className="mt-1 text-xs text-error">{error}</p>}
     </div>
   );
 };

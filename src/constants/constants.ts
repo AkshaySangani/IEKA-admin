@@ -96,6 +96,8 @@ export enum statusEnum {
   APPROVED = "APPROVED",
   GENERATED = "GENERATED",
   SENDED = "SENDED",
+  RECEIVED = "RECEIVED",
+  PAID = "PAID",
 }
 
 export const genderOptions: IOption[] = [

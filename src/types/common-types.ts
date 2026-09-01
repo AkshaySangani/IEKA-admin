@@ -33,3 +33,13 @@ export interface FilterCardItem {
   icon: React.ReactNode;
   amount?: number | string;
 }
+
+export enum PaymentMode {
+  BANK_TRANSFER = "BANK_TRANSFER",
+  CASH = "CASH"
+}
+
+export enum PaymentModeNames {
+  BANK_TRANSFER = "Online",
+  CASH = "Cash"
+}

@@ -5,7 +5,7 @@ import Modal from "../../common/modal/Modal";
 import SelectField from "../../common/select/SelectField";
 import DownloadModal from "../../common/download-modal/DownloadModal";
 import { useNavigate } from "react-router-dom";
-import CompanyList from "./CompanyTable";
+import CompanyList from "./InvoiceTable";
 import { statusEnum } from "../../../constants/constants";
 import { FilterCardItem } from "../../../types/common-types";
 import { getInvoices } from "../../../apis/company/invoice.api";
@@ -112,6 +112,7 @@ const GeneratedInvoice = () => {
       status: activeCard,
       ...selectedMonth,
     });
+    // eslint-disable-next-line
   }, [page, limit, search, activeCard, selectedMonth.month]);
 
   const getInvoiceTable = async (payload: {
@@ -178,11 +179,6 @@ const GeneratedInvoice = () => {
 
   const handleCloseDownload = () => {
     setIsOpen(false);
-  };
-
-  // redirect to add company page
-  const handleOnAdd = () => {
-    navigate("/add-company");
   };
   return (
     <>

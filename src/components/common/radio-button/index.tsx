@@ -4,7 +4,7 @@ import { IOption } from "../../../types/common-types";
 interface RadioButtonProps {
   name: string;
   label?: string;
-  value: string;
+  value: string | number;
   options: IOption[];
   required?: boolean;
   error?: string;
@@ -56,9 +56,9 @@ const RadioButton: React.FC<RadioButtonProps> = ({
         ))}
       </div>
 
-      <p className="text-error text-xs mt-1 min-h-[18px]">
-        {error || ""}
-      </p>
+      {error && (
+        <p className="mt-1 text-xs text-error">{error}</p>
+      )}
     </div>
   );
 };
