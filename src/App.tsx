@@ -15,6 +15,7 @@ import MyProfilePage from "./pages/my-profile";
 import ChangePasswordPage from "./pages/change-password";
 import AddCompanyPage from "./pages/all-companies/add-company";
 import OwnerDetailsPage from "./pages/owner-details";
+import InvoiceDetailsPage from "./pages/generated-invoice/invoice-details";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
           <Route path="all-payments" element={<AllPaymentsPage />} />
           <Route path="owner-details/:id" element={<OwnerDetailsPage />} />
           <Route path="generated-invoice" element={<GeneratedInvoicePage />} />
+          <Route path="/generated-invoice/:id" element={<InvoiceDetailsPage />} />
           <Route path="accounts" element={<AccountsPage />} />
           <Route path="my-profile" element={<MyProfilePage />} />
           <Route path="change-password" element={<ChangePasswordPage />} />

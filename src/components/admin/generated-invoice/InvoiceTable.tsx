@@ -18,8 +18,8 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
   const navigate = useNavigate();
 
   // handle click on owner info
-  const handleOnClick = () => {
-    navigate("/owner-details");
+  const handleOnClick = (id: string) => {
+    navigate(`/generated-invoice/${id}`);
   };
 
   // Define configuration structures with isolated column custom components
@@ -32,7 +32,9 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
     {
       header: "Invoice No.",
       className: "",
-      render: (row) => row.invoiceNumber,
+      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id)}>
+        {row.invoiceNumber}
+      </span>,
     },
     {
       header: "Company Payment History",

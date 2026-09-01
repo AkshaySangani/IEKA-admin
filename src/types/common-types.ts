@@ -43,3 +43,19 @@ export enum PaymentModeNames {
   BANK_TRANSFER = "Online",
   CASH = "Cash"
 }
+
+export enum RoleEnum {
+  EMPLOYEE = "EMPLOYEE",
+  MANAGER = "MANAGER",
+  OWNER = "OWNER",
+}
+
+export enum RoleNames {
+  EMPLOYEE = "Employee",
+  MANAGER = "Manager",
+  OWNER = "COO",
+}
+
+export enum HistoryFieldEnum {
+  UserStatus = "userStatus",
+}
