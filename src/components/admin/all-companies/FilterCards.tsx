@@ -9,6 +9,7 @@ interface CardItem {
   title: string;
   count: number;
   activeColor?: string;
+  textColor?: string;
   icon: React.ReactNode;
 }
 
@@ -30,28 +31,32 @@ const FilterCards = ({ setActiveCard, activeCard }: FilterCardsProps) => {
       id: "",
       title: "Total",
       count: 0,
-      activeColor: "var(--status-info)",
+      activeColor: "bg-info",
+      textColor: "text-info",
       icon: <i className="fa-solid fa-align-justify"></i>,
     },
     {
       id: "ACTIVE",
       title: "Active",
       count: 0,
-      activeColor: "var(--status-active)",
+      activeColor: "bg-success",
+      textColor: "text-success",
       icon: <i className="fa-solid fa-user-check"></i>,
     },
     {
       id: "INACTIVE",
       title: "Inactive",
       count: 0,
-      activeColor: "var(--status-inactive)",
+      activeColor: "bg-warning",
+      textColor: "text-warning",
       icon: <i className="fa-solid fa-user-xmark"></i>,
     },
     {
       id: "DELETED",
       title: "Deleted",
       count: 0,
-      activeColor: "var(--status-deleted)",
+      activeColor: "bg-danger",
+      textColor: "text-danger",
       icon: <i className="fa-solid fa-trash-can"></i>,
     },
   ]);
@@ -98,7 +103,7 @@ const FilterCards = ({ setActiveCard, activeCard }: FilterCardsProps) => {
   };
 
   return (
-    <div className="stats-cards">
+    <div className="flex gap-3">
       {cards.map((card) => (
         <StatCard
           key={card.id}
@@ -106,7 +111,9 @@ const FilterCards = ({ setActiveCard, activeCard }: FilterCardsProps) => {
           title={card.title}
           icon={card.icon}
           active={activeCard === card.id}
+          textColor={card.textColor}
           activeColor={card.activeColor}
+          className="md:max-w-[140px]"
           onClick={() => handleCardClick(card)}
         />
       ))}

@@ -42,12 +42,22 @@ export const statusMessage: { [key: string]: string } = {
   ACTIVE: "Active",
   INACTIVE: "Inactive",
   DELETED: "Deleted",
+  SENDED: "Sended",
+  GENERATED: "Generated",
+  PENDING: "Pending",
+  APPROVED: "Approved",
+  REJECTED: "Rejected",
 };
 
 export const statusColor: { [key: string]: string } = {
   ACTIVE: "text-success",
   INACTIVE: "text-pending",
   DELETED: "text-danger",
+  SENDED: "text-success",
+  GENERATED: "text-pending",
+  PENDING: "text-pending",
+  APPROVED: "text-success",
+  REJECTED: "text-danger",
 };
 
 export const moduleEnum: ObjectType = {
@@ -76,10 +86,16 @@ export const bankAccountEnum: ObjectType = {
   CURRENT: "CURRENT",
 };
 
-export const statusEnum: ObjectType = {
-  ACTIVE: "ACTIVE",
-  INACTIVE: "INACTIVE",
-  DELETED: "DELETED",
+export enum statusEnum {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+  DELETED = "DELETED",
+  REJECTED = "REJECTED",
+  ACCEPTED = "ACCEPTED",
+  PENDING = "PENDING",
+  APPROVED = "APPROVED",
+  GENERATED = "GENERATED",
+  SENDED = "SENDED",
 }
 
 export const genderOptions: IOption[] = [
@@ -149,3 +165,6 @@ export const statusOptions: IOption[] = [
   },
 ];
 
+export const currency = {
+  INR: "₹",
+};

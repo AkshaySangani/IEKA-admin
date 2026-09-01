@@ -46,7 +46,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
       id="sidebar"
       className={`
         fixed top-0 left-0
-        z-[10000]
+        z-[1000]
         h-full
         w-[250px]
         overflow-hidden
@@ -66,7 +66,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
           items-center
           justify-center
           border-r
-          border-[#ccc]
+          border-borderPrimary
           bg-white
           px-2
           py-[1px]
@@ -76,7 +76,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
           <Image
             src={profile?.company?.companyLogo || logo}
             alt="Logo"
-            className="w-[90px] transition-all duration-300"
+            className="max-h-[50px] max-w-[150px] object-contain"
           />
         </NavLink>
       </div>

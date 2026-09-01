@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "../../common/button/Button";
 import TopBar from "../../common/topbar/TopBar";
-import "./AllCompanies.css";
 import FilterCards from "./FilterCards";
 import Modal from "../../common/modal/Modal";
 import SelectField from "../../common/select/SelectField";

@@ -34,7 +34,7 @@ export interface ICompany {
   companyName: string;
   companyAddress: string;
   companyLogo: string;
-  employeeStats: IEmployeeStats;
+  userStats: IEmployeeStats;
   createdAt: string;
   companyRepresentative: ICompanyRepresentative;
 }
@@ -55,54 +55,54 @@ export default function CompanyList({activeCard}: ICompanyListProps) {
   const columns: ColumnDef<ICompany>[] = [
     {
       header: 'Sr. No.',
-      className: 'w-[5%] text-center text-gray-500',
+      className: 'text-center text-gray-500',
       render: (_, index) => index + 1
     },
     {
       header: 'Company Name',
-      className: 'w-[45%]',
+      className: '',
       render: (row) => (
         <CompanyInfo companyInfo={row}/>
       )
     },
     {
       header: 'Owners Info',
-      className: 'w-[20%]',
+      className: '',
       render: (row) => (
         <OwnerInfo ownerInfo={row.companyRepresentative} onClick={() => navigate(`/owner-details/${row?._id}`)}/>
       )
     },
     {
       header: 'User Info',
-      className: 'w-[20%]',
+      className: '',
       render: (row) => (
         <div className="flex items-center gap-1.5 text-center text-xs font-medium">
           {/* Total */}
           <div className="bg-[#f5f5f5] px-2.5 py-1 w-[calc((100%-40px)/4)]">
             <div className="text-xs text-info font-normal">Total</div>
-            <div className="text-info text-sm font-semibold">{getTotal(row.employeeStats)}</div>
+            <div className="text-info text-sm font-semibold">{getTotal(row.userStats)}</div>
           </div>
           {/* Active */}
           <div className="bg-green-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
             <div className="text-xs text-success font-normal">Active</div>
-            <div className="text-success text-sm font-semibold">{row.employeeStats.active}</div>
+            <div className="text-success text-sm font-semibold">{row.userStats.active}</div>
           </div>
           {/* Inactive */}
           <div className="bg-orange-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
             <div className="text-xs text-orange-500 font-normal">Inactive</div>
-            <div className="text-orange-500 text-sm font-semibold">{row.employeeStats.inactive}</div>
+            <div className="text-orange-500 text-sm font-semibold">{row.userStats.inactive}</div>
           </div>
           {/* Deleted */}
           <div className="bg-red-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
             <div className="text-xs text-red-400 font-normal">Deleted</div>
-            <div className="text-red-500 text-sm font-semibold">{row.employeeStats.deleted}</div>
+            <div className="text-red-500 text-sm font-semibold">{row.userStats.deleted}</div>
           </div>
         </div>
       )
     },
     {
       header: 'Status',
-      className: 'w-[10%]',
+      className: '',
       render: (row) => {
         return (
           <div className="flex items-center gap-1.5">

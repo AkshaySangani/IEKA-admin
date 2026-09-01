@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { config } from "../../../utils/config";
 import NoImage from "../../../assets/images/no-image.jpg";
 
@@ -11,41 +11,40 @@ const BACKEND_URL = config.BACKEND_API_URL || "";
 
 const Image: React.FC<ImageProps> = ({
   src,
-  alt,
+  alt = "Image",
   fallbackSrc = NoImage,
   ...props
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [imageError, setImageError] = useState(false);
-
   const getImageUrl = () => {
     if (!src) {
       return fallbackSrc;
     }
 
-    // Full URL
-    if (src.startsWith("blob:") || src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) {
+    // Absolute URLs
+    if (
+      src.startsWith("blob:") ||
+      src.startsWith("http://") ||
+      src.startsWith("https://") ||
+      src.startsWith("data:")
+    ) {
       return src;
     }
 
-    // Relative API Path
+    // Relative API path
     return `${BACKEND_URL}${src}`;
   };
 
   return (
-    <>
-      <img
-        {...props}
-        src={getImageUrl()}
-        alt={alt}
-        loading="lazy"
-        style={{
-        //   display: isLoading ? "none" : "block",
-        }}
-        onLoad={() => setIsLoading(false)}
-        onError={() => setImageError(true)}
-      />
-    </>
+    <img
+      {...props}
+      src={getImageUrl()}
+      alt={alt}
+      loading="lazy"
+      onError={(e) => {
+        e.currentTarget.onerror = null;
+        e.currentTarget.src = fallbackSrc;
+      }}
+    />
   );
 };
 

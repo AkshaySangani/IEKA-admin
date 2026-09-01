@@ -23,3 +23,13 @@ export interface IEmployeeStats {
   inactive: number;
   deleted: number;
 }
+
+export interface FilterCardItem {
+  id: string;
+  title: string;
+  count: number;
+  activeColor?: string;
+  textColor?: string;
+  icon: React.ReactNode;
+  amount?: number | string;
+}
