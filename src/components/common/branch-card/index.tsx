@@ -7,7 +7,7 @@ interface BranchCardProps {
 
 const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
   return (
-    <div key={branch.name} className="w-full border border-dashed border-gray-300 bg-light p-3 sm:p-4">
+    <div key={branch.name} className="w-full border border-dashed border-gray-300 bg-light p-2 sm:p-3">
       {/* Header */}
       <div className="flex items-start justify-between gap-3 border-b">
         <h3 className="min-w-0 truncate text-sm font-medium text-primary sm:text-md">
