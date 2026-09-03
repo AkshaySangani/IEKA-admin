@@ -1,4 +1,5 @@
 import Image from "../image";
+import UserAvatar from "../../../assets/images/User-Image.png";
 
 export interface IOwnerInfo {
   profileImage: string;
@@ -20,6 +21,7 @@ const OwnerInfo: React.FC<IOwnerInfoProps> = ({
       <Image
         src={ownerInfo.profileImage}
         alt={ownerInfo.firstName}
+        fallbackSrc={UserAvatar}
         className="w-9 h-9 object-cover rounded-full ring-1 ring-gray-200"
       />
       <div className="flex flex-col">

@@ -108,7 +108,7 @@ const HistoryModal: React.FC<IStatusHistoryProps> = ({
       header: "Remarks",
       className: "",
       render: (row) => (
-        <div className="line-clamp-2 max-w-full overflow-hidden">
+        <div className="line-clamp-2 truncate max-w-full overflow-hidden">
           {row.remarks || "-"}
         </div>
       ),

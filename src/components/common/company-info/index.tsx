@@ -8,17 +8,18 @@ export interface ICompanyInfo {
 
 interface ICompanyInfoProps {
     companyInfo: ICompanyInfo;
+    onClick?: () => void;
 }
-const CompanyInfo: React.FC<ICompanyInfoProps> = ({companyInfo}: ICompanyInfoProps) => {
+const CompanyInfo: React.FC<ICompanyInfoProps> = ({companyInfo, onClick}: ICompanyInfoProps) => {
     return (
         <div className="flex gap-4 items-start">
           <Image 
             src={companyInfo.companyLogo} 
             alt="logo" 
-            className="w-[70px] object-contain rounded border p-1 border-gray-100 flex-shrink-0"
+            className="w-[50px] object-contain rounded border p-1 border-gray-100 flex-shrink-0"
           />
           <div className="flex flex-col gap-0.5">
-            <span className="text-primary font-medium text-[15px] cursor-pointer hover:underline">
+            <span className="text-primary font-medium text-[15px] cursor-pointer" onClick={onClick}>
               {companyInfo.companyName}
             </span>
             <p className="text-gray-400 text-xs leading-relaxed max-w-sm line-clamp-2">

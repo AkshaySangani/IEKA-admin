@@ -190,5 +190,7 @@ export const pathNames = {
   ALL_COMPANIES: "/",
   ADD_COMPANY: "/add-company",
   OWNER_DETAILS_ID: "/owner-details/:id",
-  OWNER_DETAILS: "/owner-details"
+  OWNER_DETAILS: "/owner-details",
+  COMPANY_DASHBOARD: "/company-dashboard",
+  COMPANY_DASHBOARD_ID: "/company-dashboard/:id",
 }

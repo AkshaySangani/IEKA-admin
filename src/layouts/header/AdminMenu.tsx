@@ -62,7 +62,7 @@ const AdminMenu = () => {
               className="h-10 w-10 rounded-[24px] border border-[#ddd] object-cover"
             />
 
-            <div className="ml-[10px] flex flex-col">
+            <div className="ml-[10px] flex flex-col max-[991px]:hidden sm:flex">
               <span className="text-sm font-medium">
                 {profile?.firstName} {profile?.lastName}
               </span>

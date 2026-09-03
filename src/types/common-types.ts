@@ -50,12 +50,26 @@ export enum RoleEnum {
   OWNER = "OWNER",
 }
 
-export enum RoleNames {
-  EMPLOYEE = "Employee",
-  MANAGER = "Manager",
-  OWNER = "COO",
-}
+export const RoleNames: any = {
+  [RoleEnum.OWNER]: "COO",
+  [RoleEnum.MANAGER]: "Manager",
+  [RoleEnum.EMPLOYEE]: "Employee",
+};
 
 export enum HistoryFieldEnum {
   UserStatus = "userStatus",
+}
+
+export interface ExpenseCardItem {
+  id: string;
+  title: string;
+  count: number;
+  activeColor?: string;
+  textColor?: string;
+  trendDetails: {
+    type: string;
+    difference: number;
+    percentage: number;
+  } | null;
+  amount?: number | string;
 }

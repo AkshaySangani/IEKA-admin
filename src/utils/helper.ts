@@ -70,3 +70,23 @@ export function getFloatValue(value: number | string, fractionDigits: number = 2
     return num.toFixed(fractionDigits); // e.g., "2.50"
   }
 }
+
+export type TrendType = "high" | "low" | "same";
+interface TrendResult {
+  type: TrendType;
+  difference: number;
+  percentage: number;
+}
+
+export const getTrend = (current: number, past: number): TrendResult => {
+  const difference = current - past;
+
+  const percentage =
+    past === 0 ? (current > 0 ? 100 : 0) : Math.abs((difference / past) * 100);
+
+  return {
+    type: difference > 0 ? "high" : difference < 0 ? "low" : "same",
+    difference: Math.abs(difference),
+    percentage: Number(percentage.toFixed(2)),
+  };
+};

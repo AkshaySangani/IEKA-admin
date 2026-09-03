@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { CustomTable, ColumnDef } from "../../common/table";
 import { getCompanies } from "../../../apis/company/company.api";
-import { statusColor, statusEnum, statusMessage } from "../../../constants/constants";
-import Image from "../../common/image";
+import { pathNames, statusEnum } from "../../../constants/constants";
 import PageLoader from "../../common/loader/PageLoader";
 import Pagination from "../../common/pagination/Pagination";
 import CompanyInfo from "../../common/company-info";
@@ -90,8 +89,12 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
     return Number(stats.active + stats.inactive + stats.deleted);
   };
   // handle click on owner info
-  const handleOnClick = () => {
-    navigate("/owner-details");
+  const handleOnClick = (company: ICompany) => {
+    navigate(`${pathNames.COMPANY_DASHBOARD}/${company._id}`, {
+      state: {
+        company
+      }
+    });
   };
 
   // Define configuration structures with isolated column custom components
@@ -104,7 +107,7 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
     {
       header: "Company Name",
       className: "",
-      render: (row) => <CompanyInfo companyInfo={row} />,
+      render: (row) => <CompanyInfo companyInfo={row} onClick={() => handleOnClick(row)}/>,
     },
     {
       header: "Owners Info",

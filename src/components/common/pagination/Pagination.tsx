@@ -8,6 +8,7 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
   onPageSizeChange: (size: number) => void;
   pageSizeOptions?: number[];
+  showVerticalBorder?: boolean;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -17,6 +18,7 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
   onPageSizeChange,
   pageSizeOptions = [10, 25, 50, 100],
+  showVerticalBorder = false
 }) => {
   const totalPages = Math.ceil(totalRecords / pageSize);
 
@@ -39,14 +41,15 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div
-      className="
+      className={`
         w-full
         flex
         items-center
         justify-between
         gap-3
         min-w-0
-      "
+        ${showVerticalBorder ? "border-t border-b py-1" : ""}  
+      `}
     >
       {/* Total Records */}
       <div className="text-[14px] sm:text-[15px] text-gray-700 shrink-0">
