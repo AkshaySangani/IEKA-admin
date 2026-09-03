@@ -12,6 +12,7 @@ import Image from "../../common/image";
 import ModuleDetailsCard from "./ModuleDetailsCard";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../../common/loader/PageLoader";
+import TextAreaField from "../../common/text-area/TextAreaField";
 
 export interface AddCompanyFormData {
   companyName: string;
@@ -35,6 +36,8 @@ export interface AddCompanyFormData {
   //   productionPrice: string;
 
   assignedBankAccount: string;
+
+  remarks: string;
 }
 
 const AddCompany = () => {
@@ -63,6 +66,7 @@ const AddCompany = () => {
     companyLogo: null,
 
     employeePrice: "",
+    remarks: ""
   };
   const [formData, setFormData] = useState<AddCompanyFormData>(initialFormData);
 
@@ -72,6 +76,9 @@ const AddCompany = () => {
 
   // handle action
   const handleAction = () => {
+    if (!validateForm()) {
+      return;
+    }
     setIsOpen((prev) => !prev);
   };
 
@@ -108,17 +115,17 @@ const AddCompany = () => {
       newErrors.companyName = "Company name is required";
     }
 
-    if (!formData.companyEmail.trim()) {
-      newErrors.companyEmail = "Company email is required";
-    } else if (!emailRegex.test(formData.companyEmail)) {
-      newErrors.companyEmail = "Invalid company email";
-    }
+    // if (!formData.companyEmail.trim()) {
+    //   newErrors.companyEmail = "Company email is required";
+    // } else if (!emailRegex.test(formData.companyEmail)) {
+    //   newErrors.companyEmail = "Invalid company email";
+    // }
 
-    if (!formData.companyPhone.trim()) {
-      newErrors.companyPhone = "Company phone is required";
-    } else if (!phoneRegex.test(formData.companyPhone)) {
-      newErrors.companyPhone = "Invalid company phone";
-    }
+    // if (!formData.companyPhone.trim()) {
+    //   newErrors.companyPhone = "Company phone is required";
+    // } else if (!phoneRegex.test(formData.companyPhone)) {
+    //   newErrors.companyPhone = "Invalid company phone";
+    // }
 
     if (!formData.companyAddress.trim()) {
       newErrors.companyAddress = "Company address is required";
@@ -237,22 +244,24 @@ const AddCompany = () => {
     navigate("/");
     setFormData(initialFormData);
   };
+
+  const handleOnSubmit = () => {
+    formRef.current?.requestSubmit();
+  }
   return (
     <>
       <TopBar
         title="Add Company"
         actionButtons={
           <div className="flex items-center gap-2">
-            {/* <Button
+            <Button
               name="Action"
               size="sm"
-              className="buttoncommon"
               onClick={handleAction}
-            /> */}
+            />
 
             <Button
               size="sm"
-              // className="bg-dangerLight"
               onClick={handleNavigate}
               variant="danger"
               leftIcon={<i className="fa-solid fa-xmark fa-xl text-danger"></i>}
@@ -283,10 +292,6 @@ const AddCompany = () => {
             errors={errors}
             onChange={handleChange}
           />
-          <div className="flex justify-end gap-2">
-            <Button type="submit" name="Save" size="sm" />
-            <Button name="Cancel" onClick={handleNavigate} variant="secondary" size="sm" />
-          </div>
         </form>
       </div>
       <Modal
@@ -294,8 +299,9 @@ const AddCompany = () => {
         confirmButtonName="Save"
         isOpen={isOpen}
         onClose={handleAction}
-        handleOnConfirm={handleSubmit}
+        handleOnConfirm={handleOnSubmit}
         loading={loading}
+        width="max-w-xl"
       >
         <div className="flex justify-center flex-col">
           <div className="flex flex-col items-center gap-4">
@@ -306,18 +312,10 @@ const AddCompany = () => {
               Are u sure want to add this company ?
             </div>
           </div>
-          <div className="flex flex-col gap-3 items-start">
-            <label className="font-medium text-[15px]">Remarks</label>
-
-            <div className="w-full">
-              <textarea
-                rows={3}
-                // value={formData?.remarks}
-                onChange={(e) => handleChange("remarks", e.target.value)}
-                className="w-full border border-gray-300 px-3 py-2 outline-none resize-none focus:border-inputFocus"
+          <TextAreaField
+                value={formData?.remarks}
+                onChange={(e) => handleChange("remarks", e.target.value)} name={"remarks"} label="Remarks"
               />
-            </div>
-          </div>
         </div>
       </Modal>
     </>

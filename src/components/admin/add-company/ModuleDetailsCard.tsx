@@ -59,16 +59,16 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
   const columns: ColumnDef<ModuleData>[] = [
     {
       header: "#",
-      className: "w-[80px] text-center font-normal text-gray-500",
+      className: "text-center font-normal text-gray-500",
       render: (row) => row?.id,
     },
     {
       header: "Module Name",
-      className: "w-[50%]",
+      className: "",
       render: (row) => (
         <div className="flex gap-4 items-center">
           {row?.icon}
-          <span className="text-primary font-medium text-[15px] cursor-pointer hover:underline">
+          <span className="text-primary font-medium text-[15px]">
             {row.moduleName}
           </span>
         </div>
@@ -76,7 +76,7 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
     },
     {
       header: "Access",
-      className: "w-[20%]",
+      className: "",
       render: (row) => (
         <Checkbox
           name={""}
@@ -96,7 +96,7 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
     },
     {
       header: "Price",
-      className: "w-[25%]",
+      className: "w-[150px]",
       render: (row) => (
         <TextField
           type="number"
@@ -107,26 +107,26 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
     },
   ];
   return (
-    <div className="content-card border p-5">
+    <div className="content-card border p-3 md:p-5">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-gray-400 pb-4 mb-8">
-        <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">
+      <div className="flex items-center gap-3 border-b border-gray-400 pb-4 mb-1 md:mb-8">
+        <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-primary flex items-center justify-center text-white">
           <i className="fa-solid fa-user-tie"></i>
         </div>
 
-        <h3 className="text-[18px] font-medium text-gray-800">
+        <h3 className="text-md md:text-[18px] font-medium text-gray-800">
           Module Access & Price Details
         </h3>
       </div>
 
       <div className="space-y-4">
         {/* Profile Image */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 items-start">
+          <label className="font-medium text-sm md:text-[15px]">
             Module Access <span className="text-error">*</span>
           </label>
 
-          <div className="max-w-[80%]">
+          <div className="w-full lg:max-w-[80%]">
             <CustomTable columns={columns} data={tableData} />
             {(errors.employeePrice) && (
               <span className="mt-1 text-xs text-error">

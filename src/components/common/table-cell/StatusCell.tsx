@@ -20,11 +20,10 @@ const StatusCell = ({
   showHistory = true,
 }: StatusCellProps) => {
   return (
-    <div className="flex min-w-max items-center">
+    <div className="flex min-w-min justify-around items-center">
       {/* Status */}
       <span
         className={`
-          mr-1
           whitespace-nowrap
           text-sm font-medium
           ${statusColor[status] ?? "text-gray-600"}
@@ -58,7 +57,7 @@ const StatusCell = ({
               flex h-5 w-5 items-center justify-center
               text-gray-400
               transition-colors
-              hover:text-gray-600
+              hover:text-grayText
             "
           >
             <i className="fa-solid fa-pen-to-square text-sm" />

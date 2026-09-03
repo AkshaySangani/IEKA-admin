@@ -1,5 +1,3 @@
-
-
 import { useNavigate } from "react-router-dom";
 import { IEmployeeMonthlyStatus, IEmployeeStatusUser } from ".";
 import { ColumnDef, CustomTable } from "../../../common/table";
@@ -8,13 +6,18 @@ import { HistoryFieldEnum, RoleNames } from "../../../../types/common-types";
 import StatusCell from "../../../common/table-cell/StatusCell";
 import HistoryModal from "../../../common/modal/HistoryModal";
 import { useState } from "react";
-import { HistoryPayload, initialHistory } from "../../../../apis/company/history.api";
+import {
+  HistoryPayload,
+  initialHistory,
+} from "../../../../apis/company/history.api";
 
 interface IEmployeeTableProps {
   employeeHistory: IEmployeeMonthlyStatus[];
 }
 
-export default function EmployeeTable({ employeeHistory }: IEmployeeTableProps) {
+export default function EmployeeTable({
+  employeeHistory,
+}: IEmployeeTableProps) {
   const navigate = useNavigate();
 
   // history states
@@ -30,37 +33,48 @@ export default function EmployeeTable({ employeeHistory }: IEmployeeTableProps) 
   const columns: ColumnDef<IEmployeeMonthlyStatus>[] = [
     {
       header: "Sr. No.",
-      className: "text-center text-gray-500",
+      className: "text-center",
       render: (_, index) => index + 1,
     },
     {
       header: "Employee Name",
       className: "",
-      render: (row) => <PersonInfo personInfo={{
-        firstName: row.userId.firstName,
-        lastName: row.userId.lastName,
-        profileImage: row.userId.profileImage,
-        description: RoleNames[row.userId.role],
-      }} />,
+      render: (row) => (
+        <PersonInfo
+          personInfo={{
+            firstName: row.userId.firstName,
+            lastName: row.userId.lastName,
+            profileImage: row.userId.profileImage,
+            description: RoleNames[row.userId.role],
+          }}
+          personClassName="text-secondary"
+        />
+      ),
     },
     {
       header: "Current Status",
       className: "",
-      render: (row) => <StatusCell status={row.userId.status} isEditable={false} onHistory={() => handleShowHistory(row.userId)} />,
+      render: (row) => (
+        <StatusCell
+          status={row.userId.status}
+          isEditable={false}
+          onHistory={() => handleShowHistory(row.userId)}
+        />
+      ),
     },
     {
       header: "Active Days",
-      className: "",
+      className: "text-center",
       render: (row) => row.activeDays,
     },
     {
       header: "Inactive Days",
-      className: "",
+      className: "text-center",
       render: (row) => row.inactiveDays,
     },
     {
       header: "Deleted Days",
-      className: "",
+      className: "text-center",
       render: (row) => row.deletedDays,
     },
   ];
@@ -81,11 +95,14 @@ export default function EmployeeTable({ employeeHistory }: IEmployeeTableProps) 
     });
   };
 
-  return <><CustomTable columns={columns} data={employeeHistory} />
-  <HistoryModal
+  return (
+    <>
+      <CustomTable columns={columns} data={employeeHistory} />
+      <HistoryModal
         isOpen={historyOpen}
         handleOpenClose={handleHistoryOpenClose}
         history={history}
       />
-  </>;
+    </>
+  );
 }

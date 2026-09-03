@@ -114,9 +114,9 @@ const OwnerDetailEditModel: React.FC<IOwnerDetailEditModelProps> = ({
       newErrors.gender = "Gender is required";
     }
 
-    if (!formData.address) {
-      newErrors.address = "Address is required";
-    }
+    // if (!formData.address) {
+    //   newErrors.address = "Address is required";
+    // }
 
     setErrors(newErrors);
 
@@ -153,7 +153,7 @@ const OwnerDetailEditModel: React.FC<IOwnerDetailEditModelProps> = ({
   return (
     <Modal
       isOpen={isOpen}
-      title={"Company Details"}
+      title={"Owner Details"}
       onClose={handleClose}
       handleOnConfirm={handleSubmit}
       loading={loading}
@@ -236,7 +236,6 @@ const OwnerDetailEditModel: React.FC<IOwnerDetailEditModelProps> = ({
 
           {/* Address */}
           <TextAreaField
-            required
             rows={3}
             label="Home Address"
             name={"address"}

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../../common/button/Button";
 import TopBar from "../../common/topbar/TopBar";
 import FilterCards from "./FilterCards";
-import Modal from "../../common/modal/Modal";
-import SelectField from "../../common/select/SelectField";
+// import Modal from "../../common/modal/Modal";
+// import SelectField from "../../common/select/SelectField";
 import DownloadModal from "../../common/download-modal/DownloadModal";
 import { useNavigate } from "react-router-dom";
 import CompanyList from "./CompanyTable";
@@ -11,13 +11,13 @@ import CompanyList from "./CompanyTable";
 const AllCompanies = () => {
   const navigate = useNavigate();
   const [activeCard, setActiveCard] = useState("");
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [search, setSearch] = useState<string>("");
  
 
-  const handleDownloadClick = () => {
-    setIsOpen(true)
-  }
+  // const handleDownloadClick = () => {
+  //   setIsOpen(true)
+  // }
 
   const handleCloseDownload = () => {
     setIsOpen(false)
@@ -27,6 +27,11 @@ const AllCompanies = () => {
   const handleOnAdd = () => {
     navigate("/add-company")
   }
+
+  // handle search employeeDetails
+  const handleOnSearch = (value: string) => {
+    setSearch(value);
+  };
   return (
     <>
       <TopBar
@@ -35,24 +40,22 @@ const AllCompanies = () => {
           <Button
             name="Add New"
             size="sm"
-            className="buttoncommon"
             onClick={handleOnAdd}
             leftIcon={<i className="fa-solid fa-plus"></i>}
           />
         }
-        isSearch
         isExcel
-        handleSearchClick={() => setIsSearchOpen(true)}
-        handleDownloadExcelClick={() => handleDownloadClick()}
+        isSearch
+        onSearch={handleOnSearch}
       />
       <div className="content-area flex flex-col gap-4">
         <div className="content-area-inner">
           <FilterCards setActiveCard={setActiveCard} activeCard={activeCard} />
         </div>
-        <CompanyList activeCard={activeCard}/>
+        <CompanyList activeCard={activeCard} search={search}/>
       </div>
       
-      <Modal
+      {/* <Modal
         isOpen={isSearchOpen}
         title="Search"
         onClose={() => setIsSearchOpen(false)}
@@ -79,7 +82,7 @@ const AllCompanies = () => {
             }}
           />
         </div>
-      </Modal>
+      </Modal> */}
       <DownloadModal isOpen={isOpen} type={"xlsx"} onClose={handleCloseDownload} dataToExport={[]} />
     </>
   );

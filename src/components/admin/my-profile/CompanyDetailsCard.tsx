@@ -96,14 +96,14 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
       newErrors.companyEmail = "Enter a valid email";
     }
     
-    if (!companyDetail.gstin.trim()) {
-      newErrors.gstin = "GST IN number is required";
-    } else if (
-      companyDetail.gstin &&
-      !regex.gstRegex.test(companyDetail.gstin.trim().toUpperCase())
-    ) {
-      newErrors.gstin = "Enter a valid GST IN number";
-    }
+    // if (!companyDetail.gstin.trim()) {
+    //   newErrors.gstin = "GST IN number is required";
+    // } else if (
+    //   companyDetail.gstin &&
+    //   !regex.gstRegex.test(companyDetail.gstin.trim().toUpperCase())
+    // ) {
+    //   newErrors.gstin = "Enter a valid GST IN number";
+    // }
 
     setErrors(newErrors);
 
@@ -219,7 +219,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
 
             {/* GST Number */}
             <TextField
-              required
+              // required
               label="GST IN Number"
               placeholder="Enter GST Number"
               value={companyDetail.gstin}

@@ -16,6 +16,7 @@ import ChangePasswordPage from "./pages/change-password";
 import AddCompanyPage from "./pages/all-companies/add-company";
 import OwnerDetailsPage from "./pages/owner-details";
 import InvoiceDetailsPage from "./pages/generated-invoice/invoice-details";
+import { pathNames } from "./constants/constants";
 
 function App() {
   return (
@@ -62,15 +63,15 @@ function App() {
             }
           />
         </Route>
-        <Route path="/" element={
+        <Route path={pathNames.ALL_COMPANIES} element={
           <ProtectedRoute>
             <AppLayout />
           </ProtectedRoute>
         }>
           <Route index element={<AllCompanies />} />
-          <Route path="add-company" element={<AddCompanyPage/>} />
+          <Route path={pathNames.ADD_COMPANY} element={<AddCompanyPage/>} />
           <Route path="all-payments" element={<AllPaymentsPage />} />
-          <Route path="owner-details/:id" element={<OwnerDetailsPage />} />
+          <Route path={pathNames.OWNER_DETAILS_ID} element={<OwnerDetailsPage />} />
           <Route path="generated-invoice" element={<GeneratedInvoicePage />} />
           <Route path="/generated-invoice/:id" element={<InvoiceDetailsPage />} />
           <Route path="accounts" element={<AccountsPage />} />

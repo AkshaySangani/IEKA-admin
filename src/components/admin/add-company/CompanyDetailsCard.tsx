@@ -47,22 +47,22 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
       }
     }
   return (
-    <div className="content-card border p-5">
+    <div className="content-card border p-3 md:p-5">
       {/* Header */}
-      <div className="flex items-center gap-3 border-b border-gray-400 pb-2 mb-4">
-        <div className="w-11 h-11 rounded-full bg-primary flex items-center justify-center text-white">
+      <div className="flex items-center gap-3 border-b border-gray-400 pb-2 mb-1 md:mb-6">
+        <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-primary flex items-center justify-center text-white">
           <i className="fa-solid fa-building"></i>
         </div>
 
-        <h3 className="text-[18px] font-medium text-gray-800">
+        <h3 className="text-md md:text-[18px] font-medium text-gray-800">
           Company Information
         </h3>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-2 md:space-y-4">
         {/* Profile Image */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
             Company Logo <span className="text-error">*</span>
           </label>
 
@@ -78,8 +78,8 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </div>
 
         {/* Name */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
             Company Name <span className="text-error">*</span>
           </label>
 
@@ -95,9 +95,10 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </div>
 
         {/* Email */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
-            Company Email <span className="text-error">*</span>
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
+            Company Email 
+            {/* <span className="text-error">*</span> */}
           </label>
 
           <div className="max-w-[500px]">
@@ -112,12 +113,13 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </div>
 
         {/* Phone */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
-            Company Phone No. <span className="text-error">*</span>
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
+            Company Phone No. 
+            {/* <span className="text-error">*</span> */}
           </label>
 
-          <div className="max-w-[250px]">
+          <div className="w-full md:max-w-[250px]">
             <TextField
               name={"companyPhone"}
               placeholder="Enter Company Phone No."
@@ -130,8 +132,8 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </div>
 
         {/* Address */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
             Company Address <span className="text-error">*</span>
           </label>
 
@@ -148,12 +150,12 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </div>
 
         {/* GST IN No. */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
             GST IN No.
           </label>
 
-          <div className="max-w-[250px]">
+          <div className="w-full md:max-w-[250px]">
             <TextField
               name={"gstin"}
               placeholder="Enter GST IN No."
@@ -165,12 +167,12 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
         </div>
 
         {/* Assign Bank Account */}
-        <div className="grid grid-cols-[200px_1fr] gap-6 items-start">
-          <label className="font-medium text-[15px]">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
             Assign Bank Account <span className="text-error">*</span>
           </label>
 
-          <div className="max-w-[250px]">
+          <div className="w-full md:max-w-[250px]">
             <SelectField
               name="assignedBankAccount"
               options={bankAccounts}

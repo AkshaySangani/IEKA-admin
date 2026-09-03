@@ -87,21 +87,21 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
       newErrors.companyName = "Company name is required";
     }
 
-    if (!formData.companyEmail.trim()) {
-      newErrors.companyEmail = "Company email is required";
-    } else if (!regex.email.test(formData.companyEmail)) {
-      newErrors.companyEmail = "Invalid email address";
-    }
+    // if (!formData.companyEmail.trim()) {
+    //   newErrors.companyEmail = "Company email is required";
+    // } else if (!regex.email.test(formData.companyEmail)) {
+    //   newErrors.companyEmail = "Invalid email address";
+    // }
 
-    if (!formData.companyPhone.trim()) {
-      newErrors.companyPhone = "Company phone is required";
-    } else if (!regex.phone.test(formData.companyPhone)) {
-      newErrors.companyPhone = "Invalid phone number";
-    }
+    // if (!formData.companyPhone.trim()) {
+    //   newErrors.companyPhone = "Company phone is required";
+    // } else if (!regex.phone.test(formData.companyPhone)) {
+    //   newErrors.companyPhone = "Invalid phone number";
+    // }
 
-    if (formData.gstin && !regex.gstRegex.test(formData.gstin)) {
-      newErrors.gstin = "Invalid GST number";
-    }
+    // if (formData.gstin && !regex.gstRegex.test(formData.gstin)) {
+    //   newErrors.gstin = "Invalid GST number";
+    // }
 
     if (!formData.companyAddress.trim()) {
       newErrors.companyAddress = "Company address is required";
@@ -175,7 +175,7 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
 
           {/* Company Email */}
           <TextField
-            required
+            // required
             name="companyEmail"
             label="Company Email"
             value={formData.companyEmail}
@@ -186,7 +186,7 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
 
           {/* Phone */}
           <TextField
-            required
+            // required
             name="companyPhone"
             label="Company Phone"
             type="number"
@@ -198,7 +198,7 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
 
           {/* GST */}
           <TextField
-            required
+            // required
             name="gstin"
             label="GST IN No."
             value={formData.gstin}

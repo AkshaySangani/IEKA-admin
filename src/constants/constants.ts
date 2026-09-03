@@ -184,3 +184,11 @@ export const statusOptions: IOption[] = [
 export const currency = {
   INR: "₹",
 };
+
+
+export const pathNames = {
+  ALL_COMPANIES: "/",
+  ADD_COMPANY: "/add-company",
+  OWNER_DETAILS_ID: "/owner-details/:id",
+  OWNER_DETAILS: "/owner-details"
+}

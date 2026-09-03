@@ -135,8 +135,9 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
             </div>
           </li>
 
-          {menuItems.map((menu) =>
-            menu.submenu ? (
+          {menuItems.map((menu) =>{
+            const isParentActive = location.pathname === menu.path || location.pathname.startsWith(`${menu.path}/`)
+            return menu.submenu ? (
               <li key={menu.label}>
                 <div
                   onClick={(e) => {
@@ -235,7 +236,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
                 key={menu.path}
                 className={`
                   ${
-                    location.pathname === menu.path
+                    isParentActive
                       ? `
                         border-l-[3px]
                         border-l-[var(--primary-color)]
@@ -263,7 +264,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
                     transition-all
                     duration-200
                     hover:text-white
-                    ${location.pathname === menu.path ? "text-white" : ""}
+                    ${isParentActive ? "text-white" : ""}
                   `}
                 >
                   <i
@@ -273,7 +274,7 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
                   <span>{menu.label}</span>
                 </div>
               </li>
-            ),
+            )}
           )}
         </ul>
       </div>

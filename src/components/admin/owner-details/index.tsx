@@ -15,6 +15,7 @@ import {
   StatusType,
 } from "../../../types/common-types";
 import EmptyPlaceholder from "../../common/empty-paceholder";
+import { statusEnum } from "../../../constants/constants";
 
 export interface IBankAccount {
   _id: string;
@@ -35,7 +36,7 @@ export interface ICompanyRepresentative {
   phone: string;
   gender: string;
   profileImage: string;
-  status: StatusType;
+  status: statusEnum;
   address: string;
   lastLoginAt: string | null;
   passwordChangedAt: string | null;
@@ -124,7 +125,7 @@ const OwnerDetails = () => {
       gender: "",
       profileImage: "",
       address: "",
-      status: "ACTIVE",
+      status: statusEnum.INACTIVE,
       lastLoginAt: null,
       passwordChangedAt: null,
       companyId: "",
@@ -176,12 +177,10 @@ const OwnerDetails = () => {
         title={companyDetails.companyName}
         actionButtons={
           <Button
-            // name="Add New"
             size="sm"
             variant={"danger"}
-            className="buttoncommon"
             onClick={() => navigate("/")}
-            leftIcon={<i className="fa-solid fa-xmark fa-xl"></i>}
+            leftIcon={<i className="fa-solid fa-xmark fa-xl text-danger"></i>}
           />
         }
       />
