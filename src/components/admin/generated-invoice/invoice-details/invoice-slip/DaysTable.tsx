@@ -25,23 +25,23 @@ const DaysTable: React.FC<DaysTableProps> = ({ rows }) => {
       <table className="w-full border-collapse">
         <thead>
           <tr className="bg-blue-600 text-white">
-            <th className="border-r border-blue-400 px-1 py-1.5 text-left text-[7px] font-semibold">
+            <th className="border-r border-blue-400 px-1 py-1.5 text-left text-[7px] font-medium">
               DAYS PERIOD
             </th>
 
-            <th className="border-r border-blue-400 px-1 py-1.5 text-center text-[7px] font-semibold">
+            <th className="border-r border-blue-400 px-1 py-1.5 text-center text-[7px] font-medium">
               ACTIVE DAYS
             </th>
 
-            <th className="border-r border-blue-400 px-1 py-1.5 text-center text-[7px] font-semibold">
+            <th className="border-r border-blue-400 px-1 py-1.5 text-center text-[7px] font-medium">
               EMP COUNT
             </th>
 
-            <th className="border-r border-blue-400 px-1 py-1.5 text-center text-[7px] font-semibold">
+            <th className="border-r border-blue-400 px-1 py-1.5 text-center text-[7px] font-medium">
               EMP RATE/MO
             </th>
 
-            <th className="px-1 py-1.5 text-right text-[7px] font-semibold">
+            <th className="px-1 py-1.5 text-right text-[7px] font-medium">
               TOTAL AMOUNT (₹)
             </th>
           </tr>

@@ -12,7 +12,6 @@ import UserAvatar from "../../../assets/images/User-Image.png";
 import {
   HistoryFieldEnum,
   ObjectType,
-  StatusType,
 } from "../../../types/common-types";
 import StatusUpdateModal from "../../common/modal/StatusModal";
 import {
@@ -33,11 +32,6 @@ export const modules: ObjectType = {
   },
 };
 
-interface IStatusFormData {
-  status: StatusType;
-  remarks: string;
-}
-
 interface Props {
   data: ICompanyRepresentative;
   moduleAccess: string[];
@@ -51,10 +45,6 @@ const OwnerDetailCard: React.FC<Props> = ({
 }) => {
   const [isStatusOpen, setIsStatusOpen] = useState<boolean>(false);
   const [statusLoading, setStatusLoading] = useState<boolean>(false);
-  const [formData, setFormData] = useState<IStatusFormData>({
-    status: "ACTIVE",
-    remarks: "",
-  });
 
   // history states
   const [historyOpen, setHistoryOpen] = useState<boolean>(false);
@@ -66,7 +56,10 @@ const OwnerDetailCard: React.FC<Props> = ({
   };
 
   //handle Status Submit
-  const handleStatusSubmit = () => {};
+  const handleStatusSubmit = () => {
+    setStatusLoading(true);
+    setStatusLoading(false);
+  };
 
   // handle history open
   const handleHistoryOpenClose = () => {
@@ -87,7 +80,7 @@ const OwnerDetailCard: React.FC<Props> = ({
     <>
       <div className="content-card bg-white border border-gray-200 p-5">
         <div className="flex items-center justify-between border-b-2 pb-2 mb-2">
-          <h3 className="text-md text-gray-600 font-semibold">
+          <h3 className="text-md text-gray-600 font-medium">
             {data.firstName} {data.lastName}
           </h3>
 
@@ -108,7 +101,7 @@ const OwnerDetailCard: React.FC<Props> = ({
         </div>
 
         <div className="mt-4 space-y-4">
-          {/* <Row label="Owner Id." value={data.ownerId} /> */}
+          <Row label="Owner Id." value={data.userId} />
 
           <Row
             label="Person Name"
@@ -119,7 +112,7 @@ const OwnerDetailCard: React.FC<Props> = ({
             label="Status"
             value={
               <div className="flex items-center gap-2">
-                <span className="text-green-600 font-semibold">
+                <span className="text-green-600 font-medium">
                   {statusMessage[data.status]}
                 </span>
                 <button onClick={handleOpenCloseStatus}>

@@ -2,6 +2,7 @@ import Image from "../image";
 import UserAvatar from "../../../assets/images/User-Image.png";
 
 export interface IOwnerInfo {
+  userId: string;
   profileImage: string;
   firstName: string;
   lastName: string;
@@ -28,7 +29,7 @@ const OwnerInfo: React.FC<IOwnerInfoProps> = ({
         <span className="text-primary font-medium text-sm cursor-pointer">
           {ownerInfo.firstName} {ownerInfo.lastName}
         </span>
-        {/* <span className="text-gray-400 text-xs">{row.ownerId}</span> */}
+        <span className="text-gray-400 text-xs">{ownerInfo.userId}</span>
       </div>
     </div>
   );

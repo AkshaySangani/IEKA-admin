@@ -85,7 +85,7 @@ const Header = ({ setIsOpen, isOpen }: HeaderProps) => {
         {/* Mobile Page Title */}
 
         <div className="ml-3 min-w-0 max-[991px]:block lg:hidden">
-          <h1 className="truncate text-lg font-semibold text-black">{pathName}</h1>
+          <h1 className="truncate text-lg font-medium text-black">{pathName}</h1>
         </div>
       </div>
 

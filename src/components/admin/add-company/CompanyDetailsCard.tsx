@@ -105,6 +105,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
             <TextField
               name={"companyEmail"}
               placeholder="Enter Company Email"
+              type="email"
               value={value.companyEmail}
               error={errors.companyEmail}
               onChange={(e) => onChange("companyEmail", e.target.value)}
@@ -127,6 +128,25 @@ const CompanyDetailsCard: React.FC<CompanyDetailsCardProps> = ({
               value={value.companyPhone}
               error={errors.companyPhone}
               onChange={(e) => onChange("companyPhone", e.target.value)}
+            />
+          </div>
+        </div>
+
+        {/* Phone */}
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-1 md:gap-6 items-start">
+          <label className="font-medium text-sm sm:text-[15px]">
+            Invoice Send Email 
+            <span className="text-error">*</span>
+          </label>
+
+          <div className="max-w-[500px]">
+            <TextField
+              name={"invoiceEmail"}
+              placeholder="Enter email for invoice send"
+              type="email"
+              value={value.invoiceEmail}
+              error={errors.invoiceEmail}
+              onChange={(e) => onChange("invoiceEmail", e.target.value)}
             />
           </div>
         </div>

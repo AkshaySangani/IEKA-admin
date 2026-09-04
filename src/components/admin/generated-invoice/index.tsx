@@ -35,6 +35,7 @@ export interface IInvoiceCompany {
 
 export interface ICompanyRepresentative {
   _id: string;
+  userId: string;
   firstName: string;
   lastName: string;
   profileImage: string;
