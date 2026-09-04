@@ -28,12 +28,12 @@ const CompanyDetailCard: React.FC<Props> = ({
           )}
         </div>
 
-        <h2 className="text-lg text-white font-semibold">{data.companyName}</h2>
+        <h2 className="text-lg text-white font-medium">{data.companyName}</h2>
       </div>
 
       <div className="p-5">
         <div className="flex items-center justify-between border-b pb-3 mb-4">
-          <h3 className="text-md text-gray-600 font-semibold">
+          <h3 className="text-md text-gray-600 font-medium">
             Company Details
           </h3>
 
@@ -83,12 +83,14 @@ const CompanyDetailCard: React.FC<Props> = ({
 
           <Row label="Company Phone No." value={data.companyPhone} />
 
+          <Row label="Invoice Send Email" value={data.invoiceEmail} />
+
           <Row label="GST IN No." value={data.gstin || "-"} />
         </div>
       </div>
       <div className="p-5">
         <div className="flex items-center justify-between border-b pb-3 mb-4">
-          <h3 className="text-md text-gray-600 font-semibold">
+          <h3 className="text-md text-gray-600 font-medium">
             Accounting Details
           </h3>
 

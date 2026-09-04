@@ -14,7 +14,7 @@ const BranchCard: React.FC<BranchCardProps> = ({ branch }) => {
           {branch.name}
         </h3>
 
-        <div className="flex h-6 min-w-6 shrink-0 items-center justify-center bg-primary text-sm font-semibold text-white sm:h-7 sm:min-w-7 sm:text-base">
+        <div className="flex h-6 min-w-6 shrink-0 items-center justify-center bg-primary text-sm font-medium text-white sm:h-7 sm:min-w-7 sm:text-base">
           {branch.count}
         </div>
       </div>

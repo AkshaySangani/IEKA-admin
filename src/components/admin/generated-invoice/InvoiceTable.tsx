@@ -82,7 +82,7 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
               />
             </svg>
             <span
-              className={`font-semibold text-sm ${statusColor[row.status]}`}
+              className={`font-medium text-sm ${statusColor[row.status]}`}
             >
               {statusMessage[row.status]}
             </span>

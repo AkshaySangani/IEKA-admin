@@ -19,6 +19,7 @@ interface ICompanyListProps {
 
 export interface ICompanyRepresentative {
   _id: string;
+  userId: string;
   firstName: string;
   lastName: string;
   profileImage: string;
@@ -125,30 +126,30 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
       render: (row) => (
         <div className="flex items-center gap-1.5 text-center text-xs font-medium">
           {/* Total */}
-          <div className="bg-[#f5f5f5] px-2.5 py-1 w-[calc((100%-40px)/4)]">
+          <div className="bg-infoLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
             <div className="text-xs text-info font-normal">Total</div>
-            <div className="text-info text-sm font-semibold">
+            <div className="text-info text-sm font-medium">
               {getTotal(row.userStats)}
             </div>
           </div>
           {/* Active */}
-          <div className="bg-green-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
+          <div className="bg-successLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
             <div className="text-xs text-success font-normal">Active</div>
-            <div className="text-success text-sm font-semibold">
+            <div className="text-success text-sm font-medium">
               {row.userStats.active}
             </div>
           </div>
           {/* Inactive */}
-          <div className="bg-orange-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
-            <div className="text-xs text-orange-500 font-normal">Inactive</div>
-            <div className="text-orange-500 text-sm font-semibold">
+          <div className="bg-warningLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
+            <div className="text-xs text-warning font-normal">Inactive</div>
+            <div className="text-warning text-sm font-medium">
               {row.userStats.inactive}
             </div>
           </div>
           {/* Deleted */}
-          <div className="bg-red-50/50 px-2.5 py-1 w-[calc((100%-40px)/4)]">
-            <div className="text-xs text-red-400 font-normal">Deleted</div>
-            <div className="text-red-500 text-sm font-semibold">
+          <div className="bg-dangerLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
+            <div className="text-xs text-danger font-normal">Deleted</div>
+            <div className="text-danger text-sm font-medium">
               {row.userStats.deleted}
             </div>
           </div>

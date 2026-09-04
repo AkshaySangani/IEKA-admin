@@ -265,7 +265,7 @@ export default function CompanyDashboard() {
         title={
           <div className="flex items-center gap-2">
             <Image src={company.companyLogo} className="h-11 w-11"/>
-            <span className="text-lg text-black font-semibold">
+            <span className="text-lg text-black font-medium">
               {company.companyName}
             </span>
           </div>

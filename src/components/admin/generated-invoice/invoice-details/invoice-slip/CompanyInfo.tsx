@@ -48,7 +48,7 @@ const CompanyInfo: React.FC<CompanyInfoProps> = ({
           )}
 
           <div className="pt-1">
-            <h2 className="text-[12px] font-semibold text-secondary">
+            <h2 className="text-[12px] font-medium text-secondary">
               {company.name}
             </h2>
 

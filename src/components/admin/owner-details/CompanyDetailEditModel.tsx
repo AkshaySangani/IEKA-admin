@@ -11,6 +11,7 @@ interface CompanyDetailEditModelData {
   companyLogo: File | string | null;
   companyName: string;
   companyEmail: string;
+  invoiceEmail: string;
   companyPhone: string;
   gstin: string;
   companyAddress: string;
@@ -38,6 +39,7 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
     companyLogo: null,
     companyName: "",
     companyEmail: "",
+    invoiceEmail: "",
     companyPhone: "",
     gstin: "",
     companyAddress: "",
@@ -54,6 +56,7 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
         companyLogo: companyDetails.companyLogo,
         companyName: companyDetails.companyName,
         companyEmail: companyDetails.companyEmail,
+        invoiceEmail: companyDetails.invoiceEmail,
         companyPhone: companyDetails.companyPhone.toString(),
         gstin: companyDetails.gstin,
         companyAddress: companyDetails.companyAddress,
@@ -87,11 +90,11 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
       newErrors.companyName = "Company name is required";
     }
 
-    // if (!formData.companyEmail.trim()) {
-    //   newErrors.companyEmail = "Company email is required";
-    // } else if (!regex.email.test(formData.companyEmail)) {
-    //   newErrors.companyEmail = "Invalid email address";
-    // }
+    if (!formData.companyEmail.trim()) {
+      newErrors.companyEmail = "Company email is required";
+    } else if (!regex.email.test(formData.companyEmail)) {
+      newErrors.companyEmail = "Invalid email address";
+    }
 
     // if (!formData.companyPhone.trim()) {
     //   newErrors.companyPhone = "Company phone is required";
@@ -205,6 +208,17 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
             error={errors.gstin}
             placeholder="Enter GST IN number"
             onChange={(e) => handleChange("gstin", e.target.value)}
+          />
+
+          {/* Invoice Email */}
+          <TextField
+            required
+            name="invoiceEmail"
+            label="Invoice Send Email"
+            value={formData.invoiceEmail}
+            error={errors.invoiceEmail}
+            placeholder="Enter email for invoice send"
+            onChange={(e) => handleChange("invoiceEmail", e.target.value)}
           />
 
           {/* Address */}

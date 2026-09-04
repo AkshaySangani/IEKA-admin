@@ -30,6 +30,7 @@ export interface IBankAccount {
 
 export interface ICompanyRepresentative {
   _id: string;
+  userId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -52,6 +53,7 @@ export interface ICompanyDetails {
   companyName: string;
   gstin: string;
   companyEmail: string;
+  invoiceEmail: string;
   companyPhone: number;
   companyAddress: string;
   companyLogo: string;
@@ -86,6 +88,7 @@ const OwnerDetails = () => {
     companyName: "",
     gstin: "",
     companyEmail: "",
+    invoiceEmail: "",
     companyPhone: 0,
     companyAddress: "",
     companyLogo: "",
@@ -118,6 +121,7 @@ const OwnerDetails = () => {
 
     companyRepresentative: {
       _id: "",
+      userId: "",
       firstName: "",
       lastName: "",
       email: "",
@@ -142,6 +146,7 @@ const OwnerDetails = () => {
     if (id) {
       getCompany(id, true);
     }
+    // eslint-disable-next-line
   }, [id]);
 
   // get company and owner details

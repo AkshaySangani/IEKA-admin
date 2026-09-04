@@ -18,6 +18,7 @@ export interface AddCompanyFormData {
   companyName: string;
   gstin: string;
   companyEmail: string;
+  invoiceEmail: string;
   companyPhone: string;
   companyAddress: string;
   modules: string[];
@@ -50,6 +51,7 @@ const AddCompany = () => {
     companyName: "",
     gstin: "",
     companyEmail: "",
+    invoiceEmail: "",
     companyPhone: "",
     companyAddress: "",
     modules: [companyModules.employee],
@@ -115,11 +117,11 @@ const AddCompany = () => {
       newErrors.companyName = "Company name is required";
     }
 
-    // if (!formData.companyEmail.trim()) {
-    //   newErrors.companyEmail = "Company email is required";
-    // } else if (!emailRegex.test(formData.companyEmail)) {
-    //   newErrors.companyEmail = "Invalid company email";
-    // }
+    if (!formData.invoiceEmail.trim()) {
+      newErrors.invoiceEmail = "Invoice email is required";
+    } else if (!emailRegex.test(formData.companyEmail)) {
+      newErrors.invoiceEmail = "Invalid invoice email";
+    }
 
     // if (!formData.companyPhone.trim()) {
     //   newErrors.companyPhone = "Company phone is required";
@@ -308,7 +310,7 @@ const AddCompany = () => {
             <div className="w-[60px]">
               <Image src={""} alt="Check" fallbackSrc={Check} />
             </div>
-            <div className="text-lg font-semibold">
+            <div className="text-lg font-medium">
               Are u sure want to add this company ?
             </div>
           </div>

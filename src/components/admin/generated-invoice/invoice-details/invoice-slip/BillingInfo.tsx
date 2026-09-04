@@ -26,7 +26,7 @@ const BillingCard: React.FC<{
       </div>
 
       <div className="px-2 py-1.5">
-        <h3 className="text-[8px] font-semibold text-slate-900">
+        <h3 className="text-[8px] font-medium text-slate-900">
           {party.name}
         </h3>
 

@@ -88,7 +88,7 @@ export default function AccountList({
             ></i>
 
             <span
-              className={`font-semibold text-sm ${statusColor[row.status]}`}
+              className={`font-medium text-sm ${statusColor[row.status]}`}
             >
               {statusMessage[row.status]}
             </span>
@@ -131,7 +131,7 @@ export default function AccountList({
       >
         <div className="flex flex-col gap-3">
           <div className="flex justify-center">
-            <div className="flex justify-center text-lg font-semibold">
+            <div className="flex justify-center text-lg font-medium">
               Are u sure want to change change status of this account ?
             </div>
           </div>

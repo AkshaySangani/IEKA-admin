@@ -171,7 +171,7 @@ const InvoiceSlip: React.FC<InvoiceSlipProps> = ({
             <span className="font-medium text-slate-700">
               Amount in words:
             </span>{" "}
-            <span className="font-semibold text-slate-900">
+            <span className="font-medium text-slate-900">
               {amountInWords}
             </span>
           </p>
