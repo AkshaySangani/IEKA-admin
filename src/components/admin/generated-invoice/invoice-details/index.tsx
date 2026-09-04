@@ -43,7 +43,7 @@ const InvoiceDetails = () => {
   const companyId = params.id as string;
 
   const initialMonth: MonthPickerValue = {
-    month: new Date().getMonth() + 1,
+    month: new Date().getMonth(),
     year: new Date().getFullYear(),
   };
   const [selectedMonth, setSelectedMonth] =
@@ -183,7 +183,7 @@ const InvoiceDetails = () => {
       <TopBar
         title="Invoice Details"
         actionButtons={
-          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} />
+          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} position={"bottomCenter"}/>
         }
         isExcel
         // handleDownloadExcelClick={() => handleDownloadClick()}

@@ -58,6 +58,12 @@ interface IPaymentStats {
   pendingAmount: number;
   totalAmount: number;
 }
+
+interface IPaymentCounts {
+    pending: number;
+    paid: number;
+    total: number;
+}
 const AllPayments = () => {
   const navigate = useNavigate();
   const [activeCard, setActiveCard] = useState("");
@@ -65,7 +71,7 @@ const AllPayments = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const initialMonth: MonthPickerValue = {
-    month: new Date().getMonth() + 1,
+    month: new Date().getMonth(),
     year: new Date().getFullYear(),
   };
   const [selectedMonth, setSelectedMonth] =
@@ -133,7 +139,7 @@ const AllPayments = () => {
     if (response?.success && response?.data?.list?.length > 0) {
       const companyData = response?.data?.list;
       const count = response?.data?.total;
-      updateCards(response?.data?.stats);
+      updateCards(response?.data?.stats, response.data?.counts);
       setPayments(companyData);
       setTotal(count);
       setLoading(false);
@@ -146,7 +152,7 @@ const AllPayments = () => {
   };
 
   // update cards
-  const updateCards = (stats: IPaymentStats) => {
+  const updateCards = (stats: IPaymentStats, counts: IPaymentCounts) => {
     setCards((prev) =>
       prev.map((card) => {
         switch (card.id) {
@@ -154,21 +160,21 @@ const AllPayments = () => {
             return {
               ...card,
               amount: getFloatValue(stats.totalAmount),
-              // amount: stats.amount.total
+              count: counts.total
             };
 
           case statusEnum.PENDING:
             return {
               ...card,
               amount: getFloatValue(stats.pendingAmount),
-              // amount: stats.amount.approved,
+              count: counts.pending
             };
 
           case statusEnum.PAID:
             return {
               ...card,
               amount: getFloatValue(stats.paidAmount),
-              // amount: stats.amount.pending,
+              count: counts.paid
             };
 
           default:
@@ -190,14 +196,14 @@ const AllPayments = () => {
       <TopBar
         title="Generated payments"
         actionButtons={
-          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} />
+          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} position={"bottomCenter"}/>
         }
         isSearch
         isExcel
         handleSearchClick={() => setIsSearchOpen(true)}
         handleDownloadExcelClick={() => handleDownloadClick()}
       />
-      <div className="content-area flex flex-col gap-4">
+      <div className="content-area flex flex-col gap-3">
         <PageLoader loading={loading} />
         <FilterCards
           cards={cards}

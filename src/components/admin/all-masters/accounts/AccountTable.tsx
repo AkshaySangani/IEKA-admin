@@ -10,6 +10,7 @@ import { useState } from "react";
 import Modal from "../../../common/modal/Modal";
 import RadioButton from "../../../common/radio-button";
 import { updateBankAccountStatus } from "../../../../apis/all-masters/accounts";
+import StatusCell from "../../../common/table-cell/StatusCell";
 
 interface IAccountListProps {
   bankAccounts: IBankAccount[];
@@ -51,47 +52,46 @@ export default function AccountList({
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<any>[] = [
     {
-      header: "Sr. No.",
-      className: "w-[10%] text-center text-gray-500",
+      header: "#",
+      className: "text-center text-gray-500",
       render: (_, index) => index + 1,
     },
     {
       header: "Account Type",
-      className: "w-[20%]",
+      className: "",
       render: (row) => bankAccount[row.accountType],
     },
     {
       header: "Account Name",
-      className: "w-[25%]",
+      className: "",
       render: (row) => row.accountHolderName,
     },
     {
       header: "Account No.",
-      className: "w-[20%]",
+      className: "",
       render: (row) => row.accountNo,
     },
     {
       header: "IFC Code",
-      className: "w-[12%]",
+      className: "",
       render: (row) => row.ifscCode,
     },
     {
       header: "Status",
-      className: "w-[12%]",
+      className: "",
       render: (row) => {
         return (
           <div className="flex items-center gap-1.5">
-            {/* Info SVG icon asset matching your design layout */}
-            <i
-              onClick={() => handleOpen(row)}
-              className="fa-solid fa-pen-to-square cursor-pointer text-gray-400 hover:text-gray-500"
-            ></i>
-
             <span
               className={`font-medium text-sm ${statusColor[row.status]}`}
             >
               {statusMessage[row.status]}
             </span>
+            {/* Info SVG icon asset matching your design layout */}
+            <i
+              onClick={() => handleOpen(row)}
+              className="fa-solid fa-pen-to-square cursor-pointer text-grayText text-lg sm:text-sm"
+            ></i>
           </div>
         );
       },

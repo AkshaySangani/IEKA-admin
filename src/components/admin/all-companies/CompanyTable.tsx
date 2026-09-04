@@ -23,6 +23,7 @@ export interface ICompanyRepresentative {
   firstName: string;
   lastName: string;
   profileImage: string;
+  status: statusEnum;
 }
 
 export interface IEmployeeStats {
@@ -101,7 +102,7 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<ICompany>[] = [
     {
-      header: "Sr. No.",
+      header: "#",
       className: "text-center text-gray-500",
       render: (_, index) => index + 1,
     },
@@ -126,28 +127,28 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
       render: (row) => (
         <div className="flex items-center gap-1.5 text-center text-xs font-medium">
           {/* Total */}
-          <div className="bg-infoLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
+          <div className="bg-infoLight px-1 md:px-2.5 py-1 min-w-[60px]">
             <div className="text-xs text-info font-normal">Total</div>
             <div className="text-info text-sm font-medium">
               {getTotal(row.userStats)}
             </div>
           </div>
           {/* Active */}
-          <div className="bg-successLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
+          <div className="bg-successLight px-1 md:px-2.5 py-1 min-w-[60px]">
             <div className="text-xs text-success font-normal">Active</div>
             <div className="text-success text-sm font-medium">
               {row.userStats.active}
             </div>
           </div>
           {/* Inactive */}
-          <div className="bg-warningLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
+          <div className="bg-warningLight px-1 md:px-2.5 py-1 min-w-[60px]">
             <div className="text-xs text-warning font-normal">Inactive</div>
             <div className="text-warning text-sm font-medium">
               {row.userStats.inactive}
             </div>
           </div>
           {/* Deleted */}
-          <div className="bg-dangerLight px-2.5 py-1 w-[calc((100%-40px)/4)]">
+          <div className="bg-dangerLight px-1 md:px-2.5 py-1 min-w-[60px]">
             <div className="text-xs text-danger font-normal">Deleted</div>
             <div className="text-danger text-sm font-medium">
               {row.userStats.deleted}
@@ -162,7 +163,7 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
       render: (row) => {
         return (
           <StatusCell
-            status={row.status}
+            status={row.companyRepresentative.status}
             isEditable={false}
             onHistory={() => handleShowHistory(row.companyRepresentative)}
           />

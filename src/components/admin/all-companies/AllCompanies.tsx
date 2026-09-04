@@ -48,10 +48,8 @@ const AllCompanies = () => {
         isSearch
         onSearch={handleOnSearch}
       />
-      <div className="content-area flex flex-col gap-4">
-        <div className="content-area-inner">
-          <FilterCards setActiveCard={setActiveCard} activeCard={activeCard} />
-        </div>
+      <div className="content-area flex flex-col gap-3">
+        <FilterCards setActiveCard={setActiveCard} activeCard={activeCard} />
         <CompanyList activeCard={activeCard} search={search}/>
       </div>
       

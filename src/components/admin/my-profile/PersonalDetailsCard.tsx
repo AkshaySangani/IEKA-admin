@@ -8,6 +8,7 @@ import { regex } from "../../../constants/validation-regex";
 import { updateProfile } from "../../../apis/admin/my-profile";
 import Image from "../../common/image";
 import { statusColor, statusMessage } from "../../../constants/constants";
+import UserAvatar from "../../../assets/images/User-Image.png";
 
 interface PersonalDetailsProps {
   profile: IAdminProfile;
@@ -138,7 +139,7 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
               </div>
             </div>
             <div className="flex justify-center py-[10px] bg-gray-200">
-              <Image src={profile?.profileImage} alt="UserProfile" width="80" />
+              <Image src={profile?.profileImage} alt="UserProfile" width="80" fallbackSrc={UserAvatar} className="rounded-full"/>
             </div>
 
             <div className="employee_detailsitems">

@@ -25,7 +25,7 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<IInvoice>[] = [
     {
-      header: "Sr. No.",
+      header: "#",
       className: "text-center text-gray-500",
       render: (_, index) => index + 1,
     },
@@ -47,7 +47,7 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
       render: (row) => (
         <OwnerInfo
           ownerInfo={row.companyId.companyRepresentative}
-          onClick={() => navigate(`/owner-details/${row.companyId._id}`)}
+          // onClick={() => navigate(`/owner-details/${row.companyId._id}`)}
         />
       ),
     },

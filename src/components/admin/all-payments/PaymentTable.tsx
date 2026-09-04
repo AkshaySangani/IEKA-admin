@@ -44,22 +44,24 @@ export default function PaymentTable({
     setIsPaymentHistoryOpen((prev) => !prev);
   };
 
-  // handle click on owner info
-  const handleOnClick = () => {
-    navigate("/owner-details");
+  // handle click on invoice number
+  const handleOnClick = (id: string) => {
+    navigate(`/generated-invoice/${id}`);
   };
 
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<IInvoice>[] = [
     {
-      header: "Sr. No.",
+      header: "#",
       className: "text-center text-gray-500",
       render: (_, index) => index + 1,
     },
     {
       header: "Invoice No.",
       className: "",
-      render: (row) => row.invoiceNumber,
+      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id)}>
+        {row.invoiceNumber}
+      </span>,
     },
     {
       header: "Company Payment History",
@@ -72,7 +74,7 @@ export default function PaymentTable({
       render: (row) => (
         <OwnerInfo
           ownerInfo={row.companyId.companyRepresentative}
-          onClick={() => navigate(`/owner-details/${row.companyId._id}`)}
+          // onClick={() => navigate(`/owner-details/${row.companyId._id}`)}
         />
       ),
     },

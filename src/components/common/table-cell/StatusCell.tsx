@@ -1,6 +1,10 @@
 import InfoIcon from "../../../assets/icons/Info";
-import { statusColor, statusEnum, statusMessage } from "../../../constants/constants";
-
+import {
+  statusColor,
+  statusEnum,
+  statusMessage,
+} from "../../../constants/constants";
+import useDevice from "../../../hooks/useDevice";
 
 interface StatusCellProps {
   status: statusEnum;
@@ -19,49 +23,33 @@ const StatusCell = ({
   onHistory,
   showHistory = true,
 }: StatusCellProps) => {
+  const {isMobile} = useDevice();
   return (
-    <div className="flex min-w-min justify-around items-center">
+    <div className="flex items-center gap-1">
       {/* Status */}
       <span
         className={`
+          min-w-[65px]
           whitespace-nowrap
           text-sm font-medium
-          ${statusColor[status] ?? "text-gray-600"}
+          ${statusColor[status] ?? "text-secondary/50"}
         `}
       >
         {statusMessage[status] ?? status}
       </span>
 
-      {/* History - fixed width */}
-      <div className="flex h-6 w-6 shrink-0 items-center justify-center">
-        {showHistory && (
-          <button
-            type="button"
-            onClick={onHistory}
-            className="
-              flex h-5 w-5 items-center justify-center
-            "
-          >
-            <InfoIcon />
-          </button>
-        )}
+      {/* History */}
+      <div className="flex w-5 shrink-0 items-center justify-center">
+        {showHistory && <InfoIcon onClick={onHistory} size={isMobile ? 22 : 16}/>}
       </div>
 
-      {/* Edit - fixed width */}
-      <div className="flex h-6 w-6 shrink-0 items-center justify-center">
+      {/* Edit */}
+      <div className="flex w-5 shrink-0 items-center justify-center">
         {isEditable && (
-          <button
-            type="button"
+          <i
+            className="fa-solid fa-pen-to-square cursor-pointer text-lg sm:text-sm text-grayText"
             onClick={onEdit}
-            className="
-              flex h-5 w-5 items-center justify-center
-              text-gray-400
-              transition-colors
-              hover:text-grayText
-            "
-          >
-            <i className="fa-solid fa-pen-to-square text-sm" />
-          </button>
+          />
         )}
       </div>
     </div>

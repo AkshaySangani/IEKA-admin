@@ -53,6 +53,11 @@ export interface IInvoiceSummary {
   sended: number;
   total: number;
 }
+export interface IInvoiceCount {
+    generated: number;
+    sended: number;
+    total: number;
+}
 
 const GeneratedInvoice = () => {
   const navigate = useNavigate();
@@ -61,7 +66,7 @@ const GeneratedInvoice = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const initialMonth: MonthPickerValue = {
-    month: new Date().getMonth() + 1,
+    month: new Date().getMonth(),
     year: new Date().getFullYear(),
   };
   const [selectedMonth, setSelectedMonth] =
@@ -75,7 +80,7 @@ const GeneratedInvoice = () => {
       amount: 0,
       activeColor: "bg-info",
       textColor: "text-info",
-      icon: <i className="fa-solid fa-users"></i>,
+      icon: <i className="fa-solid fa-users text-xs md:text-md"></i>,
     },
     {
       id: statusEnum.GENERATED,
@@ -84,7 +89,7 @@ const GeneratedInvoice = () => {
       amount: 0,
       activeColor: "bg-pending",
       textColor: "text-pending",
-      icon: <i className="fa-solid fa-file-arrow-up"></i>,
+      icon: <i className="fa-solid fa-file-arrow-up text-xs md:text-md"></i>,
     },
     {
       id: statusEnum.SENDED,
@@ -93,7 +98,7 @@ const GeneratedInvoice = () => {
       amount: 0,
       activeColor: "bg-success",
       textColor: "text-success",
-      icon: <i className="fa-solid fa-square-arrow-up-right"></i>,
+      icon: <i className="fa-solid fa-square-arrow-up-right text-xs md:text-md"></i>,
     },
   ]);
 
@@ -129,7 +134,7 @@ const GeneratedInvoice = () => {
     if (response?.success && response?.data?.list?.length > 0) {
       const companyData = response?.data?.list;
       const count = response?.data?.total;
-      updateCards(response?.data?.stats);
+      updateCards(response?.data?.stats, response.data?.counts);
       setInvoices(companyData);
       setTotal(count);
       setLoading(false);
@@ -142,7 +147,7 @@ const GeneratedInvoice = () => {
   };
 
   // update cards
-  const updateCards = (stats: IInvoiceSummary) => {
+  const updateCards = (stats: IInvoiceSummary, counts: IInvoiceCount) => {
     setCards((prev) =>
       prev.map((card) => {
         switch (card.id) {
@@ -150,21 +155,21 @@ const GeneratedInvoice = () => {
             return {
               ...card,
               amount: getFloatValue(stats.total),
-              // amount: stats.amount.total
+              count: counts.total
             };
 
           case statusEnum.GENERATED:
             return {
               ...card,
               amount: getFloatValue(stats.generated),
-              // amount: stats.amount.approved,
+              count: counts.generated
             };
 
           case statusEnum.SENDED:
             return {
               ...card,
               amount: getFloatValue(stats.sended),
-              // amount: stats.amount.pending,
+              count: counts.sended
             };
 
           default:
@@ -186,14 +191,14 @@ const GeneratedInvoice = () => {
       <TopBar
         title="Generated Invoices"
         actionButtons={
-          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} />
+          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} position={"bottomCenter"}/>
         }
         isSearch
         isExcel
         handleSearchClick={() => setIsSearchOpen(true)}
         handleDownloadExcelClick={() => handleDownloadClick()}
       />
-      <div className="content-area flex flex-col gap-4">
+      <div className="content-area flex flex-col gap-3">
         <PageLoader loading={loading} />
         <FilterCards
           cards={cards}

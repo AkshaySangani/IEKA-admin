@@ -32,7 +32,7 @@ export default function EmployeeTable({
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<IEmployeeMonthlyStatus>[] = [
     {
-      header: "Sr. No.",
+      header: "#",
       className: "text-center",
       render: (_, index) => index + 1,
     },

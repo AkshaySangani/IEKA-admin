@@ -7,6 +7,6 @@ interface IInfoProps {
 }
 export default function InfoIcon({ onClick = () => {}, className = "", size = 18 }: IInfoProps) {
   return (
-    <Info onClick={onClick} size={size} className={`text-gray-400 cursor-pointer hover:text-gray-500 ${className}`}/>
+    <Info onClick={onClick} size={size} className={`text-grayText cursor-pointer  ${className}`}/>
   );
 }

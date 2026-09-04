@@ -29,7 +29,7 @@ const OwnerInfo: React.FC<IOwnerInfoProps> = ({
         <span className="text-primary font-medium text-sm cursor-pointer">
           {ownerInfo.firstName} {ownerInfo.lastName}
         </span>
-        <span className="text-gray-400 text-xs">{ownerInfo.userId}</span>
+        <span className="text-grayText text-xs">{ownerInfo.userId}</span>
       </div>
     </div>
   );

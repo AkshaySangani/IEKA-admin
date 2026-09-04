@@ -17,6 +17,7 @@ import CompanyEmployee from "./CompanyEmployees";
 import TopBar from "../../../common/topbar/TopBar";
 import { ICompany } from "../CompanyTable";
 import Image from "../../../common/image";
+import useDevice from "../../../../hooks/useDevice";
 
 export interface OverallExpenseStats {
   total: number;
@@ -104,6 +105,7 @@ export const initialDashboardEmployeeOverview: IDashboardEmployeeOverview = {
 export default function CompanyDashboard() {
   const params = useParams();
   const location = useLocation();
+  const {isDesktop} = useDevice();
   const company = location.state?.company as ICompany;
   const companyId = params.id as string;
   const [loading, setLoading] = useState<boolean>(false);
@@ -261,7 +263,7 @@ export default function CompanyDashboard() {
   };
   return (
     <>
-      <TopBar
+      {(isDesktop) && <TopBar
         title={
           <div className="flex items-center gap-2">
             <Image src={company.companyLogo} className="h-11 w-11"/>
@@ -270,7 +272,7 @@ export default function CompanyDashboard() {
             </span>
           </div>
         }
-      />
+      />}
       <div className="content-area bg-dashboardBg flex flex-col gap-3">
         <PageLoader loading={loading} />
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-4">
