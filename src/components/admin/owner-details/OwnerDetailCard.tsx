@@ -186,7 +186,7 @@ const OwnerDetailCard: React.FC<Props> = ({
                   </div>
                 ))}
               </div>
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <button onClick={() => handleModuleUpdateOpenClose({
                   ...formData,
                   employeePrice: String(companyDetails.employeePrice),
@@ -196,7 +196,7 @@ const OwnerDetailCard: React.FC<Props> = ({
                 <button onClick={() => handleShowHistory(data)}>
                   <InfoIcon />
                 </button>
-              </div>
+              </div> */}
               </div>
             }
           />
