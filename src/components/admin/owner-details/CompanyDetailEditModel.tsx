@@ -90,10 +90,10 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
       newErrors.companyName = "Company name is required";
     }
 
-    if (!formData.companyEmail.trim()) {
-      newErrors.companyEmail = "Company email is required";
-    } else if (!regex.email.test(formData.companyEmail)) {
-      newErrors.companyEmail = "Invalid email address";
+    if (!formData.invoiceEmail.trim()) {
+      newErrors.invoiceEmail = "Invoice email is required";
+    } else if (!regex.email.test(formData.invoiceEmail)) {
+      newErrors.invoiceEmail = "Invalid invoice email address";
     }
 
     // if (!formData.companyPhone.trim()) {

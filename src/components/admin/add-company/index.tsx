@@ -119,7 +119,7 @@ const AddCompany = () => {
 
     if (!formData.invoiceEmail.trim()) {
       newErrors.invoiceEmail = "Invoice email is required";
-    } else if (!emailRegex.test(formData.companyEmail)) {
+    } else if (!emailRegex.test(formData.invoiceEmail)) {
       newErrors.invoiceEmail = "Invalid invoice email";
     }
 

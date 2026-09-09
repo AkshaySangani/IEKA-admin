@@ -127,8 +127,6 @@ const LoginForm = ({}: Props) => {
           }
         />
         <Button fullWidth variant="primaryGradient" name="Login" loading={loading} type="submit"/>
-
-        <AppStoreButtons />
       </form>
 
       {/* <div className="login-links">
