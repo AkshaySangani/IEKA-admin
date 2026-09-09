@@ -57,7 +57,7 @@ const CompanyDetailEditModel: React.FC<ICompanyDetailEditModelProps> = ({
         companyName: companyDetails.companyName,
         companyEmail: companyDetails.companyEmail,
         invoiceEmail: companyDetails.invoiceEmail,
-        companyPhone: companyDetails.companyPhone.toString(),
+        companyPhone: companyDetails.companyPhone ? companyDetails.companyPhone.toString() : "",
         gstin: companyDetails.gstin,
         companyAddress: companyDetails.companyAddress,
       });
