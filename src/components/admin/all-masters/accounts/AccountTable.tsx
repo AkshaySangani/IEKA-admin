@@ -53,7 +53,7 @@ export default function AccountList({
   const columns: ColumnDef<any>[] = [
     {
       header: "#",
-      className: "text-center text-gray-500",
+      className: "",
       render: (_, index) => index + 1,
     },
     {

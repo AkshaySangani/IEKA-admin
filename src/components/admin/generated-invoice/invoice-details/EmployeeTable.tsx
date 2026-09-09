@@ -33,7 +33,7 @@ export default function EmployeeTable({
   const columns: ColumnDef<IEmployeeMonthlyStatus>[] = [
     {
       header: "#",
-      className: "text-center",
+      className: "",
       render: (_, index) => index + 1,
     },
     {

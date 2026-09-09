@@ -200,8 +200,8 @@ const AllPayments = () => {
         }
         isSearch
         isExcel
-        handleSearchClick={() => setIsSearchOpen(true)}
-        handleDownloadExcelClick={() => handleDownloadClick()}
+        onSearch={() => setIsSearchOpen(true)}
+        handleDownloadExcel={() => handleDownloadClick()}
       />
       <div className="content-area flex flex-col gap-3">
         <PageLoader loading={loading} />

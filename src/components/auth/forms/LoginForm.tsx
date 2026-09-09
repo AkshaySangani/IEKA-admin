@@ -1,12 +1,8 @@
 import { useState } from "react";
-import AppStoreButtons from "../AppStoreButtons/AppStoreButtons";
 import Button from "../../common/button/Button";
 import TextField from "../../common/text-field/TextField";
-import { Link } from "react-router-dom";
 import { loginApi } from "../../../apis/auth/auth.api";
 import { useAuthStore } from "../../../store/auth-store";
-
-interface Props {}
 
 interface LoginFormData {
   userId: string;
@@ -18,7 +14,7 @@ interface LoginFormErrors {
   password?: string;
 }
 
-const LoginForm = ({}: Props) => {
+const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {setToken, setProfile} = useAuthStore();
 
@@ -35,7 +31,7 @@ const LoginForm = ({}: Props) => {
 
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: name === "userId" ? value?.toLowerCase() : value,
     }));
 
     setErrors((prev) => ({

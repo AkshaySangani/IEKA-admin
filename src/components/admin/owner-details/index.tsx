@@ -201,7 +201,9 @@ const OwnerDetails = () => {
           <OwnerDetailCard
             data={companyDetails.companyRepresentative}
             moduleAccess={companyDetails.modules}
+            companyDetails={companyDetails}
             handleOwnerOpen={handleOwnerOpen}
+            fetchCompanyDetails={() => getCompany(companyDetails._id, false)}
           />
         </div> : !loading && <EmptyPlaceholder title="Company Not Found."/>}
       </div>

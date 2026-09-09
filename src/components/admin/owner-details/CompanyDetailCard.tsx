@@ -2,6 +2,7 @@ import React from "react";
 import { ICompanyDetails } from ".";
 import Image from "../../common/image";
 import { bankAccount, yesNo } from "../../../constants/constants";
+import { DateFormat, formatDate } from "../../../utils/date-format";
 
 interface Props {
   data: ICompanyDetails;
@@ -43,40 +44,12 @@ const CompanyDetailCard: React.FC<Props> = ({
         </div>
 
         <div className="space-y-4">
-          <Row
-            label="Company Logo"
-            value={
-              data.companyLogo ? (
-                <Image
-                  src={data.companyLogo}
-                  alt={data.companyName}
-                  className="h-10 object-contain ml-auto"
-                />
-              ) : (
-                "-"
-              )
-            }
-          />
-
-          <Row
-            label="Company Name"
-            value={
-              <>
-                {data.companyName}
-                {/* {data.companyCode && (
-                  <span className="ml-2 text-gray-500">
-                    ({data.companyCode})
-                  </span>
-                )} */}
-              </>
-            }
-          />
 
           <Row label="Address" value={data.companyAddress} />
 
           <Row
             label="Created Date"
-            value={data.companyRepresentative.createdAt}
+            value={formatDate(data.companyRepresentative.createdAt, DateFormat.DATE_TIME_24)}
           />
 
           <Row label="Company Email" value={data.companyEmail} />
@@ -126,7 +99,7 @@ const Row = ({ label, value }: { label: string; value: React.ReactNode }) => (
     <div className="text-gray-700">{label}</div>
 
     <div className="font-normal text-right max-w-[300px] line-clamp-2">
-      {value}
+      {value ? value : "-"}
     </div>
   </div>
 );

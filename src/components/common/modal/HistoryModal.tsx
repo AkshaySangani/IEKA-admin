@@ -100,11 +100,6 @@ const HistoryModal: React.FC<IStatusHistoryProps> = ({
       render: (row) => formatDate(row.createdAt, DateFormat.DATE_TIME_24),
     },
     {
-      header: "Action By",
-      className: "",
-      render: (row) => `${row.assignedBy.firstName} ${row.assignedBy.lastName}`,
-    },
-    {
       header: "Remarks",
       className: "",
       render: (row) => (

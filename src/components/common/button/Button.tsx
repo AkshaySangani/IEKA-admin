@@ -9,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     | "secondary"
     | "success"
     | "danger"
+    | "dangerOutline"
     | "warning";
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
@@ -44,13 +45,15 @@ const Button: React.FC<ButtonProps> = ({
 
     danger: "bg-btn-danger hover:bg-btn-danger-hover text-white",
 
+    dangerOutline: "bg-danger/40 hover:bg-btn-danger-hover text-error",
+
     warning: "",
   }[variant];
 
   const sizeClasses = {
-    sm: "py-[3px] sm:py-[5px] px-[12px] sm:px-[15px] text-xs sm:text-sm min-h-[32px] sm:min-h-[34px]",
-    md: "py-3 px-5 text-xs sm:text-sm min-h-[36px] sm:min-h-[42px]",
-    lg: "py-[14px] px-6 text-md min-h-[50px]",
+    sm: "py-[5px] px-[20px] sm:px-[15px] text-md sm:text-sm min-h-[42px] sm:min-h-[34px]",
+    md: "h-[55px] sm:h-[44px] px-5 text-lg sm:text-sm",
+    lg: "h-[50px] px-6 text-md",
   }[size];
 
   return (
@@ -65,6 +68,8 @@ const Button: React.FC<ButtonProps> = ({
         transition-all duration-300 ease-in-out
         text-center
         box-border
+        disabled:cursor-not-allowed
+        disabled:opacity-50
         ${fullWidth ? "w-full" : "w-auto"}
         ${variantClasses}
         ${sizeClasses}
@@ -86,9 +91,7 @@ const Button: React.FC<ButtonProps> = ({
         "
       />
 
-      {loading && (
-        <i className="fa-solid fa-spinner animate-spin mr-2"></i>
-      )}
+      {loading && <i className="fa-solid fa-spinner animate-spin mr-2"></i>}
 
       {leftIcon && <span className={name ? "mr-1" : ""}>{leftIcon}</span>}
 

@@ -76,6 +76,40 @@ export const apiRequest = {
     }
   },
 
+  patch: async <T>(
+    url: string,
+    payload: any,
+    options?: RequestOptions
+  ) => {
+    try {
+      const response = await api.patch<T>(url, payload);
+
+      const apiMessage =
+        (response.data as any)?.message;
+
+      if (options?.showSuccessToast !== false) {
+        toastMessage.success(
+          apiMessage ||
+          options?.successMessage ||
+          "Updated Successfully"
+        );
+      }
+
+      return response.data;
+    } catch (error: any) {
+      const apiMessage =
+        error?.response?.data?.message??error?.message??error?.message;
+
+      toastMessage.error(
+        apiMessage ||
+        options?.errorMessage ||
+        "Update Failed"
+      );
+
+      return error;
+    }
+  },
+
   delete: async <T>(
     url: string,
     options?: RequestOptions

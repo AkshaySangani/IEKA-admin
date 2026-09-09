@@ -12,11 +12,11 @@ interface ICompanyInfoProps {
 }
 const CompanyInfo: React.FC<ICompanyInfoProps> = ({companyInfo, onClick}: ICompanyInfoProps) => {
     return (
-        <div className="flex gap-4 items-start">
+        <div className="flex gap-4 items-center">
           <Image 
             src={companyInfo.companyLogo} 
             alt="logo" 
-            className="w-[50px] object-contain rounded border p-1 border-gray-100 flex-shrink-0"
+            className="w-12 h-12 object-contain rounded border p-1 border-gray-100"
           />
           <div className="flex flex-col gap-0.5">
             <span className="text-primary font-medium text-[15px] cursor-pointer" onClick={onClick}>

@@ -103,7 +103,7 @@ export default function CompanyList({ activeCard, search }: ICompanyListProps) {
   const columns: ColumnDef<ICompany>[] = [
     {
       header: "#",
-      className: "text-center text-gray-500",
+      className: "",
       render: (_, index) => index + 1,
     },
     {

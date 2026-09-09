@@ -6,9 +6,11 @@ import { ColumnDef, CustomTable } from "../../common/table";
 import TextField from "../../common/text-field/TextField";
 import { companyModules } from "../../../constants/constants";
 import Checkbox from "../../common/checkbox/CheckBox";
+import { ModulePriceFormData } from "../owner-details/OwnerDetailCard";
 
 interface ModuleDetailsCardProps {
-  value: AddCompanyFormData;
+  isEdit?: boolean;
+  value: AddCompanyFormData | ModulePriceFormData;
   errors: Record<string, string>;
   onChange: (name: keyof AddCompanyFormData | string, value: any) => void;
 }
@@ -24,11 +26,11 @@ interface ModuleData {
 }
 
 const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
+  isEdit,
   value,
   errors,
   onChange,
 }) => {
-
   const tableData: ModuleData[] = [
     {
       id: 1,
@@ -107,36 +109,49 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
     },
   ];
   return (
-    <div className="content-card border p-3 md:p-5">
-      {/* Header */}
-      <div className="flex items-center gap-3 border-b border-gray-400 pb-4 mb-1 md:mb-8">
-        <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-primary flex items-center justify-center text-white">
-          <i className="fa-solid fa-user-tie"></i>
+    <>
+      {isEdit ? (
+        <div className="w-full">
+          <CustomTable columns={columns} data={tableData} />
+          {errors.employeePrice && (
+            <span className="mt-1 text-xs text-error">
+              {errors.employeePrice}
+            </span>
+          )}
         </div>
+      ) : (
+        <div className="content-card border p-3 md:p-5">
+          {/* Header */}
+          <div className="flex items-center gap-3 border-b border-gray-400 pb-4 mb-1 md:mb-8">
+            <div className="w-8 h-8 md:w-11 md:h-11 rounded-full bg-primary flex items-center justify-center text-white">
+              <i className="fa-solid fa-user-tie"></i>
+            </div>
 
-        <h3 className="text-md md:text-[18px] font-medium text-gray-800">
-          Module Access & Price Details
-        </h3>
-      </div>
+            <h3 className="text-md md:text-[18px] font-medium text-gray-800">
+              Module Access & Price Details
+            </h3>
+          </div>
 
-      <div className="space-y-4">
-        {/* Profile Image */}
-        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 items-start">
-          <label className="font-medium text-sm md:text-[15px]">
-            Module Access <span className="text-error">*</span>
-          </label>
+          <div className="space-y-4">
+            {/* Profile Image */}
+            <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-2 md:gap-6 items-start">
+              <label className="font-medium text-sm md:text-[15px]">
+                Module Access <span className="text-error">*</span>
+              </label>
 
-          <div className="w-full lg:max-w-[80%]">
-            <CustomTable columns={columns} data={tableData} />
-            {(errors.employeePrice) && (
-              <span className="mt-1 text-xs text-error">
-                {errors.employeePrice}
-              </span>
-            )}
+              <div className="w-full lg:max-w-[80%]">
+                <CustomTable columns={columns} data={tableData} />
+                {errors.employeePrice && (
+                  <span className="mt-1 text-xs text-error">
+                    {errors.employeePrice}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

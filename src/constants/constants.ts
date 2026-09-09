@@ -51,7 +51,7 @@ export const statusMessage: { [key: string]: string } = {
 
 export const statusColor: { [key: string]: string } = {
   ACTIVE: "text-success",
-  INACTIVE: "text-pending",
+  INACTIVE: "text-warning",
   DELETED: "text-danger",
   SENDED: "text-success",
   GENERATED: "text-pending",

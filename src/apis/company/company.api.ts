@@ -47,6 +47,20 @@ export const updateCompanyDetails = (payload: FormData, companyId: string) => {
   )
 }
 
+export interface StatusUpdatePayload {
+    status: string;
+    remarks: string;
+}
+export const updateOwnerStatus = (payload: StatusUpdatePayload, userId: string) => {
+  return apiRequest.patch(
+    `/companies/status/${userId}`,
+    payload,
+    {
+      showSuccessToast: true
+    }
+  )
+}
+
 export interface IExpensePayload {
   companyId: string;
   startDate: string;

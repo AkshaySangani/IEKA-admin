@@ -150,7 +150,8 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
                     items-center
                     px-3
                     py-[18px]
-                    text-sm
+                    sm:text-sm
+                    text-md
                     text-sidebarText
                     transition-all
                     duration-200
@@ -218,7 +219,8 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
                             cursor-pointer
                             px-5
                             py-[15px]
-                            text-sm
+                            sm:text-sm
+                            text-md
                             transition-all
                             duration-200
                             hover:text-white
@@ -259,7 +261,8 @@ const Sidebar = ({ isOpen, setIsOpen, active, setActive }: SidebarProps) => {
                     items-center
                     px-3
                     py-[18px]
-                    text-sm
+                    sm:text-sm
+                    text-md
                     text-sidebarText
                     transition-all
                     duration-200

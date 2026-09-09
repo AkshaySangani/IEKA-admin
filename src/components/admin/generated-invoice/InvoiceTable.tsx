@@ -18,21 +18,25 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
   const navigate = useNavigate();
 
   // handle click on owner info
-  const handleOnClick = (id: string) => {
-    navigate(`/generated-invoice/${id}`);
+  const handleOnClick = (id: string, invoiceId: string) => {
+    navigate(`/generated-invoice/${id}`, {
+      state: {
+        invoiceId 
+      }
+    });
   };
 
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<IInvoice>[] = [
     {
       header: "#",
-      className: "text-center text-gray-500",
+      className: "",
       render: (_, index) => index + 1,
     },
     {
       header: "Invoice No.",
       className: "",
-      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id)}>
+      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id, row._id)}>
         {row.invoiceNumber}
       </span>,
     },
