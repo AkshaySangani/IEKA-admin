@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import PageLoader from "../loader/PageLoader";
 import { HistoryFieldEnum } from "../../../types/common-types";
 import { ColumnDef, CustomTable } from "../table";
-import { statusColor, statusMessage } from "../../../constants/constants";
+import { currency, statusColor, statusMessage } from "../../../constants/constants";
 import { DateFormat, formatDate } from "../../../utils/date-format";
 import { getHistory, HistoryPayload } from "../../../apis/company/history.api";
 
@@ -82,7 +82,7 @@ const HistoryModal: React.FC<IStatusHistoryProps> = ({
 
   const columns: ColumnDef<IHistory>[] = [
     {
-      header: "Status",
+      header: history.field === HistoryFieldEnum.EmployeePrice ? `Price ${currency.INR}` : "Status",
       className: "",
       render: (row) => (
         <span

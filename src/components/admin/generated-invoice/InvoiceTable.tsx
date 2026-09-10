@@ -2,28 +2,63 @@ import { CustomTable, ColumnDef } from "../../common/table";
 import {
   currency,
   statusColor,
+  statusEnum,
   statusMessage,
-} from "../../../constants/constants"; 
+} from "../../../constants/constants";
 import CompanyInfo from "../../common/company-info";
 import OwnerInfo from "../../common/owner-info";
 import { useNavigate } from "react-router-dom";
 import { IInvoice } from ".";
 import { getFloatValue } from "../../../utils/helper";
+import Modal from "../../common/modal/Modal";
+import { useState } from "react";
+import { DateFormat, formatDate } from "../../../utils/date-format";
+import StatusCell from "../../common/table-cell/StatusCell";
 
 interface IInvoiceTableProps {
   invoices: IInvoice[];
 }
 
+interface IHistory {
+  status: statusEnum;
+  date: string;
+  remarks: string;
+}
 export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
   const navigate = useNavigate();
 
-  // handle click on owner info
-  const handleOnClick = (id: string, invoiceId: string) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [history, setHistory] = useState<IHistory[]>([]);
+
+  // handle click on invoice
+  const handleOnClick = (id: string, row: IInvoice) => {
     navigate(`/generated-invoice/${id}`, {
       state: {
-        invoiceId 
-      }
+        invoiceId: row._id,
+        invoiceNo: row.invoiceNumber,
+      },
     });
+  };
+
+  // handle click on owner info
+  const handleShowHistory = (data: IInvoice | null) => {
+    setIsOpen((prev) => !prev);
+    const historyData: IHistory[] = [];
+    if (data && data.generatedAt) {
+      historyData.push({
+        status: statusEnum.GENERATED,
+        date: formatDate(data.generatedAt, DateFormat.DATE_TIME_24),
+        remarks: "",
+      });
+    }
+    if (data && data.mailSentAt) {
+      historyData.push({
+        status: statusEnum.SENDED,
+        date: formatDate(data.mailSentAt, DateFormat.DATE_TIME_24),
+        remarks: data.mailSentRemarks,
+      });
+    }
+    setHistory(historyData);
   };
 
   // Define configuration structures with isolated column custom components
@@ -36,9 +71,14 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
     {
       header: "Invoice No.",
       className: "",
-      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id, row._id)}>
-        {row.invoiceNumber}
-      </span>,
+      render: (row) => (
+        <span
+          className="font-medium text-primary cursor-pointer"
+          onClick={() => handleOnClick(row.companyId._id, row)}
+        >
+          {row.invoiceNumber}
+        </span>
+      ),
     },
     {
       header: "Company Payment History",
@@ -70,31 +110,54 @@ export default function InvoiceTable({ invoices }: IInvoiceTableProps) {
       className: "",
       render: (row) => {
         return (
-          <div className="flex items-center gap-1.5">
-            {/* Info SVG icon asset matching your design layout */}
-            <svg
-              className="w-4 h-4 text-gray-400 cursor-pointer hover:text-gray-600"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-            <span
-              className={`font-medium text-sm ${statusColor[row.status]}`}
-            >
-              {statusMessage[row.status]}
-            </span>
-          </div>
+          <StatusCell status={row.status} isEditable={false} onHistory={() => handleShowHistory(row)}/>
         );
       },
     },
   ];
 
-  return <CustomTable columns={columns} data={invoices} />;
+  const historyColumns: ColumnDef<IHistory>[] = [
+    {
+      header: "Status",
+      className: "",
+      render: (row) => (
+        <span
+          className={`font-medium text-sm ${statusColor[row.status] ?? "text-secondary"}`}
+        >
+          {statusMessage[row.status]}
+        </span>
+      ),
+    },
+    {
+      header: "Action Date",
+      className: "",
+      render: (row) => row.date,
+    },
+    {
+      header: "Remarks",
+      className: "",
+      render: (row) => (
+        <div className="line-clamp-2 truncate max-w-full overflow-hidden">
+          {row.remarks || "-"}
+        </div>
+      ),
+    },
+  ];
+
+  return (
+    <>
+      <CustomTable columns={columns} data={invoices} />
+      <Modal
+        isOpen={isOpen}
+        title={"Invoice history"}
+        width={"max-w-4xl"}
+        onClose={() => handleShowHistory(null)}
+        showFooter={false}
+      >
+        <>
+          <CustomTable columns={historyColumns} data={history} />
+        </>
+      </Modal>
+    </>
+  );
 }

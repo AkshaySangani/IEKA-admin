@@ -1,19 +1,29 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { statusEnum } from "../../../../constants/constants";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import MonthPicker, {
   MonthPickerValue,
 } from "../../../common/date-picker/MonthPicker";
 import {
   EmployeeStatusHistoryPayload,
   getEmployeeStatusHistory,
+  getInvoiceById,
+  sendInvoice,
 } from "../../../../apis/company/invoice.api";
 import TopBar from "../../../common/topbar/TopBar";
 import PageLoader from "../../../common/loader/PageLoader";
 import Pagination from "../../../common/pagination/Pagination";
 import EmployeeTable from "./EmployeeTable";
 import { RoleEnum } from "../../../../types/common-types";
-import InvoiceSlip from "./invoice-slip";
+import InvoiceSlip, { ICompany, IInvoice } from "./invoice-slip";
+import Button from "../../../common/button/Button";
+import Modal from "../../../common/modal/Modal";
+import TextAreaField from "../../../common/text-area/TextAreaField";
+import Image from "../../../common/image";
+import excliMinate from "../../../../assets/images/excliminate.png";
+import { generatePayslipPdf } from "../../../../utils/generate-pdf";
+import { toastMessage } from "../../../../utils/toast-message";
+import { getApiErrorMessage } from "../../../../services/api";
 
 export interface IEmployeeMonthlyStatus {
   _id: string;
@@ -40,7 +50,13 @@ export interface IEmployeeStatusUser {
 
 const InvoiceDetails = () => {
   const params = useParams();
+  const location = useLocation();
   const companyId = params.id as string;
+  const invoiceNo = location.state.invoiceNo as string;
+  const invoiceId = location.state.invoiceId as string
+
+  // invoice pdf div ref
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const initialMonth: MonthPickerValue = {
     month: new Date().getMonth(),
@@ -54,9 +70,23 @@ const InvoiceDetails = () => {
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // invoice send state
+  const [invoiceSendOpen, setInvoiceSendOpen] = useState<boolean>(false);
+  const [remarks, setRemarks] = useState<string>("");
+  const [remarksError, setRemarksError] = useState<string>("");
+  const [invoiceLoading, setInvoiceLoading] = useState<boolean>(false);
+
   const [employeeHistory, setEmployeeHistory] = useState<
     IEmployeeMonthlyStatus[]
   >([]);
+
+   const [admin, setAdmin] = useState<ICompany | null>(null);
+  const [invoiceDetails, setInvoiceDetails] = useState<IInvoice | null>(null);
+  useEffect(() => {
+    if (invoiceId) {
+      fetchInvoiceDetails();
+    }
+  }, []);
 
   useEffect(() => {
     getInvoiceTable({
@@ -85,106 +115,92 @@ const InvoiceDetails = () => {
     }
   };
 
-  const invoiceData = {
-  company: {
-    name: "Ieka Digital LLP",
-    address:
-      "308, Hilltown Landmark, Opp Das Khaman, Nikol-Naroda Rd, Nikol, Ahmedabad, 382350",
-    phone: "+91 9548 69854",
-    email: "info@iekadigital@gmail.com",
-    gstin: "24AAAAA0000A1ZS",
-  },
+   // fetch invoice details
+  const fetchInvoiceDetails = async () => {
+    const response = await getInvoiceById(invoiceId);
+    if (response.success) {
+      const adminData = response?.data?.admin;
+      const invoice = response?.data?.invoice;
+      setAdmin(adminData);
+      setInvoiceDetails(invoice);
+    } else {
+      setAdmin(null);
+      setInvoiceDetails(null);
+    }
+  };
 
-  invoiceNo: "INV-2026-001",
-  invoiceDate: "05-05-2026",
-  billingMonth: "04-2026",
+  // handleActionOpenClose
+  const handleActionOpenClose = () => {
+    setInvoiceSendOpen((prev) => !prev);
+  };
 
-  billFrom: {
-    title: "Bill From (Supplier)",
-    name: "Green Leaf Solar Pvt Ltd",
-    address:
-      "308, Hilltown Landmark, Opp Das Khaman, Nikol Naroda Rd, Nikol, Ahmedabad, 382350",
-    gstin: "24AAAAA0000A1ZR",
-  },
+  const handleChange = (value: string) => {
+    setRemarks(value);
+  };
 
-  billTo: {
-    title: "Bill To (Recipient)",
-    name: "Prashant Dave",
-    address:
-      "C.G. Road, Navrangpura, Ahmedabad, Gujarat - 380009",
-    phone: "+91 98765 43210",
-    gstin: "24BBBCC9989D1ZX",
-  },
+  // validate remark field
+  const validate = () => {
+    let error: string = "";
+    if (!remarks.trim()) {
+      error = "Remarks is required";
+    }
 
-  days: [
-    {
-      daysPeriod: "01-09-2025 to 30-09-2025",
-      activeDays: 30,
-      employeeCount: 10,
-      employeeRate: 300,
-      totalAmount: 3000,
-    },
-    {
-      daysPeriod: "11-09-2025 to 30-09-2025",
-      activeDays: 20,
-      employeeCount: 5,
-      employeeRate: 200,
-      totalAmount: 1000,
-    },
-    {
-      daysPeriod: "26-09-2025 to 30-09-2025",
-      activeDays: 5,
-      employeeCount: 5,
-      employeeRate: 60,
-      totalAmount: 300,
-    },
-    {
-      daysPeriod: "28-09-2025 to 30-09-2025",
-      activeDays: 3,
-      employeeCount: 1,
-      employeeRate: 30,
-      totalAmount: 30,
-    },
-  ],
+    setRemarksError(error);
+    return !error;
+  };
 
-  taxSummary: {
-    hsnSac: "998313",
-    productionManagement: 8000,
-    subtotal: 15280,
-    cgst: 1375.2,
-    sgst: 1375.2,
-    maintenance: 0,
-    total: 18030,
-  },
+  const handleSendInvoice = async () => {
+    if (!validate()) {
+      return;
+    }
+    setInvoiceLoading(true);
+    const pdfFile = contentRef.current
+      ? await generatePayslipPdf(contentRef.current, `${invoiceNo}`)
+      : null;
+    if (pdfFile) {
+      const formData = new FormData();
+      formData.append("invoicePdf", pdfFile);
+      formData.append("remarks", remarks);
+      const response = await sendInvoice(formData, invoiceId);
+      if (response.success) {
+        setRemarks("");
+        handleActionOpenClose();
+        fetchInvoiceDetails();
+      }
+    } else {
+      toastMessage.error("Pdf file not generated. please try again.")
+    }
 
-  amountInWords:
-    "One Lakh Thirty Two Thousand Hundred Eighty Rupees Only",
+    setInvoiceLoading(false);
+  };
 
-  bankDetails: {
-    bankName: "HDFC Bank",
-    accountHolder: "Green Leaf Solar Pvt Ltd",
-    accountNo: "5020012345678",
-    ifscCode: "HDFC0001234",
-    branch: "C.G. Road, Ahmedabad",
-  },
-
-  terms: [
-    "Payment is due within the agreed timeframe mentioned on the invoice.",
-    "Any additional work beyond the agreed scope will be charged separately.",
-    "All deliverables and ownership rights will be transferred only after full payment is received.",
-    "No refunds will be applicable once the work has commenced or services have been delivered.",
-  ],
-
-  customerSignature: "Customer's Signature",
-  authorizedSignature: "Authorized Signatory",
-};
+  // handle download pdf invoice
+  const handleDownloadInvoice = async () => {
+    try {
+      if (contentRef.current) {
+        await generatePayslipPdf(contentRef.current, `${invoiceNo}`, true);
+      }
+    } catch (error) {
+      console.log("error", error);
+      toastMessage.error(getApiErrorMessage(error));
+    }
+  };
   return (
     <>
       <TopBar
         title="Invoice Details"
         actionButtons={
-          <MonthPicker value={selectedMonth} onChange={setSelectedMonth} position={"bottomCenter"}/>
+          <div className="flex items-center gap-2">
+            <MonthPicker
+              value={selectedMonth}
+              onChange={setSelectedMonth}
+              position={"bottomCenter"}
+            />
+            <Button name="Action" size="sm" onClick={handleActionOpenClose} />
+          </div>
         }
+        isPdf={false}
+        handleDownloadPdfClick={handleDownloadInvoice}
         isExcel
         // handleDownloadExcelClick={() => handleDownloadClick()}
       />
@@ -198,8 +214,49 @@ const InvoiceDetails = () => {
           onPageChange={setPage}
           onPageSizeChange={setLimit}
         />
-        <InvoiceSlip {...invoiceData} />
+        <InvoiceSlip ref={contentRef} admin={admin} invoiceDetails={invoiceDetails}/>
       </div>
+
+      <Modal
+        isOpen={invoiceSendOpen}
+        title={"Invoice Send"}
+        onClose={handleActionOpenClose}
+        handleOnConfirm={handleSendInvoice}
+        confirmButtonName="Send"
+        width="max-w-xl"
+        loading={invoiceLoading}
+      >
+        <>
+          <div className="mb-4 flex flex-col items-center gap-2 text-center">
+            <Image
+              src={excliMinate}
+              fallbackSrc={excliMinate}
+              alt="excliMinate"
+              className={`
+            w-16
+            h-16
+            min-w-12
+            min-h-12
+            shrink-0
+            object-cover
+            rounded-full
+          `}
+            />
+
+            <h3 className="text-lg font-medium">
+              {`Are you sure you want to send invoice?`}
+            </h3>
+          </div>
+          <TextAreaField
+            label="Remarks"
+            required
+            name={"remarks"}
+            value={remarks}
+            error={remarksError}
+            onChange={(e) => handleChange(e.target.value)}
+          />
+        </>
+      </Modal>
     </>
   );
 };

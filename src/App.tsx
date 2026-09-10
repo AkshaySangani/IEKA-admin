@@ -18,6 +18,7 @@ import OwnerDetailsPage from "./pages/owner-details";
 import InvoiceDetailsPage from "./pages/generated-invoice/invoice-details";
 import { pathNames } from "./constants/constants";
 import CompanyDashboardPage from "./pages/all-companies/company-dashboard";
+import PaymentsHistoryPage from "./pages/all-payments/payment-history";
 
 function App() {
   return (
@@ -72,7 +73,8 @@ function App() {
           <Route index element={<AllCompanies />} />
           <Route path={pathNames.ADD_COMPANY} element={<AddCompanyPage/>} />
           <Route path={pathNames.COMPANY_DASHBOARD_ID} element={<CompanyDashboardPage/>} />
-          <Route path="all-payments" element={<AllPaymentsPage />} />
+          <Route path={pathNames.ALL_PAYMENTS} element={<AllPaymentsPage />} />
+          <Route path={pathNames.PAYMENT_HISTORY_ID} element={<PaymentsHistoryPage />} />
           <Route path={pathNames.OWNER_DETAILS_ID} element={<OwnerDetailsPage />} />
           <Route path="generated-invoice" element={<GeneratedInvoicePage />} />
           <Route path="/generated-invoice/:id" element={<InvoiceDetailsPage />} />

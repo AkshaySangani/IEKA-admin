@@ -1,5 +1,5 @@
 import { CustomTable, ColumnDef } from "../../common/table";
-import { currency } from "../../../constants/constants";
+import { currency, pathNames } from "../../../constants/constants";
 import CompanyInfo from "../../common/company-info";
 import OwnerInfo from "../../common/owner-info";
 import { useNavigate } from "react-router-dom";
@@ -45,8 +45,13 @@ export default function PaymentTable({
   };
 
   // handle click on invoice number
-  const handleOnClick = (id: string) => {
-    navigate(`/generated-invoice/${id}`);
+  const handleOnClick = (id: string, row: IInvoice) => {
+    navigate(`/generated-invoice/${id}`, {
+      state: {
+        invoiceId: row._id,
+        invoiceNo: row.invoiceNumber
+      }
+    });
   };
 
   // Define configuration structures with isolated column custom components
@@ -59,14 +64,16 @@ export default function PaymentTable({
     {
       header: "Invoice No.",
       className: "",
-      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id)}>
+      render: (row) => <span className="font-medium text-primary cursor-pointer" onClick={() => handleOnClick(row.companyId._id, row)}>
         {row.invoiceNumber}
       </span>,
     },
     {
       header: "Company Payment History",
       className: "",
-      render: (row) => <CompanyInfo companyInfo={row.companyId} />,
+      render: (row) => <CompanyInfo companyInfo={row.companyId} onClick={() => navigate(`${pathNames.PAYMENT_HISTORY}/${row.companyId._id}`, {state: {
+        company: row.companyId
+      }})}/>,
     },
     {
       header: "Owners Name",

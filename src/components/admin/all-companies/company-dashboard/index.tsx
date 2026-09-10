@@ -9,7 +9,7 @@ import {
   getCompanyBranchDepartments,
   getCompanyWorkforce,
 } from "../../../../apis/company/company.api";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { DateFormat, formatDate } from "../../../../utils/date-format";
 import { getTrend } from "../../../../utils/helper";
 import BranchDepartments from "./BranchAndDepartments";
@@ -18,6 +18,8 @@ import TopBar from "../../../common/topbar/TopBar";
 import { ICompany } from "../CompanyTable";
 import Image from "../../../common/image";
 import useDevice from "../../../../hooks/useDevice";
+import Button from "../../../common/button/Button";
+import { pathNames } from "../../../../constants/constants";
 
 export interface OverallExpenseStats {
   total: number;
@@ -103,9 +105,10 @@ export const initialDashboardEmployeeOverview: IDashboardEmployeeOverview = {
 };
 
 export default function CompanyDashboard() {
+  const navigate = useNavigate();
   const params = useParams();
   const location = useLocation();
-  const {isDesktop} = useDevice();
+  const { isDesktop } = useDevice();
   const company = location.state?.company as ICompany;
   const companyId = params.id as string;
   const [loading, setLoading] = useState<boolean>(false);
@@ -261,18 +264,32 @@ export default function CompanyDashboard() {
     setSelected(value);
     fetchExpenseData(value);
   };
+
+  const handleNavigate = () => {
+    navigate(pathNames.ALL_COMPANIES);
+  };
   return (
     <>
-      {(isDesktop) && <TopBar
-        title={
-          <div className="flex items-center gap-2">
-            <Image src={company.companyLogo} className="h-11 w-11"/>
-            <span className="text-lg text-black font-medium">
-              {company.companyName}
-            </span>
-          </div>
-        }
-      />}
+      {isDesktop && (
+        <TopBar
+          title={
+            <div className="flex items-center gap-2">
+              <Image src={company.companyLogo} className="h-11 w-11 object-contain" />
+              <span className="text-lg text-black font-medium">
+                {company.companyName}
+              </span>
+            </div>
+          }
+          actionButtons={
+            <Button
+              size="sm"
+              onClick={handleNavigate}
+              variant="danger"
+              leftIcon={<i className="fa-solid fa-xmark fa-xl text-danger"></i>}
+            />
+          }
+        />
+      )}
       <div className="content-area bg-dashboardBg flex flex-col gap-3">
         <PageLoader loading={loading} />
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-4">

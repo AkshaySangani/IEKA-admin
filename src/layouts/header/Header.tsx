@@ -14,6 +14,9 @@ export const pathLabel = {
   OWNER_DETAILS: "Owner Details",
   COMPANY_DASHBOARD: "Company Dashboard",
   COMPANY_DASHBOARD_ID: "Company Dashboard",
+  ALL_PAYMENTS: "All Payments",
+  PAYMENT_HISTORY_ID: "Payment History",
+  PAYMENT_HISTORY: "Payment History"
 } as const;
 
 export const getPathLabel = (pathname: string): string => {

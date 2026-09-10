@@ -12,10 +12,7 @@ import { ICompanyDetails, ICompanyRepresentative } from ".";
 import EmployeeManagementIcon from "../../../assets/images/employee_management.png";
 import ProductionManagementIcon from "../../../assets/images/production.png";
 import UserAvatar from "../../../assets/images/User-Image.png";
-import {
-  HistoryFieldEnum,
-  ObjectType,
-} from "../../../types/common-types";
+import { HistoryFieldEnum, ObjectType } from "../../../types/common-types";
 import StatusUpdateModal from "../../common/modal/StatusModal";
 import {
   HistoryPayload,
@@ -24,7 +21,11 @@ import {
 import InfoIcon from "../../../assets/icons/Info";
 import HistoryModal from "../../common/modal/HistoryModal";
 import ModuleAccessEditModal from "./ModuleAccessEditModal";
-import { StatusUpdatePayload, updateOwnerStatus } from "../../../apis/company/company.api";
+import {
+  StatusUpdatePayload,
+  updateCompanyDetails,
+  updateOwnerStatus,
+} from "../../../apis/company/company.api";
 
 export const modules: ObjectType = {
   [moduleEnum.EMPLOYEE]: {
@@ -56,7 +57,7 @@ const OwnerDetailCard: React.FC<Props> = ({
   companyDetails,
   moduleAccess,
   handleOwnerOpen,
-  fetchCompanyDetails
+  fetchCompanyDetails,
 }) => {
   const [isStatusOpen, setIsStatusOpen] = useState<boolean>(false);
   const [statusLoading, setStatusLoading] = useState<boolean>(false);
@@ -67,6 +68,7 @@ const OwnerDetailCard: React.FC<Props> = ({
 
   // module edit
   const [moduleEditOpen, setModuleEditOpen] = useState<boolean>(false);
+  const [moduleLoading, setModuleLoading] = useState<boolean>(false);
   const initialFormData: ModulePriceFormData = {
     modules: [companyModules.employee],
     employeePrice: "",
@@ -76,10 +78,64 @@ const OwnerDetailCard: React.FC<Props> = ({
   const [formData, setFormData] =
     useState<ModulePriceFormData>(initialFormData);
 
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof ModulePriceFormData, string>>
+  >({});
+
   // handle open close module edit modal
   const handleModuleUpdateOpenClose = (data: ModulePriceFormData) => {
-    setModuleEditOpen(prev => !prev);
-  }
+    setModuleEditOpen((prev) => !prev);
+    setFormData(data);
+  };
+
+  // handle module fields change
+  const handleChange = (field: string, value: any) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({
+      ...prev,
+      [field]: "",
+    }));
+  };
+
+  // handle validation for required fields
+  const validateForm = () => {
+    const newErrors: Partial<Record<keyof ModulePriceFormData, string>> = {};
+
+    if (!formData.employeePrice.trim()) {
+      newErrors.employeePrice = "Employee price is required";
+    } else if (Number(formData.employeePrice) <= 0) {
+      newErrors.employeePrice = "Employee price must be greater than 0";
+    }
+
+    if (!formData.remarks.trim()) {
+      newErrors.remarks = "Remarks is required";
+    }
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) {
+      return false;
+    }
+
+    return true;
+  };
+
+  // handle submit for update employee price
+  const handleSubmit = async () => {
+    if (!validateForm()) {
+      return;
+    }
+    setModuleLoading(true);
+    const payload = new FormData();
+    payload.append("employeePrice", formData.employeePrice);
+    payload.append("remarks", formData.remarks);
+    const response = await updateCompanyDetails(payload, companyDetails._id);
+    if (response.success) {
+      handleModuleUpdateOpenClose(initialFormData);
+      fetchCompanyDetails();
+    }
+    setModuleLoading(false);
+  };
 
   // handle open close status modal
   const handleOpenCloseStatus = () => {
@@ -90,7 +146,7 @@ const OwnerDetailCard: React.FC<Props> = ({
   const handleStatusSubmit = async (payload: StatusUpdatePayload) => {
     setStatusLoading(true);
     const response = await updateOwnerStatus(payload, data._id);
-    if(response.success){
+    if (response.success) {
       fetchCompanyDetails();
     }
     setStatusLoading(false);
@@ -103,10 +159,10 @@ const OwnerDetailCard: React.FC<Props> = ({
   };
 
   // handle show history
-  const handleShowHistory = (owner: ICompanyRepresentative) => {
+  const handleShowHistory = (owner: ICompanyRepresentative, field: HistoryFieldEnum) => {
     handleHistoryOpenClose();
     setHistory({
-      field: HistoryFieldEnum.UserStatus,
+      field,
       fieldId: owner._id,
       title: `${owner.firstName} ${owner.lastName}`,
     });
@@ -130,7 +186,7 @@ const OwnerDetailCard: React.FC<Props> = ({
             src={data.profileImage}
             alt={data.firstName}
             fallbackSrc={UserAvatar}
-           className={`
+            className={`
             w-20
             h-20
             min-w-12
@@ -162,7 +218,7 @@ const OwnerDetailCard: React.FC<Props> = ({
                 <button onClick={handleOpenCloseStatus}>
                   <i className="fa-solid fa-pen-to-square text-gray-400 text-sm hover:text-gray-500" />
                 </button>
-                <button onClick={() => handleShowHistory(data)}>
+                <button onClick={() => handleShowHistory(data, HistoryFieldEnum.UserStatus)}>
                   <InfoIcon />
                 </button>
               </div>
@@ -173,30 +229,34 @@ const OwnerDetailCard: React.FC<Props> = ({
             label="Modules Access & Price"
             value={
               <div className="flex items-center gap-2">
-              <div className="flex flex-col gap-2">
-                {moduleAccess.map((module) => (
-                  <div
-                    key={module}
-                    className="bg-primary text-white px-2 py-1 rounded-md flex items-center gap-2"
-                  >
-                    <div className="p-1 bg-white rounded-md">
-                      <Image src={modules[module].imageUrl} width={30} />
+                <div className="flex flex-col gap-2">
+                  {moduleAccess.map((module) => (
+                    <div
+                      key={module}
+                      className="bg-primary text-white px-2 py-1 rounded-md flex items-center gap-2"
+                    >
+                      <div className="p-1 bg-white rounded-md">
+                        <Image src={modules[module].imageUrl} width={30} />
+                      </div>
+                      {modules[module].name}
                     </div>
-                    {modules[module].name}
-                  </div>
-                ))}
-              </div>
-              {/* <div className="flex items-center gap-2">
-                <button onClick={() => handleModuleUpdateOpenClose({
-                  ...formData,
-                  employeePrice: String(companyDetails.employeePrice),
-                })}>
-                  <i className="fa-solid fa-pen-to-square text-gray-400 text-sm hover:text-gray-500" />
-                </button>
-                <button onClick={() => handleShowHistory(data)}>
-                  <InfoIcon />
-                </button>
-              </div> */}
+                  ))}
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() =>
+                      handleModuleUpdateOpenClose({
+                        ...formData,
+                        employeePrice: String(companyDetails.employeePrice),
+                      })
+                    }
+                  >
+                    <i className="fa-solid fa-pen-to-square text-gray-400 text-sm hover:text-gray-500" />
+                  </button>
+                  <button onClick={() => handleShowHistory(data, HistoryFieldEnum.EmployeePrice)}>
+                    <InfoIcon />
+                  </button>
+                </div>
               </div>
             }
           />
@@ -223,9 +283,18 @@ const OwnerDetailCard: React.FC<Props> = ({
         deleteWarning={
           "After inactive or delete this person & their employee can not accessible portal."
         }
-        options={statusOptions.filter(ele => ele.value !== statusEnum.DELETED)}
+        options={statusOptions}
       />
-      <ModuleAccessEditModal isOpen={moduleEditOpen} onClose={() => handleModuleUpdateOpenClose(initialFormData)} title={""} formData={formData}/>
+      <ModuleAccessEditModal
+        isOpen={moduleEditOpen}
+        onClose={() => handleModuleUpdateOpenClose(initialFormData)}
+        title={`${data.firstName} ${data.lastName} | ${data.userId}`}
+        formData={formData}
+        errors={errors}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        loading={moduleLoading}
+      />
       <HistoryModal
         isOpen={historyOpen}
         handleOpenClose={handleHistoryOpenClose}

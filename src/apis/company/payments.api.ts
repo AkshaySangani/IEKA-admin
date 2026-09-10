@@ -31,3 +31,9 @@ export const updatePaymentStatus = (payload: PaymentPayload, invoiceId: string) 
     }
   )
 }
+
+export const getPaymentHistory = (companyId: string, year: number) => {
+  return apiRequest.get<ApiResponse>(
+    `payments/yearly/list?companyId=${companyId}&year=${year}`,
+  );
+};

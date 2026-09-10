@@ -83,6 +83,7 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
         <Checkbox
           name={""}
           checked={row.access}
+          disabled
           onChange={(checked) => {
             if (checked) {
               onChange("modules", [...value.modules, row.accessKey]);

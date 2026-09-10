@@ -22,6 +22,10 @@ export interface IInvoice {
   invoiceNumber: string;
   status: statusEnum;
   totalAmount: number;
+
+  generatedAt: string | null;
+  mailSentAt: string | null;
+  mailSentRemarks: string;
 }
 
 export interface IInvoiceCompany {

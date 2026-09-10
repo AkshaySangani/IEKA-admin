@@ -16,6 +16,7 @@ import {
 } from "../../../types/common-types";
 import EmptyPlaceholder from "../../common/empty-paceholder";
 import { statusEnum } from "../../../constants/constants";
+import Image from "../../common/image";
 
 export interface IBankAccount {
   _id: string;
@@ -153,8 +154,13 @@ const OwnerDetails = () => {
   const getCompany = async (companyId: string, loading: boolean = false) => {
     setLoading(loading);
     const response = await getCompanyById(companyId);
-    if(response.success){
-      setCompanyDetails({...response.data, generateInvoiceWithGST: response.data.generateInvoiceWithGST ? "YES": "NO"});
+    if (response.success) {
+      setCompanyDetails({
+        ...response.data,
+        generateInvoiceWithGST: response.data.generateInvoiceWithGST
+          ? "YES"
+          : "NO",
+      });
       setLoading(false);
     } else {
       setCompanyDetails(initialCompanyDetails);
@@ -179,7 +185,17 @@ const OwnerDetails = () => {
   return (
     <>
       <TopBar
-        title={companyDetails.companyName}
+        title={
+          <div className="flex items-center gap-2">
+            <Image
+              src={companyDetails.companyLogo}
+              className="h-11 w-11 object-contain"
+            />
+            <span className="text-lg text-black font-medium">
+              {companyDetails.companyName}
+            </span>
+          </div>
+        }
         actionButtons={
           <Button
             size="sm"
@@ -191,21 +207,25 @@ const OwnerDetails = () => {
       />
       <div className="content-area flex flex-col gap-4">
         <PageLoader loading={loading} />
-        {(!loading && companyDetails._id) ? <div className="grid grid-cols-1 sm:grid-cols-[3fr_4fr] gap-4">
-          <CompanyDetailCard
-            data={companyDetails}
-            handleCompanyOpen={handleCompanyOpen}
-            handleAccountOpen={handleAccountOpen}
-          />
+        {!loading && companyDetails._id ? (
+          <div className="grid grid-cols-1 sm:grid-cols-[3fr_4fr] gap-4">
+            <CompanyDetailCard
+              data={companyDetails}
+              handleCompanyOpen={handleCompanyOpen}
+              handleAccountOpen={handleAccountOpen}
+            />
 
-          <OwnerDetailCard
-            data={companyDetails.companyRepresentative}
-            moduleAccess={companyDetails.modules}
-            companyDetails={companyDetails}
-            handleOwnerOpen={handleOwnerOpen}
-            fetchCompanyDetails={() => getCompany(companyDetails._id, false)}
-          />
-        </div> : !loading && <EmptyPlaceholder title="Company Not Found."/>}
+            <OwnerDetailCard
+              data={companyDetails.companyRepresentative}
+              moduleAccess={companyDetails.modules}
+              companyDetails={companyDetails}
+              handleOwnerOpen={handleOwnerOpen}
+              fetchCompanyDetails={() => getCompany(companyDetails._id, false)}
+            />
+          </div>
+        ) : (
+          !loading && <EmptyPlaceholder title="Company Not Found." />
+        )}
       </div>
       <CompanyDetailEditModel
         isOpen={isCompanyOpen}
@@ -222,7 +242,7 @@ const OwnerDetails = () => {
       <AccountDetailEditModel
         accountDetails={{
           accountId: companyDetails.assignedBankAccount._id,
-          generateInvoiceWithGST: companyDetails.generateInvoiceWithGST
+          generateInvoiceWithGST: companyDetails.generateInvoiceWithGST,
         }}
         companyId={companyDetails._id}
         isOpen={isAccountOpen}

@@ -58,6 +58,7 @@ export const RoleNames: any = {
 
 export enum HistoryFieldEnum {
   UserStatus = "userStatus",
+  EmployeePrice = "employeePrice"
 }
 
 export interface ExpenseCardItem {

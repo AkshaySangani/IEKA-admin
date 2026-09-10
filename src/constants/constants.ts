@@ -193,4 +193,7 @@ export const pathNames = {
   OWNER_DETAILS: "/owner-details",
   COMPANY_DASHBOARD: "/company-dashboard",
   COMPANY_DASHBOARD_ID: "/company-dashboard/:id",
+  ALL_PAYMENTS: "/all-payments",
+  PAYMENT_HISTORY_ID: "/all-payments/payment-history/:id",
+  PAYMENT_HISTORY: "/all-payments/payment-history",
 }

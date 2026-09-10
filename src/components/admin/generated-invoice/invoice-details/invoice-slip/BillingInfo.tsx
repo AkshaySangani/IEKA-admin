@@ -1,4 +1,5 @@
 import React from "react";
+import { ICompany, IInvoice } from ".";
 
 export interface IBillingParty {
   title: string;
@@ -10,44 +11,35 @@ export interface IBillingParty {
 }
 
 interface BillingInfoProps {
-  from: IBillingParty;
-  to: IBillingParty;
+  company: ICompany;
+  invoice: IInvoice;
 }
 
 const BillingCard: React.FC<{
   party: IBillingParty;
 }> = ({ party }) => {
   return (
-    <div className="flex-1 border border-slate-300 bg-white">
-      <div className="border-b border-slate-300 px-2 py-1">
-        <p className="text-[7px] font-medium uppercase text-blue-700">
+    <div className="border border-inputBorder/50 bg-white" style={{
+      flex: 1,
+      padding: "8px 12px"
+    }}>
+      <div className="border-b border-inputBorder/50 py-1">
+        <p className="text-xs font-medium uppercase text-primary">
           {party.title}
         </p>
       </div>
 
-      <div className="px-2 py-1.5">
-        <h3 className="text-[8px] font-medium text-slate-900">
+      <div className="flex flex-col gap-1">
+        <h3 className="text-sm font-medium text-secondary">
           {party.name}
         </h3>
 
-        <div className="mt-1 text-[6.5px] leading-[1.45] text-slate-600">
-          <p>{party.address}</p>
-
-          {party.phone && (
-            <p>
-              Phone: <span className="text-slate-800">{party.phone}</span>
-            </p>
-          )}
-
-          {party.email && (
-            <p>
-              Email: <span className="text-slate-800">{party.email}</span>
-            </p>
-          )}
+        <div className="flex flex-col justify-between gap-2 text-xs leading-[1.45] text-grayText">
+          <p className="text-wrap line-clamp-2 truncate">{party.address}</p>
 
           {party.gstin && (
-            <p>
-              GSTIN: <span className="text-slate-800">{party.gstin}</span>
+            <p className="text-secondary/80 font-medium">
+              GSTIN: <span className="">{party.gstin}</span>
             </p>
           )}
         </div>
@@ -56,11 +48,21 @@ const BillingCard: React.FC<{
   );
 };
 
-const BillingInfo: React.FC<BillingInfoProps> = ({ from, to }) => {
+const BillingInfo: React.FC<BillingInfoProps> = ({ company, invoice }) => {
   return (
     <div className="mt-2 flex gap-2">
-      <BillingCard party={from} />
-      <BillingCard party={to} />
+      <BillingCard party={{
+        title: "Bill From (Supplier)",
+        name: company.companyName,
+        address: "",
+        gstin: (invoice.cGST > 0 && invoice.sGST > 0) ? company.gstin : ""
+      }} />
+      <BillingCard party={{
+        title: "Bill To (Recipient)",
+        name: invoice.companyId.companyName,
+        address: invoice.companyId.companyAddress,
+        gstin: ""
+      }} />
     </div>
   );
 };

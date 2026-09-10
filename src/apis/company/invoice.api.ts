@@ -30,3 +30,21 @@ export const getEmployeeStatusHistory = (
     `/invoices/employee-status-history?companyId=${companyId}&year=${year}&month=${month}&page=${page}&limit=${limit}`,
   );
 };
+
+export const getInvoiceById = (invoiceId: string) => {
+  return apiRequest.get<ApiResponse>(
+    `/invoices/${invoiceId}`,
+  );
+};
+
+export const sendInvoice = (
+  payload: FormData,
+  invoiceId: string
+) =>
+  apiRequest.post(
+    `/invoices/${invoiceId}/send`,
+    payload,
+    {
+      showSuccessToast: true,
+    }
+  );

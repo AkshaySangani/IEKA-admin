@@ -1,75 +1,52 @@
 import React from "react";
 import Image from "../../../../common/image";
-
-export interface ICompanyInfo {
-  name: string;
-  address: string;
-  phone?: string;
-  email?: string;
-  gstin?: string;
-  logo?: string;
-}
+import IEkaLogo from "../../../../../assets/images/ieka_logo.png"
+import { ICompany, IInvoice } from ".";
+import { formatDate } from "../../../../../utils/date-format";
 
 interface CompanyInfoProps {
-  company: ICompanyInfo;
-  invoiceNo: string;
-  invoiceDate: string;
-  billingMonth: string;
+  company: ICompany;
+  invoice: IInvoice;
 }
 
 const CompanyInfo: React.FC<CompanyInfoProps> = ({
   company,
-  invoiceNo,
-  invoiceDate,
-  billingMonth,
+  invoice
 }) => {
   return (
-    <div className="border-b border-primary pb-2">
+    <div className="border-b-2 border-primary pb-2">
       <div className="flex items-start justify-between gap-4">
         {/* Company */}
-        <div className="flex items-start gap-3">
-          {company.logo ? (
-            <Image
-              src={company.logo}
-              alt={company.name}
-              className="h-14 w-24 object-contain"
-            />
-          ) : (
-            <div className="flex h-14 w-24 items-center justify-center">
-              <div className="text-center">
-                <div className="text-xl font-black leading-none tracking-tighter text-secondary">
-                  NX
-                </div>
-                <div className="text-[5px] font-bold tracking-[0.25em] text-slate-500">
-                  DIGITAL
-                </div>
-              </div>
-            </div>
-          )}
+        <div className="flex flex-col items-start gap-2">
+          <Image
+            src={company.companyLogo}
+            alt={company.companyName}
+            className="h-14 w-24 object-contain"
+          />
 
           <div className="pt-1">
-            <h2 className="text-[12px] font-medium text-secondary">
-              {company.name}
+            <h2 className="text-md font-medium text-secondary">
+              {company.companyName}
             </h2>
 
-            <p className="mt-1 max-w-[260px] text-[6.5px] leading-[1.4] text-grayText">
-              {company.address}
-            </p>
+            {/* <p className="mt-1 max-w-[260px] text-xs leading-[1.4] text-secondary">
+              {company}
+            </p> */}
 
-            {company.phone && (
-              <p className="text-[6.5px] text-grayText">
+            {/* {company.phone && (
+              <p className="text-xs text-secondary">
                 Phone : {company.phone}
               </p>
-            )}
+            )} */}
 
-            {company.email && (
-              <p className="text-[6.5px] text-secondary/50">
-                Email: {company.email}
+            {company.companyEmail && (
+              <p className="text-xs text-secondary">
+                Email: {company.companyEmail}
               </p>
             )}
 
             {company.gstin && (
-              <p className="text-[6.5px] text-grayText">
+              <p className="text-xs text-secondary">
                 GSTIN : {company.gstin}
               </p>
             )}
@@ -78,34 +55,28 @@ const CompanyInfo: React.FC<CompanyInfoProps> = ({
 
         {/* Invoice Info */}
         <div className="min-w-[150px] text-right">
-          <p className="text-xs uppercase text-grayText">
+          <p className="text-[10px] uppercase text-secondary">
             Original for Recipient
           </p>
 
-          <h1 className="mt-1 text-lg font-medium leading-none tracking-wide text-secondary">
+          <h1 className="mt-1 text-[36px] font-medium leading-none tracking-wide text-secondary">
             INVOICE
           </h1>
 
-          <div className="mt-1 space-y-0.5 text-sm text-grayText">
+          <div className="mt-1 space-y-2 text-sm text-secondary">
             <p>
               Invoice No :{" "}
-              <span className="font-medium text-secondary">
-                {invoiceNo}
-              </span>
+              <span className="font-medium text-secondary">{invoice.invoiceNumber}</span>
             </p>
 
             <p>
               Date :{" "}
-              <span className="font-medium text-secondary">
-                {invoiceDate}
-              </span>
+              <span className="font-medium text-secondary">{formatDate(new Date())}</span>
             </p>
 
             <p>
               Billing Month :{" "}
-              <span className="font-medium text-secondary">
-                {billingMonth}
-              </span>
+              <span className="font-medium text-secondary">{invoice.billingMonth}-{invoice.billingYear}</span>
             </p>
           </div>
         </div>
