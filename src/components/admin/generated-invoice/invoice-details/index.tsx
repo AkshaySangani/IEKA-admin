@@ -21,9 +21,11 @@ import Modal from "../../../common/modal/Modal";
 import TextAreaField from "../../../common/text-area/TextAreaField";
 import Image from "../../../common/image";
 import excliMinate from "../../../../assets/images/excliminate.png";
-import { generatePayslipPdf } from "../../../../utils/generate-pdf";
 import { toastMessage } from "../../../../utils/toast-message";
 import { getApiErrorMessage } from "../../../../services/api";
+import getPdfHtmlContent from "./invoice-pdf";
+import { downloadFile } from "../../../../utils/helper";
+import { config } from "../../../../utils/config";
 
 export interface IEmployeeMonthlyStatus {
   _id: string;
@@ -51,12 +53,8 @@ export interface IEmployeeStatusUser {
 const InvoiceDetails = () => {
   const params = useParams();
   const location = useLocation();
-  const companyId = params.id as string;
-  const invoiceNo = location.state.invoiceNo as string;
-  const invoiceId = location.state.invoiceId as string
-
-  // invoice pdf div ref
-  const contentRef = useRef<HTMLDivElement>(null);
+  const companyId = params?.id??"" as string;
+  const invoiceId = location?.state?.invoiceId??"" as string;
 
   const initialMonth: MonthPickerValue = {
     month: new Date().getMonth(),
@@ -154,14 +152,12 @@ const InvoiceDetails = () => {
       return;
     }
     setInvoiceLoading(true);
-    const pdfFile = contentRef.current
-      ? await generatePayslipPdf(contentRef.current, `${invoiceNo}`)
-      : null;
+    const pdfFile = (admin && invoiceDetails) ? getPdfHtmlContent(admin, invoiceDetails) : null;
     if (pdfFile) {
-      const formData = new FormData();
-      formData.append("invoicePdf", pdfFile);
-      formData.append("remarks", remarks);
-      const response = await sendInvoice(formData, invoiceId);
+      const response = await sendInvoice({
+        invoicePdf: pdfFile,
+        remarks
+      }, invoiceId);
       if (response.success) {
         setRemarks("");
         handleActionOpenClose();
@@ -177,9 +173,7 @@ const InvoiceDetails = () => {
   // handle download pdf invoice
   const handleDownloadInvoice = async () => {
     try {
-      if (contentRef.current) {
-        await generatePayslipPdf(contentRef.current, `${invoiceNo}`, true);
-      }
+      invoiceDetails && downloadFile(`${config.BACKEND_API_URL}${invoiceDetails.invoicePdf}`, `${invoiceDetails.invoiceNumber}-${invoiceDetails.billingMonth}-${invoiceDetails.billingYear}`)
     } catch (error) {
       console.log("error", error);
       toastMessage.error(getApiErrorMessage(error));
@@ -196,15 +190,15 @@ const InvoiceDetails = () => {
               onChange={setSelectedMonth}
               position={"bottomCenter"}
             />
-            <Button name="Action" size="sm" onClick={handleActionOpenClose} />
+            {!invoiceDetails?.invoicePdf && <Button name="Action" size="sm" onClick={handleActionOpenClose} />}
           </div>
         }
-        isPdf={false}
+        isPdf={invoiceDetails?.invoicePdf !== null}
         handleDownloadPdfClick={handleDownloadInvoice}
         isExcel
         // handleDownloadExcelClick={() => handleDownloadClick()}
       />
-      <div className="content-area flex-1 gap-4">
+      <div className="content-area flex-1 space-y-3">
         <PageLoader loading={loading} />
         <EmployeeTable employeeHistory={employeeHistory} />
         <Pagination
@@ -214,7 +208,7 @@ const InvoiceDetails = () => {
           onPageChange={setPage}
           onPageSizeChange={setLimit}
         />
-        <InvoiceSlip ref={contentRef} admin={admin} invoiceDetails={invoiceDetails}/>
+        <InvoiceSlip admin={admin} invoiceDetails={invoiceDetails}/>
       </div>
 
       <Modal

@@ -65,17 +65,37 @@ export default function EmployeeTable({
     {
       header: "Active Days",
       className: "text-center",
-      render: (row) => row.activeDays,
+      render: (row) => <b>{row.activeDays}</b>,
     },
     {
       header: "Inactive Days",
-      className: "text-center",
-      render: (row) => row.inactiveDays,
+      className: "",
+      render: (row) => (
+        <div className="flex gap-1">
+          <b>{row.inactiveDays}</b>
+          <div className="flex items-center text-wrap max-w-[100px] md:max-w-[200px]">
+            {row.inactiveDates.length > 0 &&
+              " [" +
+                row.inactiveDates.map((ele) => ele.split("-")[2]).join(", ") +
+                "]"}
+          </div>
+        </div>
+      ),
     },
     {
       header: "Deleted Days",
-      className: "text-center",
-      render: (row) => row.deletedDays,
+      className: "",
+      render: (row) => (
+        <div className="flex gap-1">
+          <b>{row.deletedDays}</b>
+          <div className="flex items-center text-wrap max-w-[100px] md:max-w-[200px]">
+            {row.deletedDates.length > 0 &&
+              " [" +
+                row.deletedDates.map((ele) => ele.split("-")[2]).join(", ") +
+                "]"}
+          </div>
+        </div>
+      ),
     },
   ];
 

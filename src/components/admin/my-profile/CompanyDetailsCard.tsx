@@ -17,6 +17,7 @@ interface CompanyDetailsProps {
 interface CompanyDetailForm {
   companyName: string;
   companyEmail: string;
+  companyAddress: string;
   gstin: string;
   companyLogo: File | string | null;
 }
@@ -42,6 +43,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
     companyEmail: companyDetails?.companyEmail || "",
     gstin: companyDetails?.gstin || "",
     companyLogo: companyDetails?.companyLogo || null,
+    companyAddress: companyDetails.companyAddress ?? ""
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -54,6 +56,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
         companyEmail: companyDetails?.companyEmail || "",
         gstin: companyDetails?.gstin || "",
         companyLogo: companyDetails?.companyLogo || null,
+        companyAddress: companyDetails.companyAddress || ""
       });
 
       setErrors({});
@@ -124,6 +127,8 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
 
     formData.append("companyEmail", companyDetail.companyEmail);
 
+    formData.append("companyAddress", companyDetail.companyAddress);
+
     formData.append("gstin", companyDetail.gstin);
 
     if (companyDetail.companyLogo) {
@@ -146,7 +151,7 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
       <div className="companyDetailsCard content-card border grid-cols-1">
         <div className="companyHeader">
           <div className="employee_pic">
-            <Image src={companyDetails?.companyLogo} alt="CompanyLogo" />
+            <Image src={companyDetails?.companyLogo} alt="CompanyLogo" className="object-contain"/>
           </div>
           <div className="employee_name">{companyDetails?.companyName}</div>
         </div>
@@ -164,6 +169,10 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
             <div className="employee_detail_single">
               <div className="label">Company Email</div>
               <div className="labelvalue">{companyDetails?.companyEmail}</div>
+            </div>
+            <div className="employee_detail_single">
+              <div className="label">Company Address</div>
+              <div className="labelvalue">{companyDetails?.companyAddress  ? companyDetails?.companyAddress : "-"}</div>
             </div>
             <div className="employee_detail_single">
               <div className="label">GST IN No.</div>
@@ -225,6 +234,14 @@ const CompanyDetailsCard: React.FC<CompanyDetailsProps> = ({
               value={companyDetail.gstin}
               error={errors.gstin}
               onChange={(e) => handleChange(e.target.value, "gstin")}
+            />
+
+            <TextField
+              // required
+              label="Address"
+              placeholder="Enter address"
+              value={companyDetail.companyAddress}
+              onChange={(e) => handleChange(e.target.value, "companyAddress")}
             />
           </div>
       </Modal>

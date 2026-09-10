@@ -187,3 +187,27 @@ export const numberToWords = (num: number): string => {
 
   return parts.join(" ");
 };
+
+
+export const downloadFile = async (url: string, filename: string) => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+
+  const blobUrl = window.URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = blobUrl;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  window.URL.revokeObjectURL(blobUrl);
+};
+
+export const formatAmount = (amount: number) => {
+  return `₹ ${amount.toLocaleString("en-IN", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+};

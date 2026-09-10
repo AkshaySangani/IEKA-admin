@@ -10,7 +10,7 @@ import {
   pathNames,
   statusEnum,
 } from "../../../../constants/constants";
-import { getFloatValue } from "../../../../utils/helper";
+import { downloadFile, getFloatValue } from "../../../../utils/helper";
 import { ColumnDef, CustomTable } from "../../../common/table";
 import { IPayment } from "..";
 import { formatDate } from "../../../../utils/date-format";
@@ -39,8 +39,8 @@ export default function Payments() {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
-  const companyId = params.id as string;
-  const companyDetails = location.state.company;
+  const companyId = params?.id??"" as string;
+  const companyDetails = location?.state?.company??"" as string;
 
   const [year, setYear] = useState<number>(new Date().getFullYear());
 
@@ -77,7 +77,9 @@ export default function Payments() {
     setLoading(false);
   };
 
-  const handleDownloadPdfClick = () => {};
+  const handleDownloadPdfClick = (row: IInvoice) => {
+    downloadFile(`${config.BACKEND_API_URL}${row.invoicePdf}`, `Invoice-${row.billingMonth}-${year}`)
+  };
 
   // Define configuration structures with isolated column custom components
   const columns: ColumnDef<IInvoice>[] = [
@@ -106,14 +108,12 @@ export default function Payments() {
       className: "",
       render: (row) => (
         <>
-          <Link
-            to={`${config.BACKEND_API_URL}${row.invoicePdf}.pdf`}
-            target="_"
-            download
+          <button
+            onClick={() => handleDownloadPdfClick(row)}
             className={`flex h-[30px] w-[30px] cursor-pointer items-center justify-center`}
           >
             <img src={PDF} alt="Pdf" className="h-full w-full object-contain" />
-          </Link>
+          </button>
         </>
       ),
     },

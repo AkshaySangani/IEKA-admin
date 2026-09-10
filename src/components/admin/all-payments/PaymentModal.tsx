@@ -12,6 +12,7 @@ import {
   PaymentPayload,
   updatePaymentStatus,
 } from "../../../apis/company/payments.api";
+import { getFloatValue } from "../../../utils/helper";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -50,12 +51,13 @@ const PaymentModal = ({
     ? `${representative.firstName} ${representative.lastName}`
     : "";
 
-  const [formData, setFormData] = useState<PaymentForm>({
+    const initialState:PaymentForm = {
     paymentMode: PaymentMode.BANK_TRANSFER,
     amount: "",
     transactionId: "",
     remarks: "",
-  });
+  }
+  const [formData, setFormData] = useState<PaymentForm>(initialState);
 
   const [errors, setErrors] = useState<PaymentErrors>({});
   const [loading, setLoading] = useState<boolean>(false);
@@ -85,12 +87,10 @@ const PaymentModal = ({
 
     if (!formData.amount.trim()) {
       newErrors.amount = "Amount is required";
-    } else if (Number.isNaN(amount) || amount <= 0) {
+    } else if (Number.isNaN(amount) || amount < 0) {
       newErrors.amount = "Enter a valid amount";
-    } else if (payment && amount > payment.pendingAmount) {
-      newErrors.amount = `Amount cannot be greater than ${payment.pendingAmount.toFixed(
-        2,
-      )}`;
+    } else if (payment && amount === 0) {
+      newErrors.amount = `Amount should be greater than 0}`;
     }
 
     if (
@@ -117,7 +117,7 @@ const PaymentModal = ({
 
     const payload: PaymentPayload = {
       paymentMode: formData.paymentMode,
-      amount: Number(formData.amount),
+      amount: Number(getFloatValue(formData.amount)),
       transactionId: formData.transactionId.trim(),
       remarks: formData.remarks.trim(),
     };
@@ -138,6 +138,7 @@ const PaymentModal = ({
   const handleClose = () => {
     setErrors({});
     onClose();
+    setFormData(initialState)
   };
 
   // handle confirm submit

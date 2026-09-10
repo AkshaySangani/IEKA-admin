@@ -38,7 +38,10 @@ export const getInvoiceById = (invoiceId: string) => {
 };
 
 export const sendInvoice = (
-  payload: FormData,
+  payload: {
+    invoicePdf: string;
+    remarks: string;
+  },
   invoiceId: string
 ) =>
   apiRequest.post(

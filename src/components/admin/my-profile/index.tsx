@@ -7,6 +7,7 @@ import PageLoader from "../../common/loader/PageLoader";
 import { getProfile } from "../../../apis/admin/my-profile";
 
 export interface ICompanyDetails {
+  companyAddress: string;
   companyName: string;
   gstin: string;
   companyEmail: string;
@@ -28,7 +29,7 @@ export interface IAdminProfile {
 }
 
 const MyProfile = () => {
-  const [loading,setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true);
   const [profile, setProfile] = useState<IAdminProfile>({
     _id: "",
     firstName: "",
@@ -47,8 +48,9 @@ const MyProfile = () => {
     companyName: "",
     gstin: "",
     companyEmail: "",
-    companyLogo: ""
-})
+    companyLogo: "",
+    companyAddress: "",
+  });
 
   useEffect(() => {
     getAdminProfile(true);
@@ -59,21 +61,29 @@ const MyProfile = () => {
     const response = await getProfile();
     if (response?.data) {
       setProfile(response?.data);
-      setCompanyDetails(response?.data?.company)
+      setCompanyDetails(response?.data?.company);
       setLoading(false);
     }
   };
   return (
     <>
-    <PageLoader loading={loading}/>
-      {!loading && <>
-      <TopBar title={companyDetails?.companyName} />
-      <div className="content-area grid grid-cols-1 sm:grid-cols-[3fr_4fr] gap-4">
-        <CompanyDetailsCard companyDetails={companyDetails} getAdminProfile={getAdminProfile}/>
+      <PageLoader loading={loading} />
+      {!loading && (
+        <>
+          <TopBar title={companyDetails?.companyName} />
+          <div className="content-area grid grid-cols-1 sm:grid-cols-[3fr_4fr] gap-4">
+            <CompanyDetailsCard
+              companyDetails={companyDetails}
+              getAdminProfile={getAdminProfile}
+            />
 
-        <PersonalDetailsCard profile={profile} getAdminProfile={getAdminProfile}/>
-      </div>
-      </>}
+            <PersonalDetailsCard
+              profile={profile}
+              getAdminProfile={getAdminProfile}
+            />
+          </div>
+        </>
+      )}
     </>
   );
 };

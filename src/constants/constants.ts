@@ -149,6 +149,10 @@ export const accountStatusOptions: IOption[] = [
     label: statusMessage.INACTIVE,
     value: statusEnum.INACTIVE,
   },
+  {
+    label: statusMessage.DELETED,
+    value: statusEnum.DELETED,
+  },
 ];
 
 export const yesNo: ObjectType = {

@@ -5,6 +5,7 @@ interface RequestOptions {
   successMessage?: string;
   errorMessage?: string;
   showSuccessToast?: boolean;
+  showErrorToast?: boolean;
 }
 
 export const apiRequest = {
@@ -64,7 +65,7 @@ export const apiRequest = {
       return response.data;
     } catch (error: any) {
       const apiMessage =
-        error?.response?.data?.message;
+        error?.response?.data?.message??error?.message;
 
       toastMessage.error(
         apiMessage ||
@@ -129,7 +130,7 @@ export const apiRequest = {
       return response.data;
     } catch (error: any) {
       const apiMessage =
-        error?.response?.data?.message;
+        error?.response?.data?.message??error?.message;
 
       toastMessage.error(
         apiMessage ||
@@ -141,20 +142,20 @@ export const apiRequest = {
     }
   },
 
-  get: async <T>(url: string) => {
+  get: async <T>(url: string,options: RequestOptions = {showErrorToast: true}) => {
     try {
-      const response = await api.get<T>(url);
+      const response = await api.get<T>(url, url.includes("isDownload=true") ? {responseType: "blob"}:{});
   
       return response.data;
     } catch(error: any){
       const apiMessage =
         error?.response?.data?.message || error?.message;
-        console.log("apiMessage", apiMessage)
-
-      toastMessage.error(
-        apiMessage ||
-        "Something went wrong"
-      );
+      if(options.showErrorToast){
+        toastMessage.error(
+          apiMessage ||
+          "Something went wrong"
+        );
+      }
 
       return error;
     }

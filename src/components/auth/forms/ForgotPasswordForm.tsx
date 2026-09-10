@@ -5,9 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { forgotPasswordApi } from "../../../apis/auth/auth.api";
 import { regex } from "../../../constants/validation-regex";
 
-interface Props {}
-
-const ForgotPasswordForm = ({}: Props) => {
+const ForgotPasswordForm = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -90,7 +88,7 @@ const ForgotPasswordForm = ({}: Props) => {
           type="text"
           placeholder="Enter your registered email id"
         />
-        <Button name="Submit" />
+        <Button name="Submit" loading={loading}/>
         <div className="login-links">
           <Link to="/login" className="backtologin" id="backtologin">
             <i className="fas fa-arrow-left"></i> Back To Login

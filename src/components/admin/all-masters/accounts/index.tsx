@@ -5,18 +5,19 @@ import AccountList from "./AccountTable";
 import Modal from "../../../common/modal/Modal";
 import TextField from "../../../common/text-field/TextField";
 import SelectField from "../../../common/select/SelectField";
-import { accountOptions, bankAccount } from "../../../../constants/constants";
+import { accountOptions, bankAccount, statusEnum } from "../../../../constants/constants";
 import { regex } from "../../../../constants/validation-regex";
 import { addBankAccount, getBankAccounts } from "../../../../apis/all-masters/accounts";
 import { AccountType, BankAccount, StatusType } from "../../../../types/common-types";
 import PageLoader from "../../../common/loader/PageLoader";
 
-interface BankAccountFormData {
+export interface BankAccountFormData {
   accountType: AccountType;
   accountHolderName: string;
   bankAccountNo: string;
   confirmBankAccountNo: string;
   ifscCode: string;
+  status: statusEnum;
 }
 
 export interface IBankAccount {
@@ -25,10 +26,19 @@ export interface IBankAccount {
   ifscCode: string;
   accountHolderName: string;
   accountType: AccountType;
-  status: StatusType;
+  status: statusEnum;
   createdAt: string;
   updatedAt: string;
 }
+
+ export const initialFormData: BankAccountFormData = {
+    accountType: "SAVING",
+    accountHolderName: "",
+    bankAccountNo: "",
+    confirmBankAccountNo: "",
+    ifscCode: "",
+    status: statusEnum.ACTIVE
+  };
 
 const Accounts = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -36,13 +46,7 @@ const Accounts = () => {
 
   const [bankAccounts,setBankAccounts] = useState<IBankAccount[]>([]);
 
-  const initialFormData: BankAccountFormData = {
-    accountType: "SAVING",
-    accountHolderName: "",
-    bankAccountNo: "",
-    confirmBankAccountNo: "",
-    ifscCode: "",
-  };
+ 
 
   const [loading, setLoading] = useState(false);
 
