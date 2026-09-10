@@ -61,7 +61,7 @@ const ModuleDetailsCard: React.FC<ModuleDetailsCardProps> = ({
   const columns: ColumnDef<ModuleData>[] = [
     {
       header: "#",
-      className: "text-center font-normal text-gray-500",
+      className: "",
       render: (row) => row?.id,
     },
     {

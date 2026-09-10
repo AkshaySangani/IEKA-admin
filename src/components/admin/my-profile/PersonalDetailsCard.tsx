@@ -31,7 +31,7 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
   profile,
   getAdminProfile,
 }: PersonalDetailsProps) => {
-  const {setProfile} = useAuthStore();
+  const { setProfile } = useAuthStore();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState(false);
 
@@ -118,7 +118,7 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
     if (response?.success) {
       getAdminProfile();
       setIsOpen(false);
-      setProfile(response?.data)
+      setProfile(response?.data);
     }
 
     setLoading(false);
@@ -139,7 +139,20 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
               </div>
             </div>
             <div className="flex justify-center py-[10px] bg-gray-200">
-              <Image src={profile?.profileImage} alt="UserProfile" width="80" fallbackSrc={UserAvatar} className="rounded-full"/>
+              <Image
+                src={profile?.profileImage}
+                alt="UserProfile"
+                fallbackSrc={UserAvatar}
+                className="w-20
+                            h-20
+                            min-w-20
+                            min-h-20
+                            shrink-0
+                            object-cover
+                            rounded-full
+                            ring-1
+                            ring-gray-200"
+              />
             </div>
 
             <div className="employee_detailsitems">
@@ -161,7 +174,11 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
                 <div className="label">Status</div>
                 <div className="labelvalue curruntmultidiv">
                   <div className="curruntvalue">
-                    <span className={`status font-medium ${statusColor[profile?.status]}`}>{statusMessage[profile?.status]}</span>
+                    <span
+                      className={`status font-medium ${statusColor[profile?.status]}`}
+                    >
+                      {statusMessage[profile?.status]}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -185,27 +202,34 @@ const PersonalDetailsCard: React.FC<PersonalDetailsProps> = ({
         loading={loading}
         confirmButtonName="Save"
       >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Person Picture  */}
-            <ImageUpload
-              label="Person Picture "
-              required
-              value={profileDetail?.profileImage}
-              error={errors.profileImage}
-              onChange={(file) => {
-                handleChange(file, "profileImage");
-              }}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Person Picture  */}
+          <ImageUpload
+            label="Person Picture "
+            required
+            value={profileDetail?.profileImage}
+            error={errors.profileImage}
+            onChange={(file) => {
+              handleChange(file, "profileImage");
+            }}
+          />
 
-            {/* Empty column for alignment */}
-            <div></div>
+          {/* Empty column for alignment */}
+          <div></div>
 
-            {/* Email */}
-            {/* <TextField label="Email" placeholder="Enter your email" /> */}
+          {/* Email */}
+          {/* <TextField label="Email" placeholder="Enter your email" /> */}
 
-            {/* Phone No. */}
-            <TextField label="Phone No." type="number" error={errors.phone} onChange={(e) => handleChange(e.target.value, "phone")} value={profileDetail?.phone} placeholder="Phone No. xxxxx xxxxx" />
-          </div>
+          {/* Phone No. */}
+          <TextField
+            label="Phone No."
+            type="number"
+            error={errors.phone}
+            onChange={(e) => handleChange(e.target.value, "phone")}
+            value={profileDetail?.phone}
+            placeholder="Phone No. xxxxx xxxxx"
+          />
+        </div>
       </Modal>
     </>
   );
