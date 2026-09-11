@@ -22,13 +22,9 @@ const CompanyInfo: React.FC<ICompanyInfoProps> = ({companyInfo, onClick}: ICompa
             <span className="text-primary font-medium text-[15px] cursor-pointer" onClick={onClick}>
               {companyInfo.companyName}
             </span>
-            <p className="text-grayText text-xs leading-relaxed max-w-sm line-clamp-2">
+            <p className="text-grayText text-xs leading-relaxed max-w-[250px] text-wrap truncate line-clamp-2">
               {companyInfo.companyAddress}
             </p>
-            <div className="flex gap-2 items-center text-xs mt-1">
-              {/* <span className="font-bold text-gray-700">{row.code}</span> */}
-              {/* <span className="bg-gray-100 px-2 py-0.5 rounded text-gray-600">{row.city}</span> */}
-            </div>
           </div>
         </div>
     );
